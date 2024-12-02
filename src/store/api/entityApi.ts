@@ -1,6 +1,6 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../consts";
+import { IEntity } from "../../types/api/entityTypes";
 
 /**
  * @implements EntityController
@@ -8,26 +8,66 @@ import { BASE_URL } from "../../consts";
 export const entityApi = createApi({
   reducerPath: "entityApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  tagTypes: ["Entity"],
 
   endpoints: (builder) => ({
-    getEntities: builder.query<string[], void>({
+    getEntities: builder.query<IEntity[], void>({
       query: () => {
         return {
-          url: "/entities",
+          method: "POST",
+          url: "/v1/entity/page",
+          body: {
+            paging: {
+              currentPage: 0,
+              recordsOnPage: 100,
+            },
+          },
+        };
+      },
+      providesTags: ["Entity"],
+      transformResponse: (response: PageResponse<IEntity>) => {
+        const { data } = response;
+        if (!data) throw response;
+
+        return data;
+      },
+    }),
+
+    getEntityById: builder.query<IEntity, string>({
+      query: (id) => `/v1/entity/${id}`,
+    }),
+
+    createEntity: builder.mutation<string, IEntity>({
+      query: (body) => {
+        return {
+          method: "POST",
+          url: `/v1/entity`,
+          body,
         };
       },
     }),
-    getEntityByName: builder.query<string, string>({
-      query: (name) => `/entities/${name}`,
+
+    updateEntity: builder.mutation<string, IEntity>({
+      query: ({ id, ...body }) => {
+        return {
+          method: "PUT",
+          url: `/v1/entity/${id}`,
+          body,
+        };
+      },
+      invalidatesTags: ["Entity"],
     }),
-    getEntityById: builder.query<Record<string, string>[], number>({
-      query: (id) => `/entities/${id}`,
+
+    deleteEntity: builder.mutation<string, string>({
+      query: (id) => {
+        return {
+          method: "DELETE",
+          url: `/v1/entity/${id}`,
+        };
+      },
+      invalidatesTags: ["Entity"],
     }),
   }),
 });
 
-export const {
-  useLazyGetEntityByIdQuery,
-  useLazyGetEntitiesQuery,
-  useLazyGetEntityByNameQuery,
-} = entityApi;
+export const { useGetEntitiesQuery } = entityApi;

@@ -6,6 +6,7 @@ import { Outlet } from "react-router";
 import ru_RU from "antd/lib/locale/ru_RU";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import { Layout } from "./components/Layout";
 dayjs.locale("ru");
 
 const App = () => {
@@ -24,7 +25,9 @@ const App = () => {
         }}
       >
         <AntdApp>
-          <Outlet />
+          <Layout>
+            <Outlet />
+          </Layout>
         </AntdApp>
       </ConfigProvider>
     </Provider>

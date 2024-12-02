@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "./slices/counterSlice";
 import { fakeApi } from "./api/fakeApi";
 import { entityApi } from "./api/entityApi";
+import { entityFieldsApi } from "./api/entityFieldsApi";
+import { businessObjectApi } from "./api/businessObjectApi";
 
 export const store = configureStore({
   reducer: {
@@ -10,9 +12,16 @@ export const store = configureStore({
     // ------ API ----- //
     [fakeApi.reducerPath]: fakeApi.reducer,
     [entityApi.reducerPath]: entityApi.reducer,
+    [entityFieldsApi.reducerPath]: entityFieldsApi.reducer,
+    [businessObjectApi.reducerPath]: businessObjectApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([fakeApi.middleware, entityApi.middleware]),
+    getDefaultMiddleware().concat([
+      fakeApi.middleware,
+      entityApi.middleware,
+      entityFieldsApi.middleware,
+      businessObjectApi.middleware,
+    ]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

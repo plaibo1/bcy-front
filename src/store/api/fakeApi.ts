@@ -1,8 +1,7 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const fakeApi = createApi({
-  reducerPath: "pokemonApi",
+  reducerPath: "fakeApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://jsonplaceholder.typicode.com",
   }),
