@@ -12,11 +12,14 @@ import { IEditProps } from "./EditButton";
 import dayjs from "dayjs";
 import { useUpdateBusinessObjectMutation } from "../../../store/api/businessObjectApi";
 import { IBusinessObjectCreate } from "../../../types/api/businessObjectTypes";
+import { useContext } from "react";
+import { LeadContext } from "../LeadContext";
 
 const { TextArea } = Input;
 
 interface IProps extends IEditProps {
   cancel: () => void;
+  index: number;
 }
 
 export const EditForm = ({
@@ -24,8 +27,11 @@ export const EditForm = ({
   boItem,
   cancel,
   entityId,
+  index,
 }: IProps) => {
   const { notification } = App.useApp();
+  const { setLeads } = useContext(LeadContext); // TODO: useContext
+
   const [updateBusinessObject] = useUpdateBusinessObjectMutation();
 
   const [form] = Form.useForm();
@@ -40,7 +46,13 @@ export const EditForm = ({
       ...values,
     })
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        setLeads((prev) => {
+          const newLeads = [...prev];
+          newLeads[index] = { ...newLeads[index], ...res };
+          return newLeads;
+        });
+
         notification.success({
           message: "Успешно",
           description: "Лид успешно обновлен",
@@ -49,6 +61,7 @@ export const EditForm = ({
       })
       .catch((error) => {
         console.log("🚀 ~ onFinish ~ error:", error);
+
         if ("message" in error.data) {
           notification.error({
             message: "Ошибка",

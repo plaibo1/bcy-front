@@ -11,9 +11,15 @@ export interface IEditProps {
   boItem: IBusinessObject;
   entityId: string;
   entityFields: IEntityField[];
+  index: number;
 }
 
-export const EditButton = ({ boItem, entityId, entityFields }: IEditProps) => {
+export const EditButton = ({
+  boItem,
+  entityId,
+  entityFields,
+  index,
+}: IEditProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -48,6 +54,7 @@ export const EditButton = ({ boItem, entityId, entityFields }: IEditProps) => {
           boItem={boItem}
           entityId={entityId}
           cancel={handleCancel}
+          index={index}
         />
       </Modal>
     </>

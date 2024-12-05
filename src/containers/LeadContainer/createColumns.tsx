@@ -63,12 +63,13 @@ export const createColumns = <T extends AnyObject>({
     {
       title: "Действие",
       align: "center",
-      render: (_, record) => {
+      render: (_, record, index) => {
         return (
           <EditButton
             boItem={record as unknown as IBusinessObject}
             entityFields={columnsFields}
             entityId={columnsFields[0]?.entityId}
+            index={index}
           />
         );
       },
