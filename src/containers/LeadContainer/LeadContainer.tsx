@@ -4,9 +4,11 @@ import { LeadSelect } from "./LeadSelect";
 import { createColumns } from "./createColumns";
 import { LeadProvider } from "./LeadContext";
 import { LeadTable } from "./LeadTable";
+import { LeadAddFieldButton } from "./LeadAddField";
+import { Space } from "antd";
 
 export const LeadContainer = () => {
-  const [getEntityFields, { data: entityFields }] =
+  const [getEntityFields, { data: entityFields, isError }] =
     useLazyGetEntityFieldsQuery();
 
   const [getBusinessObjects, { data: businessObjects, isLoading, isFetching }] =
@@ -19,7 +21,16 @@ export const LeadContainer = () => {
 
   return (
     <div>
-      <LeadSelect onChange={handleSelect} />
+      <Space>
+        <LeadSelect onChange={handleSelect} />
+
+        {entityFields && !isError && entityFields[0]?.entityId && (
+          <LeadAddFieldButton
+            entityId={entityFields[0]?.entityId}
+            onSubmit={() => getEntityFields(entityFields[0]?.entityId)}
+          />
+        )}
+      </Space>
 
       {entityFields && businessObjects && (
         <LeadProvider value={businessObjects?.data}>

@@ -1,3 +1,5 @@
+import { EntityType } from "./entityFieldsTypes";
+
 export interface IEntity {
   id: string;
   name: string;
@@ -12,4 +14,15 @@ export interface IEntity {
   archived: boolean;
 }
 
-// TODO: IEntityCreate
+export interface IEntityCreate {
+  name: string;
+  label: string;
+  description: string;
+  type: EntityType;
+  system: boolean;
+  hiddenFromUser: boolean;
+  hiddenFromUi: boolean;
+  archived: boolean;
+  readOnly: boolean;
+  required: boolean;
+}
