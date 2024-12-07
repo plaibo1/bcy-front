@@ -6,6 +6,7 @@ import { LeadProvider } from "./LeadContext";
 import { LeadTable } from "./LeadTable";
 import { LeadAddFieldButton } from "./LeadAddField";
 import { Space } from "antd";
+import { EditLeadEntity } from "./EditLeadEntity";
 
 export const LeadContainer = () => {
   const [getEntityFields, { data: entityFields, isError }] =
@@ -28,6 +29,13 @@ export const LeadContainer = () => {
           <LeadAddFieldButton
             entityId={entityFields[0]?.entityId}
             onSubmit={() => getEntityFields(entityFields[0]?.entityId)}
+          />
+        )}
+
+        {entityFields && !isError && entityFields[0]?.entityId && (
+          <EditLeadEntity
+            fields={entityFields}
+            entityId={entityFields[0]?.entityId}
           />
         )}
       </Space>

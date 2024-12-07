@@ -14,7 +14,7 @@ export const entityFieldsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-
+  tagTypes: ["EntityFields"],
   endpoints: (builder) => ({
     getEntityFields: builder.query<IEntityField[], string>({
       query: (entityId) => {
@@ -35,6 +35,7 @@ export const entityFieldsApi = createApi({
 
         return data;
       },
+      providesTags: ["EntityFields"],
     }),
 
     createEntityField: builder.mutation<
@@ -64,17 +65,19 @@ export const entityFieldsApi = createApi({
     }),
 
     deleteEntityField: builder.mutation<
-      string,
-      { entityId: string; id: string }
+      void,
+      { entityId: string; fieldId: string }
     >({
-      query: ({ entityId, id }) => {
+      query: ({ entityId, fieldId }) => {
         return {
           method: "DELETE",
-          url: `/v1/entity/${entityId}/field/${id}`,
+          url: `/v1/entity/${entityId}/field/${fieldId}`,
         };
       },
+      invalidatesTags: ["EntityFields"],
     }),
   }),
 });
 
-export const { useLazyGetEntityFieldsQuery } = entityFieldsApi;
+export const { useLazyGetEntityFieldsQuery, useDeleteEntityFieldMutation } =
+  entityFieldsApi;

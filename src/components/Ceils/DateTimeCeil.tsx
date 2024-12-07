@@ -9,10 +9,10 @@ export const DateTimeCeil = ({ value }: { value?: string }) => {
   return (
     <div>
       <div>
-        <ClockCircleOutlined /> {date}
+        <CalendarOutlined /> {date}
       </div>
       <div>
-        <CalendarOutlined /> {time}
+        <ClockCircleOutlined /> {time}
       </div>
     </div>
   );
