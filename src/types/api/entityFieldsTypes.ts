@@ -44,3 +44,14 @@ export interface IEntityCreate {
   readOnly: boolean;
   required: boolean;
 }
+
+export interface IEntityUpdate {
+  label: string;
+  description: string;
+  system: boolean;
+  hiddenFromUser: boolean;
+  hiddenFromUi: boolean;
+  archived: boolean;
+  readOnly: boolean;
+  required: boolean;
+}

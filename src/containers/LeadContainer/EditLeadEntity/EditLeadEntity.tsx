@@ -1,12 +1,12 @@
-import { App, Button, Flex, Modal, Popconfirm, theme, Typography } from "antd";
+import { App, Button, Modal } from "antd";
 
 import { EditOutlined } from "@ant-design/icons";
 
 import { useState } from "react";
 import { type IEntityField } from "../../../types/api/entityFieldsTypes";
 
-import { DeleteOutlined } from "@ant-design/icons";
 import { useDeleteEntityFieldMutation } from "../../../store/api/entityFieldsApi";
+import { EditLeadEditor } from "./EditLeadEditor";
 
 export const EditLeadEntity = ({
   entityId,
@@ -15,9 +15,6 @@ export const EditLeadEntity = ({
   entityId: string | undefined;
   fields: IEntityField[];
 }) => {
-  const {
-    token: { colorBorder, borderRadiusLG },
-  } = theme.useToken();
   const [deleteEntityFiled] = useDeleteEntityFieldMutation();
   const { notification, message } = App.useApp();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +27,7 @@ export const EditLeadEntity = ({
     setIsModalOpen(false);
   };
 
-  const confirm = ({ fieldId }: { fieldId: string }) => {
+  const confirm = (fieldId: string) => {
     if (!entityId) {
       message.error("Выберите сущность");
       return;
@@ -58,45 +55,7 @@ export const EditLeadEntity = ({
         onCancel={handleCancel}
         footer={null}
       >
-        <>
-          <Typography.Title level={3}>Редактирование полей</Typography.Title>
-
-          <Flex gap={16} vertical>
-            {fields.map((field) => (
-              <Flex
-                align="center"
-                justify="space-between"
-                gap={16}
-                style={{
-                  padding: 12,
-                  border: `1px solid ${colorBorder}`,
-                  borderRadius: borderRadiusLG,
-                }}
-                key={field.id}
-              >
-                <Flex vertical>
-                  <Typography style={{ fontWeight: "bold" }}>
-                    {field.label}
-                  </Typography>
-
-                  <Typography style={{ fontFamily: "monospace" }}>
-                    {field.name}
-                  </Typography>
-                </Flex>
-
-                <Popconfirm
-                  title="Удалить поле"
-                  description="Вы уверены, что хотите удалить это поле?"
-                  onConfirm={() => confirm({ fieldId: field.id })}
-                  okText="Да"
-                  cancelText="Нет"
-                >
-                  <Button icon={<DeleteOutlined />} />
-                </Popconfirm>
-              </Flex>
-            ))}
-          </Flex>
-        </>
+        <EditLeadEditor fields={fields} onConfirm={confirm} />
       </Modal>
     </>
   );
