@@ -43,6 +43,10 @@ export const createColumns = <T extends AnyObject>({
         }
 
         if (column.type === "DATE") {
+          if (!value || value.trim() === "" || typeof value !== "string") {
+            return null;
+          }
+
           return dayjs(value).format("DD.MM.YYYY");
         }
 

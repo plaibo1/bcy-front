@@ -7,8 +7,12 @@ import { LeadTable } from "./LeadTable";
 import { LeadAddFieldButton } from "./LeadAddField";
 import { Space } from "antd";
 import { EditLeadEntity } from "./EditLeadEntity";
+import { LeadFilters } from "./LeadFilters";
+import { useState } from "react";
 
 export const LeadContainer = () => {
+  const [filters, setFilters] = useState<IFilter[]>([]);
+
   const [getEntityFields, { data: entityFields, isError }] =
     useLazyGetEntityFieldsQuery();
 
@@ -18,6 +22,13 @@ export const LeadContainer = () => {
   const handleSelect = async (entityId: string) => {
     await getEntityFields(entityId);
     await getBusinessObjects({ entityId });
+  };
+
+  const handleFilterChange = (filters: IFilter[]) => {
+    if (entityFields && entityFields[0]?.entityId) {
+      setFilters(filters);
+      getBusinessObjects({ entityId: entityFields[0]?.entityId, filters });
+    }
   };
 
   return (
@@ -40,6 +51,15 @@ export const LeadContainer = () => {
         )}
       </Space>
 
+      <>
+        {entityFields && !isError && entityFields && (
+          <LeadFilters
+            entityFields={entityFields}
+            onFilters={handleFilterChange}
+          />
+        )}
+      </>
+
       {entityFields && businessObjects && (
         <LeadProvider value={businessObjects?.data}>
           <LeadTable
@@ -50,6 +70,7 @@ export const LeadContainer = () => {
                 getBusinessObjects({
                   entityId: entityFields[0]?.entityId,
                   paging: { currentPage: page - 1 },
+                  filters,
                 });
               },
               pageSize: 10,

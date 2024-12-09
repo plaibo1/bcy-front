@@ -1,4 +1,4 @@
-import { Button, Modal } from "antd";
+import { Button, Modal, Typography } from "antd";
 
 import { PlusCircleFilled } from "@ant-design/icons";
 import { LeadAddFieldForm } from "./LeadAddFieldForm";
@@ -32,12 +32,11 @@ export const LeadAddFieldButton = ({
         Добавить поле
       </Button>
 
-      <Modal
-        title="Добавить поле"
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={null}
-      >
+      <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
+        <Typography.Title style={{ marginBottom: 32 }} level={3}>
+          Добавить поле
+        </Typography.Title>
+
         <LeadAddFieldForm
           cancel={handleCancel}
           entityId={entityId}
