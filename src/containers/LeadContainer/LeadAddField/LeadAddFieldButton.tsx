@@ -33,9 +33,7 @@ export const LeadAddFieldButton = ({
       </Button>
 
       <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
-        <Typography.Title style={{ marginBottom: 32 }} level={3}>
-          Добавить поле
-        </Typography.Title>
+        <Typography.Title level={3}>Добавить поле</Typography.Title>
 
         <LeadAddFieldForm
           cancel={handleCancel}

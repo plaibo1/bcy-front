@@ -6,12 +6,15 @@ export const createFilters = (
   fields: IEntityField[]
 ): IFilter[] => {
   return Object.entries(filters).map(([field, value]) => {
-    const isFieldStringType = fields.find((f) => f.type === "STRING");
+    const foundField = fields.find((f) => f.name === field);
+
+    const isFieldStringType = foundField!.type === "STRING";
+    const iFieldNumberType = foundField!.type === "NUMBER";
 
     return {
       field,
       operation: isFieldStringType ? "starts with" : "equal",
-      values: [value],
+      values: [iFieldNumberType ? Number(value) : value],
     };
   });
 };

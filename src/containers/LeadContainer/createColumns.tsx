@@ -55,6 +55,10 @@ export const createColumns = <T extends AnyObject>({
         }
 
         if (column.type === "BOOLEAN") {
+          if (typeof value === "undefined") {
+            return null;
+          }
+
           return value ? "Да" : "Нет";
         }
 

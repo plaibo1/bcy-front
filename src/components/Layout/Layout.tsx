@@ -1,20 +1,19 @@
 import { type ReactNode } from "react";
 import { Layout as AntdLayout, Menu, theme } from "antd";
+import { useNavigate } from "react-router";
 
 const { Header, Content, Footer } = AntdLayout;
 
-const items = [
+const menuItems = [
   {
-    label: "nav 1",
+    label: "Лиды",
+    path: "/",
     key: "1",
   },
   {
-    label: "nav 2",
+    label: "Клиенты",
+    path: "/clients",
     key: "2",
-  },
-  {
-    label: "nav 3",
-    key: "3",
   },
 ];
 
@@ -22,6 +21,16 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const navigate = useNavigate();
+
+  const handleMenuClick = ({ key }: { key: string }) => {
+    const { path } = menuItems.find((item) => item.key === key) || {};
+
+    if (path) {
+      navigate(path);
+    }
+  };
 
   return (
     <AntdLayout>
@@ -41,7 +50,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           mode="horizontal"
           defaultSelectedKeys={["1"]}
           style={{ flex: 1, minWidth: 0 }}
-          items={items}
+          items={menuItems}
+          onClick={handleMenuClick}
         />
       </Header>
       <Content style={{ padding: "0 48px", marginTop: 32 }}>

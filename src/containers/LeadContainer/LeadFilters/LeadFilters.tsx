@@ -1,4 +1,14 @@
-import { Button, Col, Divider, Form, Input, Row, Space, theme } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  theme,
+} from "antd";
 import { IEntityField } from "../../../types/api/entityFieldsTypes";
 import { useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
@@ -60,15 +70,19 @@ export const LeadFilters = ({
               </Col>
 
               {entityFields.map((field) => {
-                // if (field.type === "BOOLEAN") {
-                //   return (
-                //     <Col key={field.id} span={4}>
-                //       <Form.Item label={field.label} name={field.name}>
-                //         <Checkbox  />
-                //       </Form.Item>
-                //     </Col>
-                //   );
-                // }
+                if (field.type === "BOOLEAN") {
+                  return (
+                    <Col key={field.id} span={4}>
+                      <Form.Item label={field.label} name={field.name}>
+                        <Select size="large">
+                          <Select.Option value={null}>Не заданно</Select.Option>
+                          <Select.Option value={true}>Да</Select.Option>
+                          <Select.Option value={false}>Нет</Select.Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  );
+                }
 
                 return (
                   <Col key={field.id} span={4}>

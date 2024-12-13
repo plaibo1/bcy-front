@@ -5,7 +5,7 @@ import { createColumns } from "./createColumns";
 import { LeadProvider } from "./LeadContext";
 import { LeadTable } from "./LeadTable";
 import { LeadAddFieldButton } from "./LeadAddField";
-import { Space } from "antd";
+import { Flex } from "antd";
 import { EditLeadEntity } from "./EditLeadEntity";
 import { LeadFilters } from "./LeadFilters";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export const LeadContainer = () => {
 
   return (
     <div>
-      <Space>
+      <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
         <LeadSelect onChange={handleSelect} />
 
         {entityFields && !isError && entityFields[0]?.entityId && (
@@ -49,7 +49,7 @@ export const LeadContainer = () => {
             entityId={entityFields[0]?.entityId}
           />
         )}
-      </Space>
+      </Flex>
 
       <>
         {entityFields && !isError && entityFields && (

@@ -25,7 +25,7 @@ export const LeadSelect = ({ onChange }: IProps) => {
       <Select
         size="large"
         showSearch
-        style={{ width: 300, marginBottom: 32 }}
+        style={{ width: 300 }}
         placeholder="Search to Select"
         optionFilterProp="label"
         filterSort={(optionA, optionB) =>

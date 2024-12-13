@@ -3,6 +3,10 @@ export const removeEmptyValues = (
 ) => {
   return Object.keys(obj).reduce((acc, key) => {
     if (obj[key] !== null && typeof obj[key] !== "undefined") {
+      if (typeof obj[key] === "string" && obj[key].trim() === "") {
+        return acc;
+      }
+
       acc[key] = obj[key];
     }
 
