@@ -12,15 +12,15 @@ const formItems: Record<
     filedName: "firstName",
     rules: [{ required: true, message: "Пожалуйста, введите имя" }],
   },
-  middleName: {
-    label: "Отчество",
-    filedName: "middleName",
-    rules: [{ required: true, message: "Пожалуйста, введите отчество" }],
-  },
   lastName: {
     label: "Фамилия",
     filedName: "lastName",
     rules: [{ required: true, message: "Пожалуйста, введите фамилию" }],
+  },
+  middleName: {
+    label: "Отчество",
+    filedName: "middleName",
+    rules: [{ required: true, message: "Пожалуйста, введите отчество" }],
   },
   email: {
     label: "Email",

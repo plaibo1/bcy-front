@@ -1,7 +1,10 @@
-import { Table } from "antd";
+import { Button, Modal, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { IClient } from "../../../types/api/clientsType";
 import { TableProps } from "antd/lib";
+import { EditOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { ClientsEditForm } from "../ClientsEditForm";
 
 const columns: ColumnsType<IClient> = [
   {
@@ -31,6 +34,31 @@ const columns: ColumnsType<IClient> = [
   },
 ];
 
+const EditClientButton = ({ client }: { client: IClient }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => setIsModalOpen(true)}
+      />
+
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+      >
+        <ClientsEditForm
+          client={client}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </Modal>
+    </>
+  );
+};
+
 export const ClientsTable = ({
   data,
   tableProps,
@@ -41,7 +69,16 @@ export const ClientsTable = ({
   return (
     <Table
       rowKey="id"
-      columns={columns}
+      columns={[
+        ...columns,
+        {
+          title: "Действие",
+          align: "center",
+          render: (_, record) => {
+            return <EditClientButton client={record} />;
+          },
+        },
+      ]}
       dataSource={data}
       expandable={{
         expandedRowRender: (record) => (

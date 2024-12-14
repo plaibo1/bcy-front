@@ -8,6 +8,7 @@ export const clientsApi = createApi({
     baseUrl: BASE_URL,
   }),
   tagTypes: ["Client"],
+
   endpoints: (builder) => ({
     getClients: builder.query<PageResponse<IClient>, PageRequest>({
       query: (pageRequest) => ({
@@ -34,7 +35,33 @@ export const clientsApi = createApi({
       },
       invalidatesTags: ["Client"],
     }),
+
+    deleteClient: builder.mutation<IClient, string>({
+      query: (id) => {
+        return {
+          method: "DELETE",
+          url: `/v1/client/${id}`,
+        };
+      },
+      invalidatesTags: ["Client"],
+    }),
+
+    updateClient: builder.mutation<IClient, Partial<IClient>>({
+      query: ({ id, ...body }) => {
+        return {
+          method: "PUT",
+          url: `/v1/client/${id}`,
+          body,
+        };
+      },
+      invalidatesTags: ["Client"],
+    }),
   }),
 });
 
-export const { useLazyGetClientsQuery, useCreateClientMutation } = clientsApi;
+export const {
+  useLazyGetClientsQuery,
+  useCreateClientMutation,
+  useDeleteClientMutation,
+  useUpdateClientMutation,
+} = clientsApi;
