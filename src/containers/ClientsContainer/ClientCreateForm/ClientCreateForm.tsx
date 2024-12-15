@@ -25,9 +25,16 @@ const formItems: Record<
   email: {
     label: "Email",
     filedName: "email",
-    rules: [{ required: true, message: "Пожалуйста, введите email" }],
+    rules: [
+      { required: true, message: "Пожалуйста, введите email" },
+      { type: "email", message: "Некорректный email" },
+    ],
   },
-  comment: { label: "Комментарий", filedName: "comment", rules: [] },
+  comment: {
+    label: "Комментарий",
+    filedName: "comment",
+    rules: [{ max: 200, message: "Максимальная длина 200 символов" }],
+  },
 };
 
 export const ClientCreateForm = ({ onClose }: { onClose: () => void }) => {

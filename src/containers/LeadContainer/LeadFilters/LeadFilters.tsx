@@ -1,19 +1,8 @@
-import {
-  Button,
-  Col,
-  Divider,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-  theme,
-} from "antd";
+import { Button, Col, Divider, Form, Input, Row, Select, Space } from "antd";
 import { IEntityField } from "../../../types/api/entityFieldsTypes";
-import { useState } from "react";
-import { FilterOutlined } from "@ant-design/icons";
 import { removeEmptyValues } from "../../../utils/removeEmptyValues";
-import { createFilters } from "../../../utils/createFilters";
+import { createEntityFilters } from "../../../utils/createEntityFilters";
+import { FiltersButton } from "../../../components/FiltersButton";
 
 export const LeadFilters = ({
   entityFields,
@@ -22,17 +11,15 @@ export const LeadFilters = ({
   entityFields: IEntityField[];
   onFilters: (filters: IFilter[]) => void;
 }) => {
-  const {
-    token: { borderRadiusLG, colorBorder },
-  } = theme.useToken();
   const [form] = Form.useForm();
-
-  const [showFilters, setShowFilters] = useState(false);
 
   const onFinish = (
     values: Record<keyof IEntityField, string | number | boolean>
   ) => {
-    const filters = createFilters(removeEmptyValues(values), entityFields);
+    const filters = createEntityFilters(
+      removeEmptyValues(values),
+      entityFields
+    );
     onFilters(filters);
   };
 
@@ -42,72 +29,52 @@ export const LeadFilters = ({
   };
 
   return (
-    <div>
-      <Button
-        style={{ marginBottom: 24 }}
-        onClick={() => setShowFilters(!showFilters)}
-        icon={<FilterOutlined />}
-        type={showFilters ? "primary" : "default"}
-      >
-        {showFilters ? "Скрыть" : "Показать"} фильтры
-      </Button>
+    <FiltersButton>
+      <Form layout="vertical" form={form} onFinish={onFinish}>
+        <Row gutter={[16, 0]}>
+          <Col span={4}>
+            <Form.Item label="Имя" name="name">
+              <Input size="large" type="text" />
+            </Form.Item>
+          </Col>
 
-      {showFilters && (
-        <div
-          style={{
-            border: `1px solid ${colorBorder}`,
-            padding: 16,
-            borderRadius: borderRadiusLG,
-            marginBottom: 32,
-          }}
-        >
-          <Form layout="vertical" form={form} onFinish={onFinish}>
-            <Row gutter={[16, 0]}>
-              <Col span={4}>
-                <Form.Item label="Имя" name="name">
+          {entityFields.map((field) => {
+            if (field.type === "BOOLEAN") {
+              return (
+                <Col key={field.id} span={4}>
+                  <Form.Item label={field.label} name={field.name}>
+                    <Select size="large">
+                      <Select.Option value={null}>Не заданно</Select.Option>
+                      <Select.Option value={true}>Да</Select.Option>
+                      <Select.Option value={false}>Нет</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              );
+            }
+
+            return (
+              <Col key={field.id} span={4}>
+                <Form.Item label={field.label} name={field.name}>
                   <Input size="large" type="text" />
                 </Form.Item>
               </Col>
+            );
+          })}
+        </Row>
 
-              {entityFields.map((field) => {
-                if (field.type === "BOOLEAN") {
-                  return (
-                    <Col key={field.id} span={4}>
-                      <Form.Item label={field.label} name={field.name}>
-                        <Select size="large">
-                          <Select.Option value={null}>Не заданно</Select.Option>
-                          <Select.Option value={true}>Да</Select.Option>
-                          <Select.Option value={false}>Нет</Select.Option>
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                  );
-                }
+        <Divider />
 
-                return (
-                  <Col key={field.id} span={4}>
-                    <Form.Item label={field.label} name={field.name}>
-                      <Input size="large" type="text" />
-                    </Form.Item>
-                  </Col>
-                );
-              })}
-            </Row>
+        <Space size="middle">
+          <Button htmlType="submit" type="primary" size="large">
+            Применить
+          </Button>
 
-            <Divider />
-
-            <Space size="middle">
-              <Button htmlType="submit" type="primary" size="large">
-                Применить
-              </Button>
-
-              <Button onClick={handleReset} htmlType="button" size="large">
-                Очистить
-              </Button>
-            </Space>
-          </Form>
-        </div>
-      )}
-    </div>
+          <Button onClick={handleReset} htmlType="button" size="large">
+            Очистить
+          </Button>
+        </Space>
+      </Form>
+    </FiltersButton>
   );
 };
