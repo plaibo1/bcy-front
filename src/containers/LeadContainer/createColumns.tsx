@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 
 import { EditButton } from "./EditLead";
 import { type IBusinessObject } from "../../types/api/businessObjectTypes";
+import { Table } from "antd";
 
 interface ICreateColumns {
   columnsFields: IEntityField[];
@@ -18,6 +19,7 @@ export const createColumns = <T extends AnyObject>({
   columnsFields,
 }: ICreateColumns): ColumnType<T>[] => {
   const baseColumns: ColumnType<T>[] = [
+    Table.SELECTION_COLUMN,
     {
       title: "Сводка",
       dataIndex: "audit",

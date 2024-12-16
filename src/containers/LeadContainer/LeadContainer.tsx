@@ -9,9 +9,11 @@ import { Flex } from "antd";
 import { EditLeadEntity } from "./EditLeadEntity";
 import { LeadFilters } from "./LeadFilters";
 import { useState } from "react";
+import { type TableRowSelection } from "antd/es/table/interface";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const [getEntityFields, { data: entityFields, isError }] =
     useLazyGetEntityFieldsQuery();
@@ -29,6 +31,17 @@ export const LeadContainer = () => {
       setFilters(filters);
       getBusinessObjects({ entityId: entityFields[0]?.entityId, filters });
     }
+  };
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection: TableRowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    type: "checkbox",
   };
 
   return (
@@ -65,6 +78,7 @@ export const LeadContainer = () => {
           <LeadTable
             isLoading={isLoading || isFetching}
             columns={createColumns({ columnsFields: entityFields })}
+            rowSelection={rowSelection}
             pagination={{
               onChange: (page) => {
                 getBusinessObjects({

@@ -20,13 +20,14 @@ const formItems: Record<
   middleName: {
     label: "Отчество",
     filedName: "middleName",
-    rules: [{ required: true, message: "Пожалуйста, введите отчество" }],
+    rules: [],
+    // { required: true, message: "Пожалуйста, введите отчество" }
   },
   email: {
     label: "Email",
     filedName: "email",
     rules: [
-      { required: true, message: "Пожалуйста, введите email" },
+      // { required: true, message: "Пожалуйста, введите email" },
       { type: "email", message: "Некорректный email" },
     ],
   },
@@ -81,7 +82,7 @@ export const ClientCreateForm = ({ onClose }: { onClose: () => void }) => {
         Создание клиента
       </Typography.Title>
 
-      <Form form={form} onFinish={onFinish}>
+      <Form layout="vertical" form={form} onFinish={onFinish}>
         {Object.entries(formItems).map(([key, { label, filedName, rules }]) => (
           <Form.Item key={key} label={label} name={filedName} rules={rules}>
             <Input />

@@ -15,6 +15,11 @@ const menuItems = [
     path: "/clients",
     key: "2",
   },
+  {
+    label: "Активные бекдоры",
+    path: "/active-backdoors",
+    key: "3",
+  },
 ];
 
 export const Layout = ({ children }: { children: ReactNode }) => {
