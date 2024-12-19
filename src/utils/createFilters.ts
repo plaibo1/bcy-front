@@ -1,10 +1,12 @@
 export const createFilters = (
-  filters: Record<string, string | number | boolean>
+  filters: Record<string, string | number | boolean>,
+  options?: { operation?: FiltersOperations }
 ): IFilter[] => {
   return Object.entries(filters).map(([field, value]) => {
     return {
       field,
-      operation: "equal", // TODO: add other operations
+      // переписать, это исключителньо для теста
+      operation: options?.operation || "equal",
       values: [value],
     };
   });

@@ -3,6 +3,7 @@ import App from "../App";
 import { LeadPage } from "../pages/LeadPage";
 import { ClientsPage } from "../pages/ClientsPage";
 import { ActiveBackdoorPage } from "../pages/ActiveBackdoorPage";
+import { BackdoorLeadPage } from "../pages/BackdoorLeadPage";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "/active-backdoors",
         Component: ActiveBackdoorPage,
+      },
+      {
+        path: "/backdoor-leads",
+        Component: BackdoorLeadPage,
       },
     ],
   },

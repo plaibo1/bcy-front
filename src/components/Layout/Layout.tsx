@@ -20,6 +20,11 @@ const menuItems = [
     path: "/active-backdoors",
     key: "3",
   },
+  {
+    label: "Бекдоры лидов",
+    path: "/backdoor-leads",
+    key: "4",
+  },
 ];
 
 export const Layout = ({ children }: { children: ReactNode }) => {
