@@ -3,7 +3,11 @@ import { SearchActiveBackdoor } from "./SearchActiveBackdoor";
 import { IActiveBackdoorCreate } from "../../../types/api/activeBackdoorsTypes";
 import { useCreateActiveBackdoorMutation } from "../../../store/api/activeBackdoorsApi";
 
-export const ActiveBackdoorCreateForm = () => {
+export const ActiveBackdoorCreateForm = ({
+  onCancel,
+}: {
+  onCancel: () => void;
+}) => {
   const { notification } = App.useApp();
   const [createActiveBackdoor] = useCreateActiveBackdoorMutation();
 
@@ -27,6 +31,7 @@ export const ActiveBackdoorCreateForm = () => {
           message: "Успешно",
           description: "Бэкдор успешно создан",
         });
+        onCancel();
       })
       .catch(() => {
         notification.error({

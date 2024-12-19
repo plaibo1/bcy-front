@@ -2,6 +2,7 @@ import { App, Button, Flex, Form, Input, Typography } from "antd";
 import { IClient } from "../../../types/api/clientsType";
 import { Rule } from "antd/es/form";
 import { useCreateClientMutation } from "../../../store/api/clientsApi";
+import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 
 const formItems: Record<
   keyof Omit<IClient, "id" | "orders">,
@@ -45,6 +46,15 @@ export const ClientCreateForm = ({ onClose }: { onClose: () => void }) => {
   const [createClient] = useCreateClientMutation();
 
   const onFinish = (values: Omit<IClient, "id" | "orders">) => {
+    const { firstName, lastName, middleName } = values;
+
+    values.firstName = capitalizeFirstLetter(firstName);
+    values.lastName = capitalizeFirstLetter(lastName);
+
+    if (middleName) {
+      values.middleName = capitalizeFirstLetter(middleName);
+    }
+
     createClient(values)
       .then(() => {
         form.resetFields();

@@ -33,15 +33,15 @@ export const ClientsContainer = () => {
         tableProps={{
           loading: isLoading || isFetching,
           pagination: {
-            onChange: (page) => {
+            onChange: (page, pageSize) => {
               getClients({
-                paging: { currentPage: page - 1 },
+                paging: { currentPage: page - 1, recordsOnPage: pageSize },
                 filters,
               });
             },
             current: (data?.paging.currentPage ?? 0) + 1,
             total: data?.paging.totalRecordsAmount || 1,
-            pageSize: 10,
+            pageSize: data?.paging.recordsOnPage || 10,
           },
         }}
       />

@@ -1,13 +1,19 @@
 import { Button, Modal } from "antd";
 import { ActiveBackdoorCreateForm } from "../ActiveBackdoorCreateForm";
 import { useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
 
 export const CreateActiveBackdoor = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <Button type="primary" size="large" onClick={() => setIsModalOpen(true)}>
+      <Button
+        icon={<PlusOutlined />}
+        type="primary"
+        size="large"
+        onClick={() => setIsModalOpen(true)}
+      >
         Создать бэкдор
       </Button>
 
@@ -16,7 +22,7 @@ export const CreateActiveBackdoor = () => {
         onCancel={() => setIsModalOpen(false)}
         footer={null}
       >
-        <ActiveBackdoorCreateForm />
+        <ActiveBackdoorCreateForm onCancel={() => setIsModalOpen(false)} />
       </Modal>
     </>
   );

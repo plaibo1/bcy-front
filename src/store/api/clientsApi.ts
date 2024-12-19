@@ -56,6 +56,32 @@ export const clientsApi = createApi({
       },
       invalidatesTags: ["Client"],
     }),
+
+    // ==== only for testing ==== //
+    // createFakeClient: builder.mutation<IClient, void>({
+    //   query: () => {
+    //     const generateFakeClient = () => {
+    //       const firstName = faker.person.firstName();
+    //       const middleName = faker.person.middleName();
+    //       const lastName = faker.person.lastName();
+    //       const email = faker.internet.email();
+    //       const comment = faker.lorem.sentence();
+
+    //       return {
+    //         firstName,
+    //         middleName,
+    //         lastName,
+    //         email,
+    //         comment,
+    //       };
+    //     };
+    //     return {
+    //       method: "POST",
+    //       url: `/v1/client`,
+    //       body: generateFakeClient(),
+    //     };
+    //   },
+    // }),
   }),
 });
 

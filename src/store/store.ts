@@ -5,6 +5,7 @@ import { entityApi } from "./api/entityApi";
 import { entityFieldsApi } from "./api/entityFieldsApi";
 import { businessObjectApi } from "./api/businessObjectApi";
 import { clientsApi } from "./api/clientsApi";
+import { activeBackdoorsApi } from "./api/activeBackdoorsApi";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [entityFieldsApi.reducerPath]: entityFieldsApi.reducer,
     [businessObjectApi.reducerPath]: businessObjectApi.reducer,
     [clientsApi.reducerPath]: clientsApi.reducer,
+    [activeBackdoorsApi.reducerPath]: activeBackdoorsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -24,6 +26,7 @@ export const store = configureStore({
       entityFieldsApi.middleware,
       businessObjectApi.middleware,
       clientsApi.middleware,
+      activeBackdoorsApi.middleware,
     ]),
 });
 

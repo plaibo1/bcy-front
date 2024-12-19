@@ -14,6 +14,7 @@ export const activeBackdoorsApi = createApi({
   endpoints: (builder) => ({
     getActiveBackdoors: builder.query<IActiveBackdoor[], void>({
       query: () => `/v1/backdoor`,
+      providesTags: ["ActiveBackdoor"],
     }),
 
     createActiveBackdoor: builder.mutation<
