@@ -71,7 +71,6 @@ export const createColumns = <T extends AnyObject>({
 
   const systemColumns: ColumnType<T>[] = [
     {
-      title: "Действие",
       align: "center",
       render: (_, record, index) => {
         return (

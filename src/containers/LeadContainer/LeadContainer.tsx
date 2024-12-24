@@ -8,12 +8,13 @@ import { LeadAddFieldButton } from "./LeadAddField";
 import { Flex } from "antd";
 import { EditLeadEntity } from "./EditLeadEntity";
 import { LeadFilters } from "./LeadFilters";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { type TableRowSelection } from "antd/es/table/interface";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const pageSizeRef = useRef(10);
 
   const [getEntityFields, { data: entityFields, isError }] =
     useLazyGetEntityFieldsQuery();
@@ -74,22 +75,30 @@ export const LeadContainer = () => {
       </>
 
       {entityFields && businessObjects && (
-        <LeadProvider value={businessObjects?.data}>
+        <LeadProvider
+          value={{
+            leadsData: businessObjects?.data,
+            entityFields,
+          }}
+        >
           <LeadTable
             isLoading={isLoading || isFetching}
             columns={createColumns({ columnsFields: entityFields })}
             rowSelection={rowSelection}
             pagination={{
-              onChange: (page) => {
+              onChange: (page, pageSize) => {
+                pageSizeRef.current = pageSize;
+
                 getBusinessObjects({
                   entityId: entityFields[0]?.entityId,
-                  paging: { currentPage: page - 1 },
+                  paging: { currentPage: page - 1, recordsOnPage: pageSize },
                   filters,
                 });
               },
-              pageSize: 10,
+              pageSize: pageSizeRef.current,
               total: businessObjects?.paging.totalRecordsAmount || 1,
               current: businessObjects?.paging.currentPage + 1,
+              showSizeChanger: true,
             }}
           />
         </LeadProvider>

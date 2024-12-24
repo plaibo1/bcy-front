@@ -1,6 +1,7 @@
 import {
   App,
   Button,
+  Divider,
   Flex,
   Form,
   Input,
@@ -52,7 +53,7 @@ const DeleteClientButton = ({ id }: { id: string }) => {
       okText="Да"
       cancelText="Нет"
     >
-      <Button size="large" danger type="default" icon={<DeleteOutlined />}>
+      <Button danger type="default" icon={<DeleteOutlined />}>
         Удалить клиента
       </Button>
     </Popconfirm>
@@ -107,15 +108,15 @@ export const ClientsEditForm = ({
           </Form.Item>
         ))}
 
+        <Divider />
+
         <Flex justify="space-between">
           <DeleteClientButton id={client.id} />
 
           <Space>
-            <Button size="large" onClick={onClose}>
-              Отмена
-            </Button>
+            <Button onClick={onClose}>Отмена</Button>
 
-            <Button size="large" type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit">
               Обновить
             </Button>
           </Space>

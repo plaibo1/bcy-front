@@ -11,7 +11,6 @@ import {
 import { IEditProps } from "./EditButton";
 import dayjs from "dayjs";
 import { useUpdateBusinessObjectMutation } from "../../../store/api/businessObjectApi";
-import { IBusinessObjectCreate } from "../../../types/api/businessObjectTypes";
 import { useContext } from "react";
 import { LeadContext } from "../LeadContext";
 
@@ -23,11 +22,11 @@ interface IProps extends IEditProps {
 }
 
 export const EditForm = ({
-  entityFields,
   boItem,
   cancel,
   entityId,
   index,
+  entityFields,
 }: IProps) => {
   const { notification } = App.useApp();
   const { setLeads } = useContext(LeadContext); // TODO: useContext
@@ -38,12 +37,33 @@ export const EditForm = ({
 
   const { data } = boItem;
 
-  const onFinish = (values: IBusinessObjectCreate) => {
-    console.log(values);
+  const onFinish = (values: Record<string, unknown>) => {
+    const res = Object.keys(values).reduce<Record<string, unknown>>(
+      (acc, key) => {
+        const foundField = entityFields.find((f) => f.name === key);
+
+        if (foundField!.type === "DATE") {
+          acc[key] = dayjs(values[key] as string).format("YYYY-MM-DD");
+          return acc;
+        }
+
+        if (foundField!.type === "DATETIME") {
+          acc[key] = dayjs(values[key] as string).format(
+            "YYYY-MM-DDTHH:mm:ssZ"
+          );
+          return acc;
+        }
+
+        acc[key] = values[key];
+        return acc;
+      },
+      {}
+    );
+
     updateBusinessObject({
       entityId,
       id: boItem.id,
-      ...values,
+      data: res,
     })
       .unwrap()
       .then((res) => {

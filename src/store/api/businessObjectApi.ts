@@ -40,9 +40,7 @@ export const businessObjectApi = createApi({
         return {
           method: "PATCH",
           url: `/v1/entity/${entityId}/bo/${id}`,
-          body: {
-            data: body,
-          },
+          body,
         };
       },
     }),

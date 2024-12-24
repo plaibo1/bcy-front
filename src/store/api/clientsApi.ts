@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../consts";
 import { type IClient } from "../../types/api/clientsType";
+// import { faker } from "@faker-js/faker";
 
 export const clientsApi = createApi({
   reducerPath: "clientsApi",
@@ -11,17 +12,21 @@ export const clientsApi = createApi({
 
   endpoints: (builder) => ({
     getClients: builder.query<PageResponse<IClient>, PageRequest>({
-      query: (pageRequest) => ({
-        method: "POST",
-        url: `/v1/client/order/page`,
-        body: {
-          ...pageRequest,
-          paging: {
-            currentPage: pageRequest.paging?.currentPage || 0,
-            recordsOnPage: pageRequest.paging?.recordsOnPage || 10,
+      query: (body) => {
+        console.log("🚀 ~ body:", body);
+
+        return {
+          method: "POST",
+          url: `/v1/client/order/page`,
+          body: {
+            ...body,
+            paging: {
+              currentPage: body.paging?.currentPage || 0,
+              recordsOnPage: body.paging?.recordsOnPage || 10,
+            },
           },
-        },
-      }),
+        };
+      },
       providesTags: ["Client"],
     }),
 
@@ -90,4 +95,6 @@ export const {
   useCreateClientMutation,
   useDeleteClientMutation,
   useUpdateClientMutation,
+
+  // useCreateFakeClientMutation,
 } = clientsApi;

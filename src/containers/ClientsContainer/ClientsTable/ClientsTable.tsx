@@ -72,7 +72,6 @@ export const ClientsTable = ({
       columns={[
         ...columns,
         {
-          title: "Действие",
           align: "center",
           render: (_, record) => {
             return <EditClientButton client={record} />;
@@ -82,7 +81,10 @@ export const ClientsTable = ({
       dataSource={data}
       expandable={{
         expandedRowRender: (record) => (
-          <p style={{ margin: 0 }}>{record.comment}</p>
+          // TODO: Доабвить карточку заказа
+          <code>
+            <pre>{JSON.stringify(record.orders, null, 2)}</pre>
+          </code>
         ),
         rowExpandable: (record) => record.orders.length > 0,
       }}

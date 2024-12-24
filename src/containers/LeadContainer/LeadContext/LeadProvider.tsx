@@ -7,12 +7,12 @@ export const LeadProvider = ({
   value,
 }: {
   children: ReactNode;
-  value: IBusinessObject[];
+  value: { leadsData: IBusinessObject[] };
 }) => {
-  const [leads, setLeads] = useState<IBusinessObject[]>(value);
+  const [leads, setLeads] = useState<IBusinessObject[]>(value.leadsData);
 
   useEffect(() => {
-    setLeads(value);
+    setLeads(value.leadsData);
   }, [value]);
 
   return (

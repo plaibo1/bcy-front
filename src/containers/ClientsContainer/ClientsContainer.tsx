@@ -1,6 +1,6 @@
 import { ClientsTable } from "./ClientsTable/ClientsTable";
 import { useLazyGetClientsQuery } from "../../store/api/clientsApi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ClientCreateButton } from "./ClientCreateButton";
 import { Flex } from "antd";
 import { ClientsFilters } from "./ClientsFilters";
@@ -10,6 +10,8 @@ export const ClientsContainer = () => {
     useLazyGetClientsQuery();
 
   const [filters, setFilters] = useState<IFilter[]>([]);
+
+  const pageSizeRef = useRef(10);
 
   useEffect(() => {
     getClients({});
@@ -34,6 +36,8 @@ export const ClientsContainer = () => {
           loading: isLoading || isFetching,
           pagination: {
             onChange: (page, pageSize) => {
+              pageSizeRef.current = pageSize;
+
               getClients({
                 paging: { currentPage: page - 1, recordsOnPage: pageSize },
                 filters,
@@ -41,7 +45,8 @@ export const ClientsContainer = () => {
             },
             current: (data?.paging.currentPage ?? 0) + 1,
             total: data?.paging.totalRecordsAmount || 1,
-            pageSize: data?.paging.recordsOnPage || 10,
+            pageSize: pageSizeRef.current,
+            showSizeChanger: true,
           },
         }}
       />
