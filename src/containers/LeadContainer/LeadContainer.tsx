@@ -78,7 +78,6 @@ export const LeadContainer = () => {
         <LeadProvider
           value={{
             leadsData: businessObjects?.data,
-            entityFields,
           }}
         >
           <LeadTable

@@ -1,38 +1,46 @@
-import {
-  Button,
-  Col,
-  DatePicker,
-  Divider,
-  Form,
-  Input,
-  Row,
-  Space,
-} from "antd";
 import { FiltersButton } from "../../../components/FiltersButton";
+
+import { CreateFilters } from "../../../components/CreateFilters";
+import { FilterFormCreateMap } from "../../../types/filterTypes";
 import { IBackdoorLead } from "../../../types/api/backdoorLeadTypes";
-import { type Rule } from "antd/es/form";
-import { removeEmptyValues } from "../../../utils/removeEmptyValues";
-import { createFilters } from "../../../utils/createFilters";
+import dayjs from "dayjs";
 
-const { RangePicker } = DatePicker;
-
-const fields: Record<
-  keyof IBackdoorLead,
-  { label: string; rules?: Rule[]; operations?: FiltersOperations }
-> = {
-  source: {
-    label: "Источник",
-    rules: [{ type: "url", message: "Некорректная ссылка" }],
-  },
-  fullName: { label: "ФИО" },
-  phone: { label: "Телефон" },
-  region: { label: "Регион" },
+const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
+  fullName: { label: "Имя", field: "fullName" },
   email: {
     label: "Email",
     rules: [{ type: "email", message: "Некорректный email" }],
+    field: "email",
   },
-  comment: { label: "Комментарий" },
-  log: { label: "Лог" },
+  comment: { label: "Комментарий", field: "comment" },
+  source: {
+    field: "source",
+    label: "Источник",
+  },
+  phone: {
+    field: "phone",
+    label: "Телефон",
+  },
+  region: {
+    field: "region",
+    label: "Регион",
+  },
+
+  // TODO: operation resolver
+  date: {
+    field: "date",
+    label: "Дата",
+    operation: "between",
+    type: "dateRange",
+    colSpan: 7,
+    valueResolver: (value) => {
+      if (!value || !Array.isArray(value) || value.length === 0) {
+        return "";
+      }
+
+      return value.filter(Boolean).map((v) => dayjs(v).format("YYYY-MM-DD"));
+    },
+  },
 };
 
 export const BackdoorLeadFilters = ({
@@ -40,54 +48,13 @@ export const BackdoorLeadFilters = ({
 }: {
   onFilters: (filters: IFilter[]) => void;
 }) => {
-  const [form] = Form.useForm();
-
-  const onFinish = (res: Record<keyof IBackdoorLead, string>) => {
-    const values = removeEmptyValues(res);
-
-    if (Object.keys(values).length === 0) {
-      return;
-    }
-
-    onFilters(createFilters(values, { operation: "starts with" }));
-  };
-
-  const handleReset = () => {
-    form.resetFields();
-    onFilters([]);
-  };
-
   return (
     <FiltersButton>
-      <Form form={form} layout="vertical" size="large" onFinish={onFinish}>
-        <Row gutter={[16, 0]}>
-          <Col span={5}>
-            <Form.Item label="Дата" name="date">
-              <RangePicker allowEmpty format="DD.MM.YYYY" />
-            </Form.Item>
-          </Col>
-
-          {Object.entries(fields).map(([key, { label, rules }]) => (
-            <Col key={key} span={4}>
-              <Form.Item label={label} name={key} rules={rules}>
-                <Input />
-              </Form.Item>
-            </Col>
-          ))}
-        </Row>
-
-        <Divider />
-
-        <Space size="middle">
-          <Button type="primary" htmlType="submit">
-            Применить
-          </Button>
-
-          <Button type="default" htmlType="reset" onClick={handleReset}>
-            Сбросить
-          </Button>
-        </Space>
-      </Form>
+      <CreateFilters
+        formProps={{ layout: "vertical", size: "large" }}
+        fields={fields}
+        onFilterChange={onFilters}
+      />
     </FiltersButton>
   );
 };

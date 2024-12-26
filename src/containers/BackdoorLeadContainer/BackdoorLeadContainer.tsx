@@ -1,12 +1,14 @@
 import { Space } from "antd";
 import { useLazyGetBackdoorLeadsQuery } from "../../store/api/backdoorLeadApi";
 import { BackdoorLeadTable } from "./BackdoorLeadTable";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BackdoorLeadFilters } from "./BackdoorLeadFilters";
 
 export const BackdoorLeadContainer = () => {
   const [getBackdoorLeads, { data, isLoading, isFetching }] =
     useLazyGetBackdoorLeadsQuery();
+
+  const pageSizeRef = useRef(10);
 
   const [filters, setFilters] = useState<IFilter[]>([]);
 
@@ -31,6 +33,7 @@ export const BackdoorLeadContainer = () => {
           loading: isLoading || isFetching,
           pagination: {
             onChange: (page, pageSize) => {
+              pageSizeRef.current = pageSize;
               getBackdoorLeads({
                 paging: { currentPage: page - 1, recordsOnPage: pageSize },
                 filters,
@@ -38,7 +41,8 @@ export const BackdoorLeadContainer = () => {
             },
             current: (data?.paging.currentPage ?? 0) + 1,
             total: data?.paging.totalRecordsAmount || 1,
-            pageSize: data?.paging.recordsOnPage || 10,
+            pageSize: pageSizeRef.current,
+            showSizeChanger: true,
           },
         }}
       />
