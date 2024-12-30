@@ -13,8 +13,6 @@ export const clientsApi = createApi({
   endpoints: (builder) => ({
     getClients: builder.query<PageResponse<IClient>, PageRequest>({
       query: (body) => {
-        console.log("🚀 ~ body:", body);
-
         return {
           method: "POST",
           url: `/v1/client/order/page`,

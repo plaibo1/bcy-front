@@ -2,6 +2,7 @@ import { App, Button, Flex, Modal, Typography } from "antd";
 import { useState, type Key } from "react";
 import { LeadSelect } from "../../LeadContainer/LeadSelect";
 import { useMoveBackdoorLeadMutation } from "../../../store/api/backdoorLeadApi";
+import { isBackendError } from "../../../types/errorTypeGuards";
 
 export const BackdoorLeadOperations = ({
   selectedRowKeys,
@@ -37,6 +38,20 @@ export const BackdoorLeadOperations = ({
         });
 
         setIsModalOpen(false);
+      })
+      .catch((err) => {
+        if (isBackendError(err)) {
+          notification.error({
+            message: "Ошибка",
+            description: err.data.message,
+          });
+          return;
+        }
+
+        notification.error({
+          message: "Ошибка",
+          description: "Произошла ошибка при перемещении бэкдоров",
+        });
       });
   };
 

@@ -49,6 +49,7 @@ export const entityApi = createApi({
           },
         };
       },
+      invalidatesTags: ["Entity"],
     }),
 
     updateEntity: builder.mutation<string, IEntity>({

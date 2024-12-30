@@ -92,7 +92,7 @@ export const ClientCreateForm = ({ onClose }: { onClose: () => void }) => {
         Создание клиента
       </Typography.Title>
 
-      <Form layout="vertical" form={form} onFinish={onFinish}>
+      <Form size="large" layout="vertical" form={form} onFinish={onFinish}>
         {Object.entries(formItems).map(([key, { label, filedName, rules }]) => (
           <Form.Item key={key} label={label} name={filedName} rules={rules}>
             <Input />

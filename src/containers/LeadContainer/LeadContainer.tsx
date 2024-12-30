@@ -10,10 +10,12 @@ import { EditLeadEntity } from "./EditLeadEntity";
 import { LeadFilters } from "./LeadFilters";
 import { useState, useRef } from "react";
 import { type TableRowSelection } from "antd/es/table/interface";
+import { AddLeadButton } from "./AddLeadButton";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const currentEntityId = useRef<string>();
   const pageSizeRef = useRef(10);
 
   const [getEntityFields, { data: entityFields, isError }] =
@@ -25,12 +27,14 @@ export const LeadContainer = () => {
   const handleSelect = async (entityId: string) => {
     await getEntityFields(entityId);
     await getBusinessObjects({ entityId });
+
+    currentEntityId.current = entityId;
   };
 
   const handleFilterChange = (filters: IFilter[]) => {
-    if (entityFields && entityFields[0]?.entityId) {
+    if (currentEntityId.current) {
       setFilters(filters);
-      getBusinessObjects({ entityId: entityFields[0]?.entityId, filters });
+      getBusinessObjects({ entityId: currentEntityId.current, filters });
     }
   };
 
@@ -48,19 +52,20 @@ export const LeadContainer = () => {
   return (
     <div>
       <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
+        <AddLeadButton />
         <LeadSelect onChange={handleSelect} />
 
-        {entityFields && !isError && entityFields[0]?.entityId && (
+        {entityFields && !isError && currentEntityId.current && (
           <LeadAddFieldButton
-            entityId={entityFields[0]?.entityId}
-            onSubmit={() => getEntityFields(entityFields[0]?.entityId)}
+            entityId={currentEntityId.current}
+            onSubmit={() => getEntityFields(currentEntityId.current || "")}
           />
         )}
 
-        {entityFields && !isError && entityFields[0]?.entityId && (
+        {entityFields && !isError && currentEntityId.current && (
           <EditLeadEntity
             fields={entityFields}
-            entityId={entityFields[0]?.entityId}
+            entityId={currentEntityId.current}
           />
         )}
       </Flex>
