@@ -1,7 +1,9 @@
+import { type IClient } from "./clientsType";
+
 export interface IActiveBackdoor {
   id: string;
   url: string;
-  clientId: string;
+  client: IClient;
   status: string;
   createdDate: string;
 }

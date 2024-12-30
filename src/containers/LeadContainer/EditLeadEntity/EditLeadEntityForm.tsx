@@ -1,4 +1,4 @@
-import { IEntityUpdate } from "../../../types/api/entityFieldsTypes";
+import { IEntityFieldUpdate } from "../../../types/api/entityFieldsTypes";
 import { App, Button, Form, Input, Switch, theme } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import { useUpdateEntityFieldMutation } from "../../../store/api/entityFieldsApi";
@@ -6,7 +6,7 @@ import { useUpdateEntityFieldMutation } from "../../../store/api/entityFieldsApi
 const { TextArea } = Input;
 
 const formFields: Record<
-  keyof IEntityUpdate,
+  keyof IEntityFieldUpdate,
   { label: string; type: "string" | "boolean" | "text"; required?: boolean }
 > = {
   label: { label: "Имя в таблице", type: "string", required: true },
@@ -24,7 +24,7 @@ export const EditLeadEntityForm = ({
   entityId,
   filedId,
 }: {
-  initialValues: IEntityUpdate;
+  initialValues: IEntityFieldUpdate;
   entityId: string;
   filedId: string;
 }) => {
@@ -35,7 +35,7 @@ export const EditLeadEntityForm = ({
 
   const [updateEntityField] = useUpdateEntityFieldMutation();
 
-  const onFinish = (values: IEntityUpdate) => {
+  const onFinish = (values: IEntityFieldUpdate) => {
     updateEntityField({ entityId, filedId, ...values })
       .unwrap()
       .then(() => {
@@ -50,11 +50,12 @@ export const EditLeadEntityForm = ({
     <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
       {Object.keys(formFields)
         .filter(
-          (key) => formFields[key as keyof IEntityUpdate].type !== "boolean"
+          (key) =>
+            formFields[key as keyof IEntityFieldUpdate].type !== "boolean"
         )
         .map((key) => {
           const { label, type, required } =
-            formFields[key as keyof IEntityUpdate];
+            formFields[key as keyof IEntityFieldUpdate];
 
           return (
             <Form.Item
@@ -75,10 +76,11 @@ export const EditLeadEntityForm = ({
       >
         {Object.keys(formFields)
           .filter(
-            (key) => formFields[key as keyof IEntityUpdate].type === "boolean"
+            (key) =>
+              formFields[key as keyof IEntityFieldUpdate].type === "boolean"
           )
           .map((key) => {
-            const { label } = formFields[key as keyof IEntityUpdate];
+            const { label } = formFields[key as keyof IEntityFieldUpdate];
             return (
               <div
                 key={key}

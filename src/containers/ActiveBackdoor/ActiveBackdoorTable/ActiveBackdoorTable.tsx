@@ -7,7 +7,7 @@ const columns: ColumnsType<IActiveBackdoor> = [
   {
     title: "URL",
     dataIndex: "url",
-    key: "url",
+
     render: (url) => {
       return (
         <a target="_blank" href={url}>
@@ -19,20 +19,30 @@ const columns: ColumnsType<IActiveBackdoor> = [
   {
     title: "Статус",
     dataIndex: "status",
-    key: "status",
+
     render: (status) => {
       return <Tag color="geekblue">{status}</Tag>;
     },
   },
   {
     title: "Клиент",
-    dataIndex: "clientId",
-    key: "clientId",
+    dataIndex: "client",
+    render: (client) => {
+      return (
+        <div>
+          <b>
+            {client.firstName} {client.lastName} {client.middleName}
+          </b>
+          <br />
+          <code>{client.email}</code>
+        </div>
+      );
+    },
   },
   {
     title: "Дата создания",
     dataIndex: "createdDate",
-    key: "createdDate",
+
     render: (createdDate) => {
       return <DateTimeCeil value={createdDate} />;
     },
@@ -48,6 +58,7 @@ export const ActiveBackdoorTable = ({
 }) => {
   return (
     <Table
+      rowKey="id"
       columns={columns}
       dataSource={data}
       loading={isLoading}

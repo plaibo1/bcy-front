@@ -1,12 +1,12 @@
 import { App, Button, Flex, Form, Input, Select, Switch } from "antd";
 import {
-  IEntityCreate,
+  IEntityFieldCreate,
   type EntityType,
 } from "../../../types/api/entityFieldsTypes";
 import { ENTITY_FIELD_TYPES_MAP } from "../../../consts";
 
 import { PlusCircleFilled } from "@ant-design/icons";
-import { useCreateEntityMutation } from "../../../store/api/entityApi";
+import { useCreateEntityFieldMutation } from "../../../store/api/entityFieldsApi";
 
 const { TextArea } = Input;
 
@@ -29,10 +29,10 @@ export const LeadAddFieldForm = ({
   cancel: () => void;
   entityId: string | undefined;
 }) => {
-  const [createEntity] = useCreateEntityMutation();
+  const [createEntityField] = useCreateEntityFieldMutation();
   const { message, notification } = App.useApp();
 
-  const onFinish = (values: IEntityCreate) => {
+  const onFinish = (values: IEntityFieldCreate) => {
     console.log("Success:", values);
 
     if (!entityId) {
@@ -40,7 +40,7 @@ export const LeadAddFieldForm = ({
       return;
     }
 
-    createEntity({ ...values, entityId })
+    createEntityField({ ...values, entityId })
       .unwrap()
       .then((res) => {
         notification.success({

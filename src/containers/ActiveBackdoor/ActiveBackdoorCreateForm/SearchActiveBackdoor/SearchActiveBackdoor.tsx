@@ -20,7 +20,7 @@ const transformResponseToOptions = (data: IClient[]) => {
 
           <div>
             <span style={{ textTransform: "capitalize" }}>
-              {`${firstName} ${lastName} ${middleName}`}
+              {`${firstName} ${lastName} ${middleName || ""}`}
             </span>
 
             <br />

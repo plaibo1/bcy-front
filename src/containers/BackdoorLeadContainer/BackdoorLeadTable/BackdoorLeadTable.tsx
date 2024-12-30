@@ -1,7 +1,6 @@
 import { Table } from "antd";
 import { type IBackdoorLead } from "../../../types/api/backdoorLeadTypes";
 import { type ColumnsType } from "antd/es/table";
-import { useState } from "react";
 import { type TableRowSelection } from "antd/es/table/interface";
 import { TableProps } from "antd/lib";
 
@@ -42,20 +41,17 @@ const columns: ColumnsType<IBackdoorLead> = [
 export const BackdoorLeadTable = ({
   data,
   tableProps,
+  selectedRowKeys,
+  setSelectedRowKeys,
 }: {
   data?: IBackdoorLead[];
   tableProps?: TableProps<IBackdoorLead>;
+  selectedRowKeys?: React.Key[];
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
 }) => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
   const rowSelection: TableRowSelection<IBackdoorLead> = {
     selectedRowKeys,
-    onChange: onSelectChange,
+    onChange: setSelectedRowKeys,
     type: "checkbox",
   };
 

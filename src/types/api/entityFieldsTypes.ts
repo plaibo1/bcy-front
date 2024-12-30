@@ -32,7 +32,7 @@ export interface IEntityField {
   };
 }
 
-export interface IEntityCreate {
+export interface IEntityFieldCreate {
   name: string;
   label: string;
   description: string;
@@ -45,7 +45,7 @@ export interface IEntityCreate {
   required: boolean;
 }
 
-export interface IEntityUpdate {
+export interface IEntityFieldUpdate {
   label: string;
   description: string;
   system: boolean;

@@ -25,7 +25,24 @@ export const backdoorLeadApi = createApi({
       },
       providesTags: ["BackdoorLead"],
     }),
+
+    moveBackdoorLead: builder.mutation<
+      IBackdoorLead,
+      { entityId: string; backdoorLeadIds: string[] }
+    >({
+      query: ({ entityId, backdoorLeadIds }) => {
+        return {
+          method: "POST",
+          url: `/v1/entity/${entityId}/backdoor-leads/move`,
+          body: {
+            backdoorLeadIds,
+          },
+        };
+      },
+      invalidatesTags: ["BackdoorLead"],
+    }),
   }),
 });
 
-export const { useLazyGetBackdoorLeadsQuery } = backdoorLeadApi;
+export const { useLazyGetBackdoorLeadsQuery, useMoveBackdoorLeadMutation } =
+  backdoorLeadApi;

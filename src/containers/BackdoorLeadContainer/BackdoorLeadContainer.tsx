@@ -1,8 +1,9 @@
-import { Space } from "antd";
+import { Flex, Space } from "antd";
 import { useLazyGetBackdoorLeadsQuery } from "../../store/api/backdoorLeadApi";
 import { BackdoorLeadTable } from "./BackdoorLeadTable";
 import { useEffect, useRef, useState } from "react";
 import { BackdoorLeadFilters } from "./BackdoorLeadFilters";
+import { BackdoorLeadOperations } from "./BackdoorLeadOperations";
 
 export const BackdoorLeadContainer = () => {
   const [getBackdoorLeads, { data, isLoading, isFetching }] =
@@ -11,6 +12,7 @@ export const BackdoorLeadContainer = () => {
   const pageSizeRef = useRef(10);
 
   const [filters, setFilters] = useState<IFilter[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
     getBackdoorLeads({});
@@ -23,11 +25,20 @@ export const BackdoorLeadContainer = () => {
 
   return (
     <>
+      <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
+        <BackdoorLeadOperations
+          disabled={!selectedRowKeys.length}
+          selectedRowKeys={selectedRowKeys}
+        />
+      </Flex>
+
       <Space style={{ marginBottom: 32 }}>
         <BackdoorLeadFilters onFilters={onFilters} />
       </Space>
 
       <BackdoorLeadTable
+        selectedRowKeys={selectedRowKeys}
+        setSelectedRowKeys={setSelectedRowKeys}
         data={data?.data}
         tableProps={{
           loading: isLoading || isFetching,

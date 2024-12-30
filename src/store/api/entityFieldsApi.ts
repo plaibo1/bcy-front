@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../consts";
 
 import {
-  IEntityUpdate,
-  type IEntityCreate,
+  IEntityFieldUpdate,
+  type IEntityFieldCreate,
   type IEntityField,
 } from "../../types/api/entityFieldsTypes";
 
@@ -41,7 +41,7 @@ export const entityFieldsApi = createApi({
 
     createEntityField: builder.mutation<
       IEntityField,
-      { entityId: string } & IEntityCreate
+      IEntityFieldCreate & { entityId: string }
     >({
       query: ({ entityId, ...body }) => {
         return {
@@ -54,7 +54,7 @@ export const entityFieldsApi = createApi({
 
     updateEntityField: builder.mutation<
       IEntityField,
-      { entityId: string; filedId: string } & IEntityUpdate
+      { entityId: string; filedId: string } & IEntityFieldUpdate
     >({
       query: ({ entityId, filedId, ...body }) => {
         return {
@@ -85,4 +85,5 @@ export const {
   useLazyGetEntityFieldsQuery,
   useDeleteEntityFieldMutation,
   useUpdateEntityFieldMutation,
+  useCreateEntityFieldMutation,
 } = entityFieldsApi;

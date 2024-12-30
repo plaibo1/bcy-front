@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../consts";
-import { IEntity } from "../../types/api/entityTypes";
-import { IEntityCreate } from "../../types/api/entityFieldsTypes";
+import { IEntity, IEntityCreate } from "../../types/api/entityTypes";
 
 /**
  * @implements EntityController
@@ -38,15 +37,16 @@ export const entityApi = createApi({
       query: (id) => `/v1/entity/${id}`,
     }),
 
-    createEntity: builder.mutation<
-      IEntity,
-      IEntityCreate & { entityId: string }
-    >({
-      query: ({ entityId, ...body }) => {
+    createEntity: builder.mutation<IEntity, IEntityCreate>({
+      query: (body) => {
         return {
           method: "POST",
-          url: `/v1/entity/${entityId}/field`,
-          body,
+          url: `/v1/entity`,
+          body: {
+            ...body,
+            color: body.color || "#acd123",
+            icon: body.icon || "smile",
+          },
         };
       },
     }),
