@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { useUpdateBusinessObjectMutation } from "../../../store/api/businessObjectApi";
 import { useContext } from "react";
 import { LeadContext } from "../LeadContext";
+import { SelectField } from "../LeadFilters/SelectField";
 
 const { TextArea } = Input;
 
@@ -108,6 +109,10 @@ export const EditForm = ({
               <Input disabled size="large" defaultValue={value as string} />
             </Form.Item>
           );
+        }
+
+        if (field.settings?.labelValues) {
+          return <SelectField field={field} initialValue={value as string} />;
         }
 
         if (field.type === "DATE") {

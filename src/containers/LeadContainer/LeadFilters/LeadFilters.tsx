@@ -13,6 +13,7 @@ import { IEntityField } from "../../../types/api/entityFieldsTypes";
 import { removeEmptyValues } from "../../../utils/removeEmptyValues";
 import { createEntityFilters } from "../../../utils/createEntityFilters";
 import { FiltersButton } from "../../../components/FiltersButton";
+import { SelectField } from "./SelectField";
 
 export const LeadFilters = ({
   entityFields,
@@ -49,6 +50,14 @@ export const LeadFilters = ({
           </Col>
 
           {entityFields.map((field) => {
+            if (field.settings?.labelValues) {
+              return (
+                <Col key={field.id} span={4}>
+                  <SelectField field={field} />
+                </Col>
+              );
+            }
+
             if (field.type === "DATE") {
               return (
                 <Col key={field.id} span={4}>

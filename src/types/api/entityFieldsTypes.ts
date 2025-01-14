@@ -30,6 +30,10 @@ export interface IEntityField {
     updatedDate: string;
     updatedBy: string;
   };
+  settings: {
+    entityId: string;
+    labelValues?: Record<string, string | null>;
+  };
 }
 
 export interface IEntityFieldCreate {

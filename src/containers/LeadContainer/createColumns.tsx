@@ -40,6 +40,10 @@ export const createColumns = <T extends AnyObject>({
       render: (_, record) => {
         const value = record?.data[column.name];
 
+        if (column.settings?.labelValues) {
+          return column.settings.labelValues[value] ?? value;
+        }
+
         if (column.type === "STRING") {
           return value;
         }
