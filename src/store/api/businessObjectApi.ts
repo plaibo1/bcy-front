@@ -30,11 +30,26 @@ export const businessObjectApi = createApi({
           },
         };
       },
+      providesTags: ["BusinessObject"],
+    }),
+
+    createBusinessObject: builder.mutation<
+      IBusinessObject,
+      IBusinessObjectCreate & { entityId: string }
+    >({
+      query: ({ entityId, ...body }) => {
+        return {
+          method: "POST",
+          url: `/v1/entity/${entityId}/bo`,
+          body,
+        };
+      },
+      invalidatesTags: ["BusinessObject"],
     }),
 
     updateBusinessObject: builder.mutation<
       IBusinessObject,
-      IBusinessObjectCreate & { id: string; entityId: string }
+      Partial<IBusinessObjectCreate> & { id: string; entityId: string }
     >({
       query: ({ entityId, id, ...body }) => {
         return {
@@ -44,10 +59,24 @@ export const businessObjectApi = createApi({
         };
       },
     }),
+
+    deleteBusinessObject: builder.mutation<
+      void,
+      { entityId: string; id: string }
+    >({
+      query: ({ entityId, id }) => {
+        return {
+          method: "DELETE",
+          url: `/v1/entity/${entityId}/bo/${id}`,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useLazyGetBusinessObjectsQuery,
+  useCreateBusinessObjectMutation,
   useUpdateBusinessObjectMutation,
+  useDeleteBusinessObjectMutation,
 } = businessObjectApi;

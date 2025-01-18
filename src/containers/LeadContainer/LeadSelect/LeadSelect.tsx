@@ -1,4 +1,4 @@
-import { Flex, Select, Typography } from "antd";
+import { Flex, Select } from "antd";
 import { useGetEntitiesQuery } from "../../../store/api/entityApi";
 import { IEntity } from "../../../types/api/entityTypes";
 
@@ -20,13 +20,11 @@ export const LeadSelect = ({ onChange }: IProps) => {
 
   return (
     <Flex vertical gap={8}>
-      <Typography.Text>Выбор категории</Typography.Text>
-
       <Select
         size="large"
         showSearch
         style={{ width: 300 }}
-        placeholder="Search to Select"
+        placeholder="Выбор категории"
         optionFilterProp="label"
         filterSort={(optionA, optionB) =>
           (optionA?.label ?? "")

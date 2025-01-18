@@ -5,12 +5,13 @@ import { createColumns } from "./createColumns";
 import { LeadProvider } from "./LeadContext";
 import { LeadTable } from "./LeadTable";
 import { LeadAddFieldButton } from "./LeadAddField";
-import { Flex } from "antd";
+import { Divider, Flex } from "antd";
 import { EditLeadEntity } from "./EditLeadEntity";
 import { LeadFilters } from "./LeadFilters";
 import { useState, useRef } from "react";
 import { type TableRowSelection } from "antd/es/table/interface";
 import { AddLeadButton } from "./AddLeadButton";
+import { AddBusinessObject } from "./AddBusinessObject";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
@@ -51,7 +52,7 @@ export const LeadContainer = () => {
 
   return (
     <div>
-      <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
+      <Flex style={{ marginBottom: 32 }} gap={8} align="center">
         <AddLeadButton />
         <LeadSelect onChange={handleSelect} />
 
@@ -66,6 +67,19 @@ export const LeadContainer = () => {
           <EditLeadEntity
             fields={entityFields}
             entityId={currentEntityId.current}
+          />
+        )}
+
+        <Divider type="vertical" />
+
+        {entityFields && !isError && currentEntityId.current && (
+          <AddBusinessObject
+            entityId={currentEntityId.current}
+            onSubmit={() => {
+              console.log("onSubmit dasdas");
+              getEntityFields(currentEntityId.current || "");
+            }}
+            entityFields={entityFields}
           />
         )}
       </Flex>

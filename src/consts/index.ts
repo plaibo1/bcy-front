@@ -51,3 +51,9 @@ export const ENTITY_FIELD_TYPES_MAP: Record<
     value: "PHONE",
   },
 };
+
+export const sourceTypeMap: Record<string, string> = {
+  FRONT: "Админ панель",
+  BACKDOOR: "Бэкдор",
+  IVR: "Контакт-центр",
+};

@@ -6,11 +6,16 @@ import {
   Form,
   Input,
   InputNumber,
+  Popconfirm,
+  Space,
   Switch,
 } from "antd";
 import { IEditProps } from "./EditButton";
 import dayjs from "dayjs";
-import { useUpdateBusinessObjectMutation } from "../../../store/api/businessObjectApi";
+import {
+  useDeleteBusinessObjectMutation,
+  useUpdateBusinessObjectMutation,
+} from "../../../store/api/businessObjectApi";
 import { useContext } from "react";
 import { LeadContext } from "../LeadContext";
 import { SelectField } from "../LeadFilters/SelectField";
@@ -22,6 +27,9 @@ interface IProps extends IEditProps {
   index: number;
 }
 
+/**
+ * @deprecated переписать на BusinessObjectForm
+ */
 export const EditForm = ({
   boItem,
   cancel,
@@ -32,7 +40,10 @@ export const EditForm = ({
   const { notification } = App.useApp();
   const { setLeads } = useContext(LeadContext); // TODO: useContext
 
-  const [updateBusinessObject] = useUpdateBusinessObjectMutation();
+  const [updateBusinessObject, { isLoading: isUpdating }] =
+    useUpdateBusinessObjectMutation();
+  const [deleteBusinessObject, { isLoading: isDeleting }] =
+    useDeleteBusinessObjectMutation();
 
   const [form] = Form.useForm();
 
@@ -94,6 +105,27 @@ export const EditForm = ({
         notification.error({
           message: "Ошибка",
           description: "Произошла ошибка при обновлении лид",
+        });
+      });
+  };
+
+  const handleDeleteLead = () => {
+    deleteBusinessObject({ entityId, id: boItem.id })
+      .unwrap()
+      .then(() => {
+        setLeads((prev) => prev.filter((lead) => lead.id !== boItem.id));
+
+        notification.success({
+          message: "Успешно",
+          description: `Лид ${boItem.name} успешно удален`,
+        });
+
+        cancel();
+      })
+      .catch(() => {
+        notification.error({
+          message: "Ошибка",
+          description: "Произошла ошибка при удалении лид",
         });
       });
   };
@@ -184,14 +216,39 @@ export const EditForm = ({
         );
       })}
 
-      <Flex justify="end" gap={16}>
-        <Button size="large" type="default" onClick={cancel}>
-          Отмена
-        </Button>
+      <Flex justify="space-between" gap={16}>
+        <Popconfirm
+          onConfirm={handleDeleteLead}
+          title="Удалить лид"
+          description="Вы уверены, что хотите удалить этот лид?"
+          okText="Да"
+          cancelText="Нет"
+        >
+          <Button
+            loading={isDeleting}
+            disabled={isUpdating}
+            size="large"
+            danger
+          >
+            Удалить лид
+          </Button>
+        </Popconfirm>
 
-        <Button size="large" type="primary" htmlType="submit">
-          Сохранить
-        </Button>
+        <Space>
+          <Button size="large" type="default" onClick={cancel}>
+            Отмена
+          </Button>
+
+          <Button
+            loading={isUpdating}
+            disabled={isDeleting}
+            size="large"
+            type="primary"
+            htmlType="submit"
+          >
+            Сохранить
+          </Button>
+        </Space>
       </Flex>
     </Form>
   );

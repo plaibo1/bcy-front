@@ -13,5 +13,6 @@ export interface IBusinessObject {
 }
 
 export interface IBusinessObjectCreate {
+  name: string;
   data: Record<string, unknown>;
 }

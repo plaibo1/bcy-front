@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import { EditButton } from "./EditLead";
 import { type IBusinessObject } from "../../types/api/businessObjectTypes";
 import { Table } from "antd";
+import { sourceTypeMap } from "../../consts";
 
 interface ICreateColumns {
   columnsFields: IEntityField[];
@@ -20,6 +21,13 @@ export const createColumns = <T extends AnyObject>({
 }: ICreateColumns): ColumnType<T>[] => {
   const baseColumns: ColumnType<T>[] = [
     Table.SELECTION_COLUMN,
+    {
+      title: "Источник",
+      dataIndex: "sourceType",
+      key: "sourceType",
+      width: 160,
+      render: (sourceType) => sourceTypeMap[sourceType] || sourceType,
+    },
     {
       title: "Сводка",
       dataIndex: "audit",
