@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         // target: 'http://localhost:8000', // mock_server node js
-        target: "http://localhost:8080", // docker compose up backend
+        target: "http://localhost:80", // docker compose up backend
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),
