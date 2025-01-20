@@ -4,6 +4,7 @@ import { LeadPage } from "../pages/LeadPage";
 import { ClientsPage } from "../pages/ClientsPage";
 import { ActiveBackdoorPage } from "../pages/ActiveBackdoorPage";
 import { BackdoorLeadPage } from "../pages/BackdoorLeadPage";
+import { OrdersPage } from "../pages/OrdersPage";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: "/clients",
         Component: ClientsPage,
+      },
+      {
+        path: "/orders",
+        Component: OrdersPage,
       },
       {
         path: "/active-backdoors",

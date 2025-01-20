@@ -33,6 +33,9 @@ const transformResponseToOptions = (data: IClient[]) => {
   });
 };
 
+/**
+ * @todo rename to SearchClient
+ */
 export const SearchActiveBackdoor = ({
   value,
   onChange,

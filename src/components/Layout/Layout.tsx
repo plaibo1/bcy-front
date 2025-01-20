@@ -16,6 +16,11 @@ const menuItems = [
     key: "2",
   },
   {
+    label: "Заказы",
+    path: "/orders",
+    key: "5",
+  },
+  {
     label: "Активные бекдоры",
     path: "/active-backdoors",
     key: "3",

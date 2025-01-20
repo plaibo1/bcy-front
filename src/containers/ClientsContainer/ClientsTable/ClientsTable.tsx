@@ -32,6 +32,11 @@ const columns: ColumnsType<IClient> = [
     dataIndex: "comment",
     key: "comment",
   },
+  {
+    title: "ID Клиента",
+    dataIndex: "id",
+    key: "id",
+  },
 ];
 
 const EditClientButton = ({ client }: { client: IClient }) => {

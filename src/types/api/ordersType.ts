@@ -10,3 +10,14 @@ export interface IOrder {
   mailsForSend: string[];
   maxDefect: number;
 }
+
+export interface IOrderCreate {
+  name: string;
+  clientId: string;
+  categoryId: string;
+  status: string;
+  costPerLead: number;
+  leadCount: number;
+  mailsForSend: string[];
+  maxDefect: number;
+}

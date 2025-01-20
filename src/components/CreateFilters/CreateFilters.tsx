@@ -19,6 +19,7 @@ interface Props<T extends Record<string, unknown>> {
   onFilterChange: (filters: IFilter[]) => void;
   onCancel?: () => void;
   formProps?: FormProps;
+  children?: React.ReactNode;
 }
 
 export const CreateFilters = <T extends Record<string, unknown>>({
