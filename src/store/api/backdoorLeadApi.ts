@@ -1,12 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../../consts";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { type IBackdoorLead } from "../../types/api/backdoorLeadTypes";
+import { getBaseQuery } from "./getBaseQuery";
 
 export const backdoorLeadApi = createApi({
   reducerPath: "backdoorLeadApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-  }),
+  baseQuery: getBaseQuery(),
   tagTypes: ["BackdoorLead"],
   endpoints: (builder) => ({
     getBackdoorLeads: builder.query<PageResponse<IBackdoorLead>, PageRequest>({

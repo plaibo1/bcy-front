@@ -1,15 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../../consts";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   IActiveBackdoor,
   IActiveBackdoorCreate,
 } from "../../types/api/activeBackdoorsTypes";
+import { getBaseQuery } from "./getBaseQuery";
 
 export const activeBackdoorsApi = createApi({
   reducerPath: "activeBackdoorsApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-  }),
+  baseQuery: getBaseQuery(),
   tagTypes: ["ActiveBackdoor"],
   endpoints: (builder) => ({
     getActiveBackdoors: builder.query<IActiveBackdoor[], void>({

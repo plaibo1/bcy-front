@@ -1,20 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../../consts";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 import {
   IEntityFieldUpdate,
   type IEntityFieldCreate,
   type IEntityField,
 } from "../../types/api/entityFieldsTypes";
+import { getBaseQuery } from "./getBaseQuery";
 
 /**
  * @implements entity-field-controller
  */
 export const entityFieldsApi = createApi({
   reducerPath: "entityFieldsApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-  }),
+  baseQuery: getBaseQuery(),
   tagTypes: ["EntityFields"],
   endpoints: (builder) => ({
     getEntityFields: builder.query<IEntityField[], string>({

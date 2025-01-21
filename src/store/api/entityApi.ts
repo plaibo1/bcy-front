@@ -1,13 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../../consts";
+import { createApi } from "@reduxjs/toolkit/query/react";
+
 import { IEntity, IEntityCreate } from "../../types/api/entityTypes";
+import { getBaseQuery } from "./getBaseQuery";
 
 /**
  * @implements EntityController
  */
 export const entityApi = createApi({
   reducerPath: "entityApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: getBaseQuery(),
   tagTypes: ["Entity"],
 
   endpoints: (builder) => ({
