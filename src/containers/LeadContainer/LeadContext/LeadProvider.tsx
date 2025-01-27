@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { Key, useEffect, useState, type ReactNode } from "react";
 import { LeadContext } from "./LeadContext";
 import { IBusinessObject } from "../../../types/api/businessObjectTypes";
 
@@ -7,7 +7,12 @@ export const LeadProvider = ({
   value,
 }: {
   children: ReactNode;
-  value: { leadsData: IBusinessObject[] };
+  value: {
+    leadsData: IBusinessObject[];
+    selectedLeads: Key[];
+    filters: IFilter[];
+    entityId?: string;
+  };
 }) => {
   const [leads, setLeads] = useState<IBusinessObject[]>(value.leadsData);
 
@@ -16,7 +21,15 @@ export const LeadProvider = ({
   }, [value]);
 
   return (
-    <LeadContext.Provider value={{ data: leads, setLeads }}>
+    <LeadContext.Provider
+      value={{
+        data: leads,
+        setLeads,
+        selectedLeads: value.selectedLeads,
+        filters: value.filters,
+        entityId: value.entityId,
+      }}
+    >
       {children}
     </LeadContext.Provider>
   );

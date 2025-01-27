@@ -12,6 +12,7 @@ import { useState, useRef } from "react";
 import { type TableRowSelection } from "antd/es/table/interface";
 import { AddLeadButton } from "./AddLeadButton";
 import { AddBusinessObject } from "./AddBusinessObject";
+import { LeadActionsButton } from "./LeadActions";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
@@ -30,6 +31,7 @@ export const LeadContainer = () => {
     await getBusinessObjects({ entityId });
 
     currentEntityId.current = entityId;
+    setSelectedRowKeys([]);
   };
 
   const handleFilterChange = (filters: IFilter[]) => {
@@ -40,7 +42,6 @@ export const LeadContainer = () => {
   };
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -97,8 +98,15 @@ export const LeadContainer = () => {
         <LeadProvider
           value={{
             leadsData: businessObjects?.data,
+            selectedLeads: selectedRowKeys,
+            entityId: currentEntityId.current,
+            filters,
           }}
         >
+          <Flex style={{ marginBottom: 24 }}>
+            <LeadActionsButton />
+          </Flex>
+
           <LeadTable
             isLoading={isLoading || isFetching}
             columns={createColumns({ columnsFields: entityFields })}

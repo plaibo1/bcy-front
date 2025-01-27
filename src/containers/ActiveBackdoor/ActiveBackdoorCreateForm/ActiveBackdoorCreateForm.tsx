@@ -1,7 +1,7 @@
 import { App, Button, Flex, Form, Input, Typography } from "antd";
-import { SearchActiveBackdoor } from "./SearchActiveBackdoor";
 import { IActiveBackdoorCreate } from "../../../types/api/activeBackdoorsTypes";
 import { useCreateActiveBackdoorMutation } from "../../../store/api/activeBackdoorsApi";
+import { SearchClient } from "../../../components/SearchClient";
 
 export const ActiveBackdoorCreateForm = ({
   onCancel,
@@ -66,7 +66,7 @@ export const ActiveBackdoorCreateForm = ({
           label="Клиент"
           rules={[{ required: true }]}
         >
-          <SearchActiveBackdoor />
+          <SearchClient />
         </Form.Item>
 
         <Flex gap={8} justify="flex-end">

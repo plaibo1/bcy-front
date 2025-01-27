@@ -1,17 +1,22 @@
-import { App, Flex, Select } from "antd";
+import { App, Flex, Select, Tag } from "antd";
 import { type AutoCompleteProps } from "antd/lib";
 import { useState } from "react";
-import { useLazyGetClientsQuery } from "../../../../store/api/clientsApi";
-import { IClient } from "../../../../types/api/clientsType";
+
 import { UserOutlined } from "@ant-design/icons";
-import { debounce } from "../../../../utils/debounce";
-import { capitalizeFirstLetter } from "../../../../utils/capitalizeFirstLetter";
 
-import styles from "./SearchActiveBackdoor.module.css";
+import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
+import { debounce } from "../../utils/debounce";
 
-const transformResponseToOptions = (data: IClient[]) => {
-  return data.map((client) => {
-    const { id, email, firstName, lastName, middleName } = client;
+import { useLazyGetOrdersQuery } from "../../store/api/orderApi";
+import { IOrder } from "../../types/api/ordersType";
+import { ordersStatuses } from "../../consts";
+
+import styles from "./SearchOrders.module.css";
+
+const transformResponseToOptions = (data: IOrder[]) => {
+  return data.map((order) => {
+    const { id, name, status } = order;
+
     return {
       value: id,
       label: (
@@ -19,13 +24,18 @@ const transformResponseToOptions = (data: IClient[]) => {
           <UserOutlined />
 
           <div>
-            <span style={{ textTransform: "capitalize" }}>
-              {`${firstName} ${lastName} ${middleName || ""}`}
-            </span>
+            <span style={{ textTransform: "capitalize" }}>{name}</span>
+
+            <Tag
+              style={{ marginLeft: 12 }}
+              color={ordersStatuses[status].color}
+            >
+              {ordersStatuses[status].label}
+            </Tag>
 
             <br />
 
-            <code style={{ fontWeight: "bold" }}>{email}</code>
+            <code style={{ fontWeight: "bold", fontSize: 12 }}>{id}</code>
           </div>
         </Flex>
       ),
@@ -33,10 +43,7 @@ const transformResponseToOptions = (data: IClient[]) => {
   });
 };
 
-/**
- * @todo rename to SearchClient
- */
-export const SearchActiveBackdoor = ({
+export const SearchOrders = ({
   value,
   onChange,
 }: {
@@ -45,7 +52,7 @@ export const SearchActiveBackdoor = ({
 }) => {
   const { message } = App.useApp();
   const [options, setOptions] = useState<AutoCompleteProps["options"]>([]);
-  const [getClients, { isLoading }] = useLazyGetClientsQuery();
+  const [getOrders, { isLoading }] = useLazyGetOrdersQuery();
 
   const handleSearch = async (value: string) => {
     if (!value || value.trim() === "") {
@@ -53,11 +60,11 @@ export const SearchActiveBackdoor = ({
     }
 
     try {
-      const { data } = await getClients({
+      const { data } = await getOrders({
         paging: { currentPage: 0, recordsOnPage: 100 },
         filters: [
           {
-            field: "lastName",
+            field: "name",
             operation: "starts with",
             values: [capitalizeFirstLetter(value)],
           },
@@ -79,7 +86,7 @@ export const SearchActiveBackdoor = ({
       onChange={onChange}
       value={value}
       onSearch={debounce(handleSearch, 350)}
-      placeholder="Начните вводить фамилию"
+      placeholder="Начните вводить имя заказа"
       filterOption={false}
       onClear={() => setOptions([])}
       className={styles.select}

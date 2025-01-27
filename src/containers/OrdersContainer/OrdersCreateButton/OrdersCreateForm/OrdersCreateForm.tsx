@@ -12,9 +12,9 @@ import { ordersStatuses } from "../../../../consts";
 import { LeadSelect } from "../../../LeadContainer/LeadSelect";
 import { useState } from "react";
 import { type IOrderCreate } from "../../../../types/api/ordersType";
-import { SearchActiveBackdoor } from "../../../ActiveBackdoor/ActiveBackdoorCreateForm/SearchActiveBackdoor";
 import { useCreateOrderMutation } from "../../../../store/api/orderApi";
 import { isBackendError } from "../../../../types/errorTypeGuards";
+import { SearchClient } from "../../../../components/SearchClient";
 
 export const OrdersCreateForm = ({ onCancel }: { onCancel: () => void }) => {
   const { message, notification } = App.useApp();
@@ -73,7 +73,7 @@ export const OrdersCreateForm = ({ onCancel }: { onCancel: () => void }) => {
         </Form.Item>
 
         <Form.Item label="Клиент" name="clientId" rules={[{ required: true }]}>
-          <SearchActiveBackdoor />
+          <SearchClient />
         </Form.Item>
 
         <Form.Item name="name" label="Название" rules={[{ required: true }]}>
