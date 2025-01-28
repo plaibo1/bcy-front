@@ -1,7 +1,7 @@
 import { PresetStatusColorType } from "antd/es/_util/colors";
 import { EntityType } from "../types/api/entityFieldsTypes";
 
-export const BASE_URL = "https://api.crm.makeitdeal.ru";
+export const BASE_URL = "/api";
 // "https://api.crm.makeitdeal.ru";
 // || import.meta.env.VITE_BASE_URL || "/api";
 

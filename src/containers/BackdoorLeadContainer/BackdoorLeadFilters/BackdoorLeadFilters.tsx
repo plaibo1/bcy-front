@@ -24,6 +24,7 @@ const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
   region: {
     field: "region",
     label: "Регион",
+    type: "region",
   },
 
   // TODO: operation resolver

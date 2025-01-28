@@ -12,6 +12,7 @@ import { type FilterFormCreateMap } from "../../types/filterTypes";
 import { createDeclarativeFilters } from "../../utils/createDeclarativeFilters";
 import { removeEmptyValues } from "../../utils/removeEmptyValues";
 import { FormProps } from "antd/lib/form";
+import { RegionSelect } from "../RegionSelect";
 
 interface Props<T extends Record<string, unknown>> {
   fields: FilterFormCreateMap<T>;
@@ -67,6 +68,14 @@ export const CreateFilters = <T extends Record<string, unknown>>({
                 </Col>
               );
             };
+
+            if (field.type === "region") {
+              return (
+                <Wrapper key={fieldKey}>
+                  <RegionSelect />
+                </Wrapper>
+              );
+            }
 
             if (typeof field.type === "undefined") {
               return (
