@@ -2,6 +2,7 @@ import { App, Button, Flex, Form, Input, Typography } from "antd";
 import { IActiveBackdoorCreate } from "../../../types/api/activeBackdoorsTypes";
 import { useCreateActiveBackdoorMutation } from "../../../store/api/activeBackdoorsApi";
 import { SearchClient } from "../../../components/SearchClient";
+import { isBackendError } from "../../../types/errorTypeGuards";
 
 export const ActiveBackdoorCreateForm = ({
   onCancel,
@@ -9,7 +10,8 @@ export const ActiveBackdoorCreateForm = ({
   onCancel: () => void;
 }) => {
   const { notification } = App.useApp();
-  const [createActiveBackdoor] = useCreateActiveBackdoorMutation();
+  const [createActiveBackdoor, { isLoading }] =
+    useCreateActiveBackdoorMutation();
 
   const onFinish = (values: IActiveBackdoorCreate) => {
     const res = Object.keys(values).reduce((acc, key) => {
@@ -33,7 +35,14 @@ export const ActiveBackdoorCreateForm = ({
         });
         onCancel();
       })
-      .catch(() => {
+      .catch((err) => {
+        if (isBackendError(err)) {
+          notification.error({
+            message: "Ошибка",
+            description: err.data.message,
+          });
+          return;
+        }
         notification.error({
           message: "Ошибка",
           description: "Не удалось создать бэкдор",
@@ -70,7 +79,7 @@ export const ActiveBackdoorCreateForm = ({
         </Form.Item>
 
         <Flex gap={8} justify="flex-end">
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Создать
           </Button>
         </Flex>

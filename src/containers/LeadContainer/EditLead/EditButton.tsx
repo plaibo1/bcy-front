@@ -44,6 +44,7 @@ export const EditButton = ({
         onCancel={handleCancel}
         width={1000}
         footer={null}
+        destroyOnClose
       >
         <Typography.Title level={3} style={{ marginBottom: 32 }}>
           Редактирование лида

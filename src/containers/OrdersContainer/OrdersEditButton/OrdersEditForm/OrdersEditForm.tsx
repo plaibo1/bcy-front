@@ -1,8 +1,22 @@
-import { App, Button, Flex, Form, Input, InputNumber, Select } from "antd";
+import {
+  App,
+  Button,
+  Flex,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+} from "antd";
 import { IOrder } from "../../../../types/api/ordersType";
 import { ordersStatuses } from "../../../../consts";
 import { isBackendError } from "../../../../types/errorTypeGuards";
-import { useEditOrderMutation } from "../../../../store/api/orderApi";
+import {
+  useDeleteOrderMutation,
+  useEditOrderMutation,
+} from "../../../../store/api/orderApi";
+
+import { DeleteOutlined } from "@ant-design/icons";
 
 export const OrdersEditForm = ({
   order,
@@ -12,7 +26,8 @@ export const OrdersEditForm = ({
   onCancel: () => void;
 }) => {
   const { notification } = App.useApp();
-  const [editOrder] = useEditOrderMutation();
+  const [editOrder, { isLoading: isEditing }] = useEditOrderMutation();
+  const [deleteOrder, { isLoading: isDeleting }] = useDeleteOrderMutation();
 
   const onFinish = (values: IOrder) => {
     editOrder({ ...values, id: order.id })
@@ -36,6 +51,32 @@ export const OrdersEditForm = ({
         notification.error({
           message: "Ошибка",
           description: "Не удалось создать заказ",
+        });
+      });
+  };
+
+  const handleDelete = () => {
+    deleteOrder(order.id)
+      .unwrap()
+      .then(() => {
+        notification.success({
+          message: "Успешно",
+          description: "Заказ успешно удален",
+        });
+        onCancel();
+      })
+      .catch((err) => {
+        if (isBackendError(err)) {
+          notification.error({
+            message: "Ошибка",
+            description: err.data.message,
+          });
+          return;
+        }
+
+        notification.error({
+          message: "Ошибка",
+          description: "Не удалось удалить заказ",
         });
       });
   };
@@ -80,14 +121,32 @@ export const OrdersEditForm = ({
           </Form.Item>
         </Flex>
 
-        <Flex justify="flex-end" gap={8}>
-          <Button size="large" type="default" onClick={onCancel}>
-            Отмена
+        <Flex justify="space-between" gap={8}>
+          <Button
+            danger
+            icon={<DeleteOutlined />}
+            onClick={handleDelete}
+            loading={isDeleting}
+            disabled={isEditing}
+          >
+            Удалить
           </Button>
 
-          <Button size="large" type="primary" htmlType="submit">
-            Сохранить
-          </Button>
+          <Space>
+            <Button size="large" type="default" onClick={onCancel}>
+              Отмена
+            </Button>
+
+            <Button
+              size="large"
+              type="primary"
+              htmlType="submit"
+              loading={isEditing}
+              disabled={isDeleting}
+            >
+              Сохранить
+            </Button>
+          </Space>
         </Flex>
       </Form>
     </>

@@ -29,7 +29,7 @@ export const activeBackdoorsApi = createApi({
       invalidatesTags: ["ActiveBackdoor"],
     }),
 
-    deleteActiveBackdoor: builder.mutation<string, number>({
+    deleteActiveBackdoor: builder.mutation<string, string>({
       query: (id) => {
         return {
           method: "DELETE",
@@ -55,4 +55,5 @@ export const {
   useGetActiveBackdoorsQuery,
   useCreateActiveBackdoorMutation,
   useRefreshActiveBackdoorMutation,
+  useDeleteActiveBackdoorMutation,
 } = activeBackdoorsApi;

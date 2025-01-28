@@ -2,6 +2,7 @@ import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { IActiveBackdoor } from "../../../types/api/activeBackdoorsTypes";
 import { DateTimeCeil } from "../../../components/Ceils/DateTimeCeil";
+import { RemoveActiveBackdoor } from "./ActionButtons";
 
 const columns: ColumnsType<IActiveBackdoor> = [
   {
@@ -45,6 +46,12 @@ const columns: ColumnsType<IActiveBackdoor> = [
 
     render: (createdDate) => {
       return <DateTimeCeil value={createdDate} />;
+    },
+  },
+  {
+    dataIndex: "id",
+    render: (id) => {
+      return <RemoveActiveBackdoor id={id} />;
     },
   },
 ];
