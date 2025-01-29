@@ -1,4 +1,4 @@
-import { App, Flex, Select, Tag } from "antd";
+import { App, Flex, Select, type SelectProps, Tag } from "antd";
 import { type AutoCompleteProps } from "antd/lib";
 import { useState } from "react";
 
@@ -46,9 +46,11 @@ const transformResponseToOptions = (data: IOrder[]) => {
 export const SearchOrders = ({
   value,
   onChange,
+  selectProps,
 }: {
   value?: string;
   onChange?: (v: string) => void;
+  selectProps?: SelectProps;
 }) => {
   const { message } = App.useApp();
   const [options, setOptions] = useState<AutoCompleteProps["options"]>([]);
@@ -91,6 +93,7 @@ export const SearchOrders = ({
       onClear={() => setOptions([])}
       className={styles.select}
       loading={isLoading}
+      {...selectProps}
     />
   );
 };

@@ -5,6 +5,8 @@ import { ClientsPage } from "../pages/ClientsPage";
 import { ActiveBackdoorPage } from "../pages/ActiveBackdoorPage";
 import { BackdoorLeadPage } from "../pages/BackdoorLeadPage";
 import { OrdersPage } from "../pages/OrdersPage";
+import { ActiveBackdoorConfiguratorPage } from "../pages/ActiveBackdoorConfiguratorPage";
+import { ConfiguratorSubPage } from "../containers/ActiveBackdoorConfigurator/Configurator";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,16 @@ export const router = createBrowserRouter([
       {
         path: "/active-backdoors",
         Component: ActiveBackdoorPage,
+      },
+      {
+        path: "/active-backdoors/:id",
+        Component: ActiveBackdoorConfiguratorPage,
+        children: [
+          {
+            path: ":configurationId",
+            Component: ConfiguratorSubPage,
+          },
+        ],
       },
       {
         path: "/backdoor-leads",

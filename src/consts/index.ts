@@ -5,6 +5,8 @@ export const BASE_URL = "/api";
 // "https://api.crm.makeitdeal.ru";
 // || import.meta.env.VITE_BASE_URL || "/api";
 
+export const ACTIVE_BACKDOOR_URL_POSTFIX = "crm.lead.fields";
+
 export const ENTITY_FIELD_TYPES_MAP: Record<
   EntityType,
   { label: string; value: EntityType }

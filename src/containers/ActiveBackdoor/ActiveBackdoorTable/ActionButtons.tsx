@@ -1,7 +1,8 @@
-import { App, Button, Popconfirm } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { App, Button, Popconfirm, Space } from "antd";
+import { DeleteOutlined, SettingOutlined } from "@ant-design/icons";
 import { useDeleteActiveBackdoorMutation } from "../../../store/api/activeBackdoorsApi";
 import { isBackendError } from "../../../types/errorTypeGuards";
+import { Link } from "react-router";
 
 export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
   const { notification } = App.useApp();
@@ -33,8 +34,14 @@ export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
   };
 
   return (
-    <Popconfirm title="Удалить активный бекдор" onConfirm={handleDelete}>
-      <Button danger icon={<DeleteOutlined />} loading={isLoading} />
-    </Popconfirm>
+    <Space>
+      <Link to={`/active-backdoors/${id}`}>
+        <Button icon={<SettingOutlined />} />
+      </Link>
+
+      <Popconfirm title="Удалить активный бекдор" onConfirm={handleDelete}>
+        <Button danger icon={<DeleteOutlined />} loading={isLoading} />
+      </Popconfirm>
+    </Space>
   );
 };

@@ -15,6 +15,10 @@ export const activeBackdoorsApi = createApi({
       providesTags: ["ActiveBackdoor"],
     }),
 
+    getActiveBackdoorById: builder.query<IActiveBackdoor, string>({
+      query: (id) => `/v1/backdoor/${id}`,
+    }),
+
     createActiveBackdoor: builder.mutation<
       IActiveBackdoor,
       IActiveBackdoorCreate
@@ -53,6 +57,7 @@ export const activeBackdoorsApi = createApi({
 
 export const {
   useGetActiveBackdoorsQuery,
+  useGetActiveBackdoorByIdQuery,
   useCreateActiveBackdoorMutation,
   useRefreshActiveBackdoorMutation,
   useDeleteActiveBackdoorMutation,

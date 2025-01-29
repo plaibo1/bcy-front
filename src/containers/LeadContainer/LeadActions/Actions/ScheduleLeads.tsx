@@ -46,12 +46,12 @@ export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
       return;
     }
 
-    if (typeof durationInMinutes === "undefined") {
+    if (typeof durationInMinutes === "undefined" && !startDate) {
       scheduleLeads({
         entityId,
         orderId: orderId[0],
         leadIds: selectedLeads.map((item) => String(item)),
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        startDate: null,
       })
         .unwrap()
         .then(() => {
@@ -79,11 +79,18 @@ export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
       return;
     }
 
+    if (!startDate || !durationInMinutes) {
+      message.error("Выберите дату и длительность");
+      return;
+    }
+
     scheduleLeadsWithDuration({
       entityId,
       orderId: orderId[0],
       leadIds: selectedLeads.map((item) => String(item)),
-      startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+      startDate: startDate
+        ? dayjs(startDate).format("YYYY-MM-DDTHH:mm:ssZ")
+        : null,
       durationInMinutes,
     })
       .unwrap()
@@ -128,7 +135,7 @@ export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
 
         <Space>
           <Form.Item label="Дата" name="startDate">
-            <DatePicker format="DD.MM.YYYY" />
+            <DatePicker showTime format="DD.MM.YYYY HH:mm" />
           </Form.Item>
 
           <Form.Item
