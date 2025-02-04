@@ -5,9 +5,6 @@ export type EntityType =
   | "BOOLEAN"
   | "DATETIME"
   | "DATE"
-  | "DURATION"
-  | "JSONB"
-  | "ARRAY"
   | "EMAIL"
   | "PHONE";
 

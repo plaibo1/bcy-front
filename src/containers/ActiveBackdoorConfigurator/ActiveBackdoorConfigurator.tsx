@@ -46,7 +46,9 @@ export const ActiveBackdoorConfigurator = ({
               size="large"
               icon={<PlusOutlined />}
             >
-              Добавить конфигурацию
+              {configurationId === "new"
+                ? "Добавление конфигурации"
+                : "Добавить конфигурацию"}
             </Button>
           </Link>
 
