@@ -5,7 +5,6 @@ import {
   IConfigurationBackdoor,
   ICreateConfiguration,
 } from "../../types/api/configuratorBackdoor";
-import { ACTIVE_BACKDOOR_URL_POSTFIX } from "../../consts";
 
 export const configuratorBackdoorApi = createApi({
   reducerPath: "configuratorBackdoorApi",
@@ -19,8 +18,11 @@ export const configuratorBackdoorApi = createApi({
     >({
       query: ({ url }) => {
         return {
-          method: "GET",
-          url: `${url}/${ACTIVE_BACKDOOR_URL_POSTFIX}`,
+          method: "POST",
+          url: `/v1/backdoor/configuration/bitrix-fields`,
+          body: {
+            bitrixUrl: url,
+          },
         };
       },
     }),

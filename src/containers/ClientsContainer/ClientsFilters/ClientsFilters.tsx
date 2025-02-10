@@ -8,16 +8,16 @@ import { createFilters } from "../../../utils/createFilters";
 
 const formFields: Record<
   keyof Omit<IClient, "id" | "orders">,
-  { label: string; rules?: Rule[] }
+  { label: string; operation?: FiltersOperations; rules?: Rule[] }
 > = {
-  firstName: { label: "Имя" },
-  lastName: { label: "Фамилия" },
-  middleName: { label: "Отчество" },
+  firstName: { label: "Имя", operation: "starts with" },
+  lastName: { label: "Фамилия", operation: "starts with" },
+  middleName: { label: "Отчество", operation: "starts with" },
   email: {
     label: "Email",
     rules: [{ type: "email", message: "Некорректный email" }],
   },
-  comment: { label: "Комментарий" },
+  comment: { label: "Комментарий", operation: "contains" },
 };
 
 export const ClientsFilters = ({

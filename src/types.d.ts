@@ -31,14 +31,14 @@ interface ISort {
 interface PageResponse<T> {
   paging: IPagination;
   filters: IFilter[];
-  sort: ISort[];
+  sorts: ISort[];
   data: T[];
 }
 
 interface PageRequest {
   paging?: Partial<IPagination>;
   filters?: IFilter[];
-  sort?: ISort[];
+  sorts?: ISort[];
 }
 
 type FiltersOperations =
@@ -81,13 +81,13 @@ type FiltersOperations =
 // {
 //   filters: [
 //     { field: "description", operation: "is not null" },
-//     {
-//       operation: "or",
-//       values: [
-//         { field: "name", operation: "equal", values: ["string"] },
-//         { field: "name", operation: "equal", values: ["email"] },
-//       ],
-//     },
+// {
+//   operation: "or",
+//   values: [
+//     { field: "name", operation: "equal", values: ["string"] },
+//     { field: "name", operation: "equal", values: ["email"] },
+//   ],
+// },
 //   ],
 //   sorts: [{ field: "name", sortType: "ASC", order: 1.0 }],
 //   paging: { currentPage: 0, recordsOnPage: 9223372036854775807 },

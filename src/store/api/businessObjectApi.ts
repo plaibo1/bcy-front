@@ -27,6 +27,7 @@ export const businessObjectApi = createApi({
               currentPage: body.paging?.currentPage || 0,
               recordsOnPage: body.paging?.recordsOnPage || 10,
             },
+            sorts: [{ field: "created_date", sortType: "DESC", order: 1.0 }],
           },
         };
       },

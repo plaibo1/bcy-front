@@ -24,7 +24,6 @@ const fields: Partial<Fields> = {
   label: { label: "Отображаемое имя", rules: [{ required: true }] },
   description: { label: "Описание", rules: [{ required: true }] },
   system: { label: "Системная", type: "boolean" },
-  archived: { label: "Архив", type: "boolean" },
 };
 
 export const ModalContent = ({ onClose }: { onClose: () => void }) => {

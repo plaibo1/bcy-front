@@ -13,6 +13,7 @@ import { type TableRowSelection } from "antd/es/table/interface";
 import { AddLeadButton } from "./AddLeadButton";
 import { AddBusinessObject } from "./AddBusinessObject";
 import { LeadActionsButton } from "./LeadActions";
+import { AnyObject } from "antd/es/_util/type";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
@@ -49,6 +50,17 @@ export const LeadContainer = () => {
     selectedRowKeys,
     onChange: onSelectChange,
     type: "checkbox",
+  };
+
+  const handleRowClick = (record: AnyObject, event: React.MouseEvent) => {
+    if (event.ctrlKey || event.metaKey) {
+      setSelectedRowKeys((prev) => {
+        const alreadySelected = prev.includes(record.id);
+        return alreadySelected
+          ? prev.filter((id) => id !== record.id)
+          : [...prev, record.id];
+      });
+    }
   };
 
   return (
@@ -126,6 +138,9 @@ export const LeadContainer = () => {
               current: businessObjects?.paging.currentPage + 1,
               showSizeChanger: true,
             }}
+            onRow={(record) => ({
+              onClick: (event) => handleRowClick(record, event),
+            })}
           />
         </LeadProvider>
       )}

@@ -55,10 +55,25 @@ export const SearchClient = ({
       const { data } = await getClients({
         paging: { currentPage: 0, recordsOnPage: 100 },
         filters: [
+          // TODO: update IFilter types
           {
-            field: "lastName",
-            operation: "starts with",
-            values: [capitalizeFirstLetter(value)],
+            operation: "or",
+            values: [
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              {
+                field: "lastName",
+                operation: "starts with",
+                values: [capitalizeFirstLetter(value)],
+              },
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              {
+                field: "firstName",
+                operation: "starts with",
+                values: [capitalizeFirstLetter(value)],
+              },
+            ],
           },
         ],
       }).unwrap();
