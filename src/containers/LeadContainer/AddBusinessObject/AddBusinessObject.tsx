@@ -17,7 +17,7 @@ export const AddBusinessObject = ({
   return (
     <>
       <Button size="large" type="default" onClick={() => setIsShowModal(true)}>
-        Добавить бизнес-объект
+        Добавить Лид
       </Button>
 
       <Modal

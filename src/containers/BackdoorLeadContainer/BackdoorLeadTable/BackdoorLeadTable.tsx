@@ -3,14 +3,10 @@ import { type IBackdoorLead } from "../../../types/api/backdoorLeadTypes";
 import { type ColumnsType } from "antd/es/table";
 import { type TableRowSelection } from "antd/es/table/interface";
 import { TableProps } from "antd/lib";
+import { DateTimeCeil } from "../../../components/Ceils/DateTimeCeil";
 
 const columns: ColumnsType<IBackdoorLead> = [
   Table.SELECTION_COLUMN,
-  {
-    title: "Источник",
-    dataIndex: "source",
-    key: "source",
-  },
   {
     title: "ФИО",
     dataIndex: "fullName",
@@ -35,6 +31,17 @@ const columns: ColumnsType<IBackdoorLead> = [
     title: "Комментарий",
     dataIndex: "comment",
     key: "comment",
+  },
+  {
+    title: "Лог",
+    dataIndex: "log",
+    key: "log",
+  },
+  {
+    title: "Дата",
+    render: (_, record) => {
+      return <DateTimeCeil value={record.audit.createdDate} />;
+    },
   },
 ];
 

@@ -1,23 +1,33 @@
-import { Rule } from "antd/es/form";
 import { FiltersButton } from "../../../components/FiltersButton";
-import { IClient } from "../../../types/api/clientsType";
-import { Button, Col, Divider, Input, Row, Space } from "antd";
-import { Form } from "antd/lib";
-import { removeEmptyValues } from "../../../utils/removeEmptyValues";
-import { createFilters } from "../../../utils/createFilters";
+import { CreateFilters } from "../../../components/CreateFilters";
+import { FilterFormCreateMap } from "../../../types/filterTypes";
 
-const formFields: Record<
-  keyof Omit<IClient, "id" | "orders">,
-  { label: string; operation?: FiltersOperations; rules?: Rule[] }
-> = {
-  firstName: { label: "Имя", operation: "starts with" },
-  lastName: { label: "Фамилия", operation: "starts with" },
-  middleName: { label: "Отчество", operation: "starts with" },
+type ClientFilters = {
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  email: string;
+  comment: string;
+};
+
+const fields: FilterFormCreateMap<ClientFilters> = {
+  firstName: { field: "firstName", label: "Имя", operation: "starts with" },
+  lastName: { field: "lastName", label: "Фамилия", operation: "starts with" },
+  middleName: {
+    field: "middleName",
+    label: "Отчество",
+    operation: "starts with",
+  },
   email: {
+    field: "email",
     label: "Email",
     rules: [{ type: "email", message: "Некорректный email" }],
   },
-  comment: { label: "Комментарий", operation: "contains" },
+  comment: {
+    field: "comment",
+    label: "Комментарий",
+    operation: "contains",
+  },
 };
 
 export const ClientsFilters = ({
@@ -25,50 +35,13 @@ export const ClientsFilters = ({
 }: {
   onFilters: (filters: IFilter[]) => void;
 }) => {
-  const [form] = Form.useForm();
-
-  const handleReset = () => {
-    form.resetFields();
-    onFilters([]);
-  };
-
-  const handleFinish = (
-    res: Record<keyof Omit<IClient, "id" | "orders">, string>
-  ) => {
-    const values = removeEmptyValues(res);
-
-    if (Object.keys(values).length === 0) {
-      return;
-    }
-
-    onFilters(createFilters(values));
-  };
-
   return (
     <FiltersButton>
-      <Form layout="vertical" form={form} onFinish={handleFinish}>
-        <Row gutter={[16, 0]}>
-          {Object.entries(formFields).map(([key, { label, rules }]) => (
-            <Col span={3} key={key}>
-              <Form.Item label={label} name={key} rules={rules}>
-                <Input size="large" type="text" />
-              </Form.Item>
-            </Col>
-          ))}
-        </Row>
-
-        <Divider />
-
-        <Space size="middle">
-          <Button size="large" type="primary" htmlType="submit">
-            Применить
-          </Button>
-
-          <Button size="large" type="default" onClick={handleReset}>
-            Сбросить
-          </Button>
-        </Space>
-      </Form>
+      <CreateFilters
+        formProps={{ layout: "vertical", size: "large" }}
+        fields={fields}
+        onFilterChange={onFilters}
+      />
     </FiltersButton>
   );
 };

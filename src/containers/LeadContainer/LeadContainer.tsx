@@ -67,7 +67,7 @@ export const LeadContainer = () => {
     <div>
       <Flex style={{ marginBottom: 32 }} gap={8} align="center">
         <AddLeadButton />
-        <LeadSelect onChange={handleSelect} />
+        <LeadSelect selectFirst onChange={handleSelect} />
 
         {entityFields && !isError && currentEntityId.current && (
           <LeadAddFieldButton

@@ -1,6 +1,7 @@
 import { Flex, Select } from "antd";
 import { useGetEntitiesQuery } from "../../../store/api/entityApi";
 import { IEntity } from "../../../types/api/entityTypes";
+// import { useEffect } from "react";
 
 const transformEntities = (entities: IEntity[]) => {
   if (entities.length === 0) return [];
@@ -13,10 +14,18 @@ const transformEntities = (entities: IEntity[]) => {
 
 interface IProps {
   onChange: (entityId: string) => void;
+  selectFirst?: boolean;
 }
 
-export const LeadSelect = ({ onChange }: IProps) => {
+export const LeadSelect = ({ onChange, selectFirst }: IProps) => {
+  console.log("🚀 ~ LeadSelect ~ selectFirst:", selectFirst);
   const { data: entities, isLoading } = useGetEntitiesQuery();
+
+  // useEffect(() => {
+  //   if (selectFirst && !isLoading && entities?.[0]?.id) {
+  //     // onChange(entities?.[0]?.id || "");
+  //   }
+  // }, [entities, isLoading, onChange, selectFirst]);
 
   return (
     <Flex vertical gap={8}>

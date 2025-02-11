@@ -15,7 +15,7 @@ export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
       .then(() => {
         notification.success({
           message: "Успешно",
-          description: "Активный бекдор успешно удален",
+          description: "Интеграция успешно удалена",
         });
       })
       .catch((err) => {
@@ -28,7 +28,7 @@ export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
         }
         notification.error({
           message: "Ошибка",
-          description: "При удалении активного бекдора произошла ошибка",
+          description: "При удалении интеграции произошла ошибка",
         });
       });
   };
@@ -39,7 +39,7 @@ export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
         <Button icon={<SettingOutlined />} />
       </Link>
 
-      <Popconfirm title="Удалить активный бекдор" onConfirm={handleDelete}>
+      <Popconfirm title="Удалить интеграцию" onConfirm={handleDelete}>
         <Button danger icon={<DeleteOutlined />} loading={isLoading} />
       </Popconfirm>
     </Space>

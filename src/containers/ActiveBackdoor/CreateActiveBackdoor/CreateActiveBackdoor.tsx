@@ -14,7 +14,7 @@ export const CreateActiveBackdoor = () => {
         size="large"
         onClick={() => setIsModalOpen(true)}
       >
-        Создать бэкдор
+        Создать интеграцию
       </Button>
 
       <Modal

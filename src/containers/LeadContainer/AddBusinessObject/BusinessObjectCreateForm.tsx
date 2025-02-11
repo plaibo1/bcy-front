@@ -34,13 +34,13 @@ export const BusinessObjectCreateForm = ({
 
         notification.success({
           message: "Успешно",
-          description: "Бизнес-объект успешно создан",
+          description: "Лид успешно создан",
         });
       })
       .catch(() => {
         notification.error({
           message: "Ошибка",
-          description: "Не удалось создать бизнес-объект",
+          description: "Не удалось создать лид",
         });
       });
     onSubmit();
@@ -48,7 +48,7 @@ export const BusinessObjectCreateForm = ({
 
   return (
     <>
-      <Typography.Title level={3}>Добавить бизнес-объект</Typography.Title>
+      <Typography.Title level={3}>Добавить Лид</Typography.Title>
 
       <BusinessObjectForm
         formProps={{

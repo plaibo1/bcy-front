@@ -21,7 +21,7 @@ const menuItems = [
     key: "5",
   },
   {
-    label: "Активные бекдоры",
+    label: "Интеграции",
     path: "/active-backdoors",
     key: "3",
   },

@@ -28,7 +28,7 @@ export const ActiveBackdoorConfigurator = ({
         Назад
       </Button>
 
-      <Typography.Title level={1}>Конфигурации бэкдора</Typography.Title>
+      <Typography.Title level={1}>Конфигурация интеграции</Typography.Title>
 
       <ConfiguratorHeading backdoor={backdoor} />
 

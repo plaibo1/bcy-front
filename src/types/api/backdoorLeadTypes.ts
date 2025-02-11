@@ -6,4 +6,11 @@ export interface IBackdoorLead {
   email: string;
   comment: string;
   log: string;
+
+  audit: {
+    createdDate: string;
+    createdBy: string;
+    updatedDate: string;
+    updatedBy: string;
+  };
 }

@@ -31,7 +31,7 @@ export const ActiveBackdoorCreateForm = ({
       .then(() => {
         notification.success({
           message: "Успешно",
-          description: "Бэкдор успешно создан",
+          description: "Интеграция успешно создана",
         });
         onCancel();
       })
@@ -45,7 +45,7 @@ export const ActiveBackdoorCreateForm = ({
         }
         notification.error({
           message: "Ошибка",
-          description: "Не удалось создать бэкдор",
+          description: "Не удалось создать интеграцию",
         });
       });
   };
@@ -53,7 +53,7 @@ export const ActiveBackdoorCreateForm = ({
   return (
     <>
       <Typography.Title style={{ marginBottom: 32 }} level={3}>
-        Active Backdoor
+        Создать интеграцию
       </Typography.Title>
 
       <Form size="large" layout="vertical" onFinish={onFinish}>
