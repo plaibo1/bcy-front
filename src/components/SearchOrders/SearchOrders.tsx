@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { UserOutlined } from "@ant-design/icons";
 
-import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import { debounce } from "../../utils/debounce";
 
 import { useLazyGetOrdersQuery } from "../../store/api/orderApi";
@@ -67,8 +66,8 @@ export const SearchOrders = ({
         filters: [
           {
             field: "name",
-            operation: "starts with",
-            values: [capitalizeFirstLetter(value)],
+            operation: "contains",
+            values: [value],
           },
         ],
       }).unwrap();

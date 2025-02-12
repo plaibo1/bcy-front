@@ -6,6 +6,7 @@ export type EntityType =
   | "DATETIME"
   | "DATE"
   | "EMAIL"
+  | "STATUS"
   | "PHONE";
 
 export interface IEntityField {
