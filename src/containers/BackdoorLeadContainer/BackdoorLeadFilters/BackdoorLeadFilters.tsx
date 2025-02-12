@@ -20,6 +20,7 @@ const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
   phone: {
     field: "phone",
     label: "Телефон",
+    type: "phone",
   },
   region: {
     field: "region",

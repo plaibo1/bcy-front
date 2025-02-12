@@ -16,6 +16,7 @@ export type FilterFormCreateMap<T extends object> = {
       | "datetime"
       | "dateRange"
       | "dateTimeRange"
-      | "region";
+      | "region"
+      | "phone";
   };
 };

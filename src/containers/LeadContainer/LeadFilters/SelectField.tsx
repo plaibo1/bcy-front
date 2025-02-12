@@ -13,6 +13,7 @@ export const SelectField = ({
       label={field.label}
       name={field.name}
       initialValue={initialValue}
+      rules={[{ required: field.required, message: "Поле обязательно" }]}
     >
       <Select size="large" allowClear showSearch>
         <Select.Option value={null}>Не заданно</Select.Option>

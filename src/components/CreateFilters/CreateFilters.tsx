@@ -13,6 +13,7 @@ import { createDeclarativeFilters } from "../../utils/createDeclarativeFilters";
 import { removeEmptyValues } from "../../utils/removeEmptyValues";
 import { FormProps } from "antd/lib/form";
 import { RegionSelect } from "../RegionSelect";
+import { PhoneInput } from "../PhoneInput";
 
 interface Props<T extends Record<string, unknown>> {
   fields: FilterFormCreateMap<T>;
@@ -68,6 +69,14 @@ export const CreateFilters = <T extends Record<string, unknown>>({
                 </Col>
               );
             };
+
+            if (field.type === "phone") {
+              return (
+                <Wrapper key={fieldKey}>
+                  <PhoneInput />
+                </Wrapper>
+              );
+            }
 
             if (field.type === "region") {
               return (

@@ -12,6 +12,7 @@ import { type IEntityField } from "../../types/api/entityFieldsTypes";
 import dayjs from "dayjs";
 import { FormProps } from "antd/lib";
 import { Rule } from "antd/es/form";
+import { PhoneInput } from "../PhoneInput";
 
 interface IProps {
   entityFields: IEntityField[];
@@ -149,6 +150,14 @@ export const BusinessObjectForm = ({
           return (
             <FiledWrapper key={field.name}>
               <Input size="large" />
+            </FiledWrapper>
+          );
+        }
+
+        if (field.type === "PHONE") {
+          return (
+            <FiledWrapper key={field.name}>
+              <PhoneInput />
             </FiledWrapper>
           );
         }

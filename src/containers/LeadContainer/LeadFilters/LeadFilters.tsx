@@ -14,6 +14,7 @@ import { removeEmptyValues } from "../../../utils/removeEmptyValues";
 import { createEntityFilters } from "../../../utils/createEntityFilters";
 import { FiltersButton } from "../../../components/FiltersButton";
 import { SelectField } from "./SelectField";
+import { PhoneInput } from "../../../components/PhoneInput";
 
 export const LeadFilters = ({
   entityFields,
@@ -96,6 +97,16 @@ export const LeadFilters = ({
                       <Select.Option value={true}>Да</Select.Option>
                       <Select.Option value={false}>Нет</Select.Option>
                     </Select>
+                  </Form.Item>
+                </Col>
+              );
+            }
+
+            if (field.type === "PHONE") {
+              return (
+                <Col key={field.id} span={4}>
+                  <Form.Item label={field.label} name={field.name}>
+                    <PhoneInput />
                   </Form.Item>
                 </Col>
               );

@@ -19,6 +19,8 @@ import {
 import { useContext } from "react";
 import { LeadContext } from "../LeadContext";
 import { SelectField } from "../LeadFilters/SelectField";
+import { PhoneInput } from "../../../components/PhoneInput";
+import { type IEntityField } from "../../../types/api/entityFieldsTypes";
 
 const { TextArea } = Input;
 
@@ -26,6 +28,32 @@ interface IProps extends IEditProps {
   cancel: () => void;
   index: number;
 }
+
+const transformDataToInitialValues = (
+  data: Record<string, unknown>,
+  entityFields: IEntityField[]
+) => {
+  return entityFields.reduce<Record<string, unknown>>((acc, field) => {
+    const value = data[field.name];
+
+    if (typeof value === "undefined") {
+      return acc;
+    }
+
+    if (field.type === "DATE") {
+      acc[field.name] = dayjs(value as string, "YYYY-MM-DD");
+      return acc;
+    }
+
+    if (field.type === "DATETIME") {
+      acc[field.name] = dayjs(value as string, "YYYY-MM-DDTHH:mm:ssZ");
+      return acc;
+    }
+
+    acc[field.name] = data[field.name];
+    return acc;
+  }, {});
+};
 
 /**
  * @deprecated переписать на BusinessObjectForm
@@ -131,47 +159,39 @@ export const EditForm = ({
   };
 
   return (
-    <Form layout="vertical" form={form} onFinish={onFinish}>
+    <Form
+      layout="vertical"
+      form={form}
+      onFinish={onFinish}
+      initialValues={transformDataToInitialValues(data, entityFields)}
+    >
       {entityFields.map((field) => {
         const value = data[field.name];
 
         if (field.readOnly) {
           return (
             <Form.Item key={field.name} label={field.label} name={field.name}>
-              <Input disabled size="large" defaultValue={value as string} />
+              <Input disabled size="large" />
             </Form.Item>
           );
         }
 
         if (field.settings?.labelValues) {
-          return <SelectField field={field} initialValue={value as string} />;
+          return <SelectField field={field} />;
         }
 
         if (field.type === "DATE") {
-          const date = dayjs(value as string);
-
           return (
             <Form.Item key={field.name} label={field.label} name={field.name}>
-              <DatePicker
-                defaultValue={date}
-                size="large"
-                format="DD.MM.YYYY"
-              />
+              <DatePicker size="large" format="DD.MM.YYYY" />
             </Form.Item>
           );
         }
 
         if (field.type === "DATETIME") {
-          const date = dayjs(value as string);
-
           return (
             <Form.Item key={field.name} label={field.label} name={field.name}>
-              <DatePicker
-                showTime
-                defaultValue={date}
-                size="large"
-                format="DD.MM.YYYY HH:mm:ss"
-              />
+              <DatePicker showTime size="large" format="DD.MM.YYYY HH:mm:ss" />
             </Form.Item>
           );
         }
@@ -179,7 +199,7 @@ export const EditForm = ({
         if (field.type === "BOOLEAN") {
           return (
             <Form.Item key={field.name} label={field.label} name={field.name}>
-              <Switch size="default" defaultChecked={value as boolean} />
+              <Switch size="default" />
             </Form.Item>
           );
         }
@@ -190,7 +210,17 @@ export const EditForm = ({
               <InputNumber
                 style={{ minWidth: 150, width: "fit-content" }}
                 size="large"
-                defaultValue={value as number}
+              />
+            </Form.Item>
+          );
+        }
+
+        if (field.type === "PHONE") {
+          return (
+            <Form.Item key={field.name} label={field.label} name={field.name}>
+              <PhoneInput
+                style={{ minWidth: 150, width: "fit-content" }}
+                size="large"
               />
             </Form.Item>
           );
@@ -204,14 +234,14 @@ export const EditForm = ({
         ) {
           return (
             <Form.Item key={field.name} label={field.label} name={field.name}>
-              <TextArea size="large" defaultValue={value} />
+              <TextArea size="large" />
             </Form.Item>
           );
         }
 
         return (
           <Form.Item key={field.name} label={field.label} name={field.name}>
-            <Input size="large" defaultValue={value as string} />
+            <Input size="large" />
           </Form.Item>
         );
       })}
