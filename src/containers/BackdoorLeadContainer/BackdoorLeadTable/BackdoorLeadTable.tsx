@@ -8,6 +8,11 @@ import { DateTimeCeil } from "../../../components/Ceils/DateTimeCeil";
 const columns: ColumnsType<IBackdoorLead> = [
   Table.SELECTION_COLUMN,
   {
+    title: "Источник",
+    dataIndex: "source",
+    key: "source",
+  },
+  {
     title: "ФИО",
     dataIndex: "fullName",
     key: "fullName",

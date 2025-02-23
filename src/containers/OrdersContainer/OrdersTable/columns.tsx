@@ -34,6 +34,11 @@ export const columns: ColumnsType<IOrder> = [
     key: "leadCount",
   },
   {
+    title: "Количество отправленных лидов",
+    dataIndex: "countLeadsSent",
+    key: "countLeadsSent",
+  },
+  {
     title: "Выполнено лидов",
     dataIndex: "executedLeadCount",
     key: "executedLeadCount",
