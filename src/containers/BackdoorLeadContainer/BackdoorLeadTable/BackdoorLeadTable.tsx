@@ -67,12 +67,26 @@ export const BackdoorLeadTable = ({
     type: "checkbox",
   };
 
+  const handleRowClick = (record: IBackdoorLead, event: React.MouseEvent) => {
+    if (event.ctrlKey || event.metaKey) {
+      setSelectedRowKeys((prev) => {
+        const alreadySelected = prev.includes(record.id);
+        return alreadySelected
+          ? prev.filter((id) => id !== record.id)
+          : [...prev, record.id];
+      });
+    }
+  };
+
   return (
     <Table
       rowKey="id"
       columns={columns}
       dataSource={data}
       rowSelection={rowSelection}
+      onRow={(record) => ({
+        onClick: (event) => handleRowClick(record, event),
+      })}
       {...tableProps}
     />
   );

@@ -50,6 +50,7 @@ const ExpandedRow = ({ client }: { client: IClient }) => {
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
         {client.orders.map((order) => (
           <div
+            key={order.id}
             style={{
               border: "1px solid #eee",
               padding: 8,

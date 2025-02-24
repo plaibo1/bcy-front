@@ -35,7 +35,6 @@ export const ENTITY_FIELD_TYPES_MAP: Record<
     label: "Число",
     value: "NUMBER",
   },
-
   EMAIL: {
     label: "Email",
     value: "EMAIL",
@@ -47,6 +46,14 @@ export const ENTITY_FIELD_TYPES_MAP: Record<
   STATUS: {
     label: "Статус",
     value: "STATUS",
+  },
+  GENDER: {
+    label: "Пол",
+    value: "GENDER",
+  },
+  REGION: {
+    label: "Регион",
+    value: "REGION",
   },
 };
 

@@ -7,7 +7,9 @@ export type EntityType =
   | "DATE"
   | "EMAIL"
   | "STATUS"
-  | "PHONE";
+  | "PHONE"
+  | "GENDER"
+  | "REGION";
 
 export interface IEntityField {
   id: string;
