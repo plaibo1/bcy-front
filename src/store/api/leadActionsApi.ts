@@ -56,10 +56,9 @@ export const leadActionsApi = createApi({
             ...body,
             paging: {
               currentPage: body.paging?.currentPage || 0,
-              recordsOnPage: body.paging?.recordsOnPage || 10,
+              recordsOnPage: body.paging?.recordsOnPage || 200_000,
             },
           },
-
           responseHandler: (response) => response.blob(),
           responseType: "blob" as const,
         };

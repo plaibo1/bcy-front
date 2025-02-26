@@ -39,8 +39,30 @@ export const backdoorLeadApi = createApi({
       },
       invalidatesTags: ["BackdoorLead"],
     }),
+
+    // TODO: перенести в отедельный сервис
+    getExcelByBackdoorLeadFilters: builder.mutation<Blob, PageRequest>({
+      query: (body) => {
+        return {
+          method: "POST",
+          url: `/v1/backdoor-lead/download/excel/filter`,
+          body: {
+            ...body,
+            paging: {
+              currentPage: body.paging?.currentPage || 0,
+              recordsOnPage: body.paging?.recordsOnPage || 200_000,
+            },
+          },
+          responseHandler: (response) => response.blob(),
+          responseType: "blob" as const,
+        };
+      },
+    }),
   }),
 });
 
-export const { useLazyGetBackdoorLeadsQuery, useMoveBackdoorLeadMutation } =
-  backdoorLeadApi;
+export const {
+  useLazyGetBackdoorLeadsQuery,
+  useMoveBackdoorLeadMutation,
+  useGetExcelByBackdoorLeadFiltersMutation,
+} = backdoorLeadApi;

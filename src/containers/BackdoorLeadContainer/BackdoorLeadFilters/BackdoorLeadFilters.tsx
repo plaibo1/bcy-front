@@ -6,16 +6,17 @@ import { IBackdoorLead } from "../../../types/api/backdoorLeadTypes";
 import dayjs from "dayjs";
 
 const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
-  fullName: { label: "Имя", field: "fullName" },
+  fullName: { label: "Имя", field: "fullName", operation: "starts with" },
   email: {
     label: "Email",
     rules: [{ type: "email", message: "Некорректный email" }],
     field: "email",
   },
-  comment: { label: "Комментарий", field: "comment" },
+  comment: { label: "Комментарий", field: "comment", operation: "contains" },
   source: {
     field: "source",
     label: "Источник",
+    operation: "starts with",
   },
   phone: {
     field: "phone",

@@ -2,6 +2,7 @@ import { Button, Flex, Modal, Typography } from "antd";
 import { useState, type Key } from "react";
 import { ActionsSelect } from "../../../components/ActionsSelect";
 import { MoveBackdoorLead } from "./Actions/MoveBackdoorLead";
+import { ExcelByFilters } from "./Actions/ExcelByFilters";
 
 const actions = [
   {
@@ -9,25 +10,23 @@ const actions = [
     label: "Переместить бэкдоры в другой раздел",
     component: MoveBackdoorLead,
   },
+  {
+    key: 1,
+    label: "Создать Excel-файл по фильтрам",
+    component: ExcelByFilters,
+  },
 ];
 
 export const BackdoorLeadOperations = ({
   selectedRowKeys,
-  disabled,
 }: {
   selectedRowKeys: Key[];
-  disabled: boolean;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <Button
-        disabled={disabled}
-        size="large"
-        type="primary"
-        onClick={() => setIsModalOpen(true)}
-      >
+      <Button size="large" type="primary" onClick={() => setIsModalOpen(true)}>
         Действия
       </Button>
 
@@ -35,17 +34,17 @@ export const BackdoorLeadOperations = ({
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
-        width="fit-content"
+        width={600}
       >
         <ActionsSelect actions={actions} onCancel={() => setIsModalOpen(false)}>
           <Flex vertical style={{ marginBottom: 32 }}>
-            <Typography.Title style={{ marginBottom: 0 }} level={3}>
+            <Typography.Title style={{ marginBottom: 4 }} level={3}>
               Действия для бэкдоров
             </Typography.Title>
 
-            <Typography.Title level={5}>
+            <Typography.Text>
               Выбрано бэкдоров: {selectedRowKeys.length}
-            </Typography.Title>
+            </Typography.Text>
           </Flex>
         </ActionsSelect>
       </Modal>

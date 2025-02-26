@@ -48,41 +48,48 @@ const ExpandedRow = ({ client }: { client: IClient }) => {
       </Typography.Title>
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-        {client.orders.map((order) => (
-          <div
-            key={order.id}
-            style={{
-              border: "1px solid #eee",
-              padding: 8,
-              borderRadius: 8,
-              backgroundColor: "#fff",
-            }}
-          >
+        {client.orders.map((order) => {
+          return (
             <div
-              style={{
-                display: "flex",
-                gap: 12,
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
               key={order.id}
+              style={{
+                border: "1px solid #eee",
+                padding: 8,
+                borderRadius: 8,
+                backgroundColor: "#fff",
+              }}
             >
-              <Flex gap={4}>
-                <UserOutlined />
-                {order.name}
-              </Flex>
-
-              <Tag
-                style={{ marginLeft: 12 }}
-                color={ordersStatuses[order.status].color}
+              <div>
+                <Typography.Text type="success">
+                  {order.countLeadsSent}
+                </Typography.Text>{" "}
+                / <Typography.Text strong>{order.leadCount}</Typography.Text>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+                key={order.id}
               >
-                {ordersStatuses[order.status].label}
-              </Tag>
-            </div>
+                <Flex gap={4}>
+                  <UserOutlined />
+                  {order.name}
+                </Flex>
 
-            <code style={{ fontSize: 12 }}>{order.id}</code>
-          </div>
-        ))}
+                <Tag
+                  style={{ marginLeft: 12 }}
+                  color={ordersStatuses[order.status].color}
+                >
+                  {ordersStatuses[order.status].label}
+                </Tag>
+              </div>
+              <code style={{ fontSize: 12 }}>{order.id}</code>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

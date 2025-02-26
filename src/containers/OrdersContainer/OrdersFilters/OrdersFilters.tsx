@@ -14,7 +14,7 @@ interface OrdersFilters {
 }
 
 const fields: FilterFormCreateMap<OrdersFilters> = {
-  name: { label: "Название", field: "name" },
+  name: { label: "Название", field: "name", operation: "starts with" },
   costPerLead: { label: "Стоимость за лид", field: "costPerLead" },
   leadCount: { label: "Количество лидов", field: "leadCount" },
   maxDefect: { label: "Макс. дефектность", field: "maxDefect" },

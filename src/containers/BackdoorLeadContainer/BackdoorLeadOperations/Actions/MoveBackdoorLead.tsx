@@ -9,6 +9,7 @@ import { BackdoorLeadContext } from "../../BackdoorLeadContext/BackdoorLeadConte
 export const MoveBackdoorLead = ({ onCancel }: { onCancel?: () => void }) => {
   const { notification } = App.useApp();
   const { selectedBackdoorLeads } = useContext(BackdoorLeadContext);
+
   const [moveBackdoorLead] = useMoveBackdoorLeadMutation();
 
   const [entityId, setEntityId] = useState<string | undefined>(undefined);
@@ -54,7 +55,12 @@ export const MoveBackdoorLead = ({ onCancel }: { onCancel?: () => void }) => {
   return (
     <>
       {!selectedBackdoorLeads.length && (
-        <Alert type="warning" message="Не выбраны бэкдоры лидов" />
+        <Alert
+          style={{ marginBottom: 16 }}
+          type="warning"
+          showIcon
+          message="Не выбраны бэкдоры лидов"
+        />
       )}
 
       <Flex align="flex-end" gap={16}>

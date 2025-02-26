@@ -9,6 +9,7 @@ export interface IOrder {
   executedLeadCount: number;
   mailsForSend: string[];
   maxDefect: number;
+  countLeadsSent: number;
 }
 
 export interface IOrderCreate {

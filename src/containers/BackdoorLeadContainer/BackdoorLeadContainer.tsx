@@ -25,43 +25,38 @@ export const BackdoorLeadContainer = () => {
   };
 
   return (
-    <>
+    <BackdoorLeadProvider
+      value={{ selectedBackdoorLeads: selectedRowKeys, filters }}
+    >
       <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
-        <BackdoorLeadOperations
-          disabled={!selectedRowKeys.length}
-          selectedRowKeys={selectedRowKeys}
-        />
+        <BackdoorLeadOperations selectedRowKeys={selectedRowKeys} />
       </Flex>
 
       <Space style={{ marginBottom: 32 }}>
         <BackdoorLeadFilters onFilters={onFilters} />
       </Space>
 
-      <BackdoorLeadProvider
-        value={{ selectedBackdoorLeads: selectedRowKeys, filters }}
-      >
-        <BackdoorLeadTable
-          selectedRowKeys={selectedRowKeys}
-          setSelectedRowKeys={setSelectedRowKeys}
-          data={data?.data}
-          tableProps={{
-            loading: isLoading || isFetching,
-            pagination: {
-              onChange: (page, pageSize) => {
-                pageSizeRef.current = pageSize;
-                getBackdoorLeads({
-                  paging: { currentPage: page - 1, recordsOnPage: pageSize },
-                  filters,
-                });
-              },
-              current: (data?.paging.currentPage ?? 0) + 1,
-              total: data?.paging.totalRecordsAmount || 1,
-              pageSize: pageSizeRef.current,
-              showSizeChanger: true,
+      <BackdoorLeadTable
+        selectedRowKeys={selectedRowKeys}
+        setSelectedRowKeys={setSelectedRowKeys}
+        data={data?.data}
+        tableProps={{
+          loading: isLoading || isFetching,
+          pagination: {
+            onChange: (page, pageSize) => {
+              pageSizeRef.current = pageSize;
+              getBackdoorLeads({
+                paging: { currentPage: page - 1, recordsOnPage: pageSize },
+                filters,
+              });
             },
-          }}
-        />
-      </BackdoorLeadProvider>
-    </>
+            current: (data?.paging.currentPage ?? 0) + 1,
+            total: data?.paging.totalRecordsAmount || 1,
+            pageSize: pageSizeRef.current,
+            showSizeChanger: true,
+          },
+        }}
+      />
+    </BackdoorLeadProvider>
   );
 };
