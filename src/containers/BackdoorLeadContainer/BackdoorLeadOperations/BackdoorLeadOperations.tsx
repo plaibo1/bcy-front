@@ -1,8 +1,15 @@
-import { App, Button, Flex, Modal, Typography } from "antd";
+import { Button, Flex, Modal, Typography } from "antd";
 import { useState, type Key } from "react";
-import { LeadSelect } from "../../LeadContainer/LeadSelect";
-import { useMoveBackdoorLeadMutation } from "../../../store/api/backdoorLeadApi";
-import { isBackendError } from "../../../types/errorTypeGuards";
+import { ActionsSelect } from "../../../components/ActionsSelect";
+import { MoveBackdoorLead } from "./Actions/MoveBackdoorLead";
+
+const actions = [
+  {
+    key: 0,
+    label: "Переместить бэкдоры в другой раздел",
+    component: MoveBackdoorLead,
+  },
+];
 
 export const BackdoorLeadOperations = ({
   selectedRowKeys,
@@ -11,49 +18,7 @@ export const BackdoorLeadOperations = ({
   selectedRowKeys: Key[];
   disabled: boolean;
 }) => {
-  const { notification } = App.useApp();
-  const [moveBackdoorLead] = useMoveBackdoorLeadMutation();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [entityId, setEntityId] = useState<string | undefined>(undefined);
-
-  const onSelectEntity = (entityId: string) => {
-    setEntityId(entityId);
-  };
-
-  const moveLeads = async () => {
-    if (!entityId) {
-      return;
-    }
-
-    moveBackdoorLead({
-      entityId,
-      backdoorLeadIds: selectedRowKeys as string[],
-    })
-      .unwrap()
-      .then(() => {
-        notification.success({
-          message: "Успешно",
-          description: "Лиды успешно перемещены",
-        });
-
-        setIsModalOpen(false);
-      })
-      .catch((err) => {
-        if (isBackendError(err)) {
-          notification.error({
-            message: "Ошибка",
-            description: err.data.message,
-          });
-          return;
-        }
-
-        notification.error({
-          message: "Ошибка",
-          description: "Произошла ошибка при перемещении бэкдоров",
-        });
-      });
-  };
 
   return (
     <>
@@ -72,27 +37,17 @@ export const BackdoorLeadOperations = ({
         footer={null}
         width="fit-content"
       >
-        <Flex vertical style={{ marginBottom: 32 }}>
-          <Typography.Title style={{ marginBottom: 0 }} level={3}>
-            Действия для бэкдоров
-          </Typography.Title>
+        <ActionsSelect actions={actions} onCancel={() => setIsModalOpen(false)}>
+          <Flex vertical style={{ marginBottom: 32 }}>
+            <Typography.Title style={{ marginBottom: 0 }} level={3}>
+              Действия для бэкдоров
+            </Typography.Title>
 
-          <Typography.Title level={5}>
-            Выбрано бэкдоров: {selectedRowKeys.length}
-          </Typography.Title>
-        </Flex>
-
-        <Flex align="flex-end" gap={16}>
-          <LeadSelect onChange={onSelectEntity} />
-          <Button
-            disabled={!entityId}
-            size="large"
-            type="primary"
-            onClick={moveLeads}
-          >
-            Переместить выбранные
-          </Button>
-        </Flex>
+            <Typography.Title level={5}>
+              Выбрано бэкдоров: {selectedRowKeys.length}
+            </Typography.Title>
+          </Flex>
+        </ActionsSelect>
       </Modal>
     </>
   );

@@ -4,6 +4,7 @@ import { BackdoorLeadTable } from "./BackdoorLeadTable";
 import { useEffect, useRef, useState } from "react";
 import { BackdoorLeadFilters } from "./BackdoorLeadFilters";
 import { BackdoorLeadOperations } from "./BackdoorLeadOperations";
+import { BackdoorLeadProvider } from "./BackdoorLeadContext/BackdoorLeadProvider";
 
 export const BackdoorLeadContainer = () => {
   const [getBackdoorLeads, { data, isLoading, isFetching }] =
@@ -36,27 +37,31 @@ export const BackdoorLeadContainer = () => {
         <BackdoorLeadFilters onFilters={onFilters} />
       </Space>
 
-      <BackdoorLeadTable
-        selectedRowKeys={selectedRowKeys}
-        setSelectedRowKeys={setSelectedRowKeys}
-        data={data?.data}
-        tableProps={{
-          loading: isLoading || isFetching,
-          pagination: {
-            onChange: (page, pageSize) => {
-              pageSizeRef.current = pageSize;
-              getBackdoorLeads({
-                paging: { currentPage: page - 1, recordsOnPage: pageSize },
-                filters,
-              });
+      <BackdoorLeadProvider
+        value={{ selectedBackdoorLeads: selectedRowKeys, filters }}
+      >
+        <BackdoorLeadTable
+          selectedRowKeys={selectedRowKeys}
+          setSelectedRowKeys={setSelectedRowKeys}
+          data={data?.data}
+          tableProps={{
+            loading: isLoading || isFetching,
+            pagination: {
+              onChange: (page, pageSize) => {
+                pageSizeRef.current = pageSize;
+                getBackdoorLeads({
+                  paging: { currentPage: page - 1, recordsOnPage: pageSize },
+                  filters,
+                });
+              },
+              current: (data?.paging.currentPage ?? 0) + 1,
+              total: data?.paging.totalRecordsAmount || 1,
+              pageSize: pageSizeRef.current,
+              showSizeChanger: true,
             },
-            current: (data?.paging.currentPage ?? 0) + 1,
-            total: data?.paging.totalRecordsAmount || 1,
-            pageSize: pageSizeRef.current,
-            showSizeChanger: true,
-          },
-        }}
-      />
+          }}
+        />
+      </BackdoorLeadProvider>
     </>
   );
 };
