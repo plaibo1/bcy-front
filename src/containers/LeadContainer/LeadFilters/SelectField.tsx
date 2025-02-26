@@ -4,16 +4,22 @@ import { IEntityField } from "../../../types/api/entityFieldsTypes";
 export const SelectField = ({
   field,
   initialValue,
+  noRules,
 }: {
   field: IEntityField;
   initialValue?: string;
+  noRules?: boolean;
 }) => {
   return (
     <Form.Item
       label={field.label}
       name={field.name}
       initialValue={initialValue}
-      rules={[{ required: field.required, message: "Поле обязательно" }]}
+      rules={
+        noRules
+          ? []
+          : [{ required: field.required, message: "Поле обязательно" }]
+      }
     >
       <Select size="large" allowClear showSearch>
         <Select.Option value={null}>Не заданно</Select.Option>

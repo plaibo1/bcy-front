@@ -54,7 +54,7 @@ export const LeadFilters = ({
             if (field.settings?.labelValues) {
               return (
                 <Col key={field.id} span={4}>
-                  <SelectField field={field} />
+                  <SelectField field={field} noRules />
                 </Col>
               );
             }

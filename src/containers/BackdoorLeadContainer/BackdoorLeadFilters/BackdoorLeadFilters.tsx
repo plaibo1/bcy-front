@@ -40,7 +40,9 @@ const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
         return "";
       }
 
-      return value.filter(Boolean).map((v) => dayjs(v).format("YYYY-MM-DD"));
+      return value
+        .filter(Boolean)
+        .map((v) => dayjs(v).format("YYYY-MM-DDTHH:mm:ssZ"));
     },
   },
 };
