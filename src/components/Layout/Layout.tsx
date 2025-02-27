@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { Layout as AntdLayout, Menu, theme } from "antd";
-import { useNavigate } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
 const { Header, Content, Footer } = AntdLayout;
 
@@ -8,44 +8,36 @@ const menuItems = [
   {
     label: "Лиды",
     path: "/",
-    key: "1",
   },
   {
     label: "Клиенты",
     path: "/clients",
-    key: "2",
   },
   {
     label: "Заказы",
     path: "/orders",
-    key: "5",
   },
   {
     label: "Интеграции",
     path: "/active-backdoors",
-    key: "3",
   },
   {
     label: "Бекдоры лидов",
     path: "/backdoor-leads",
-    key: "4",
   },
 ];
+
+const navItems = menuItems.map((item) => ({
+  key: item.path,
+  label: <NavLink to={item.path}>{item.label}</NavLink>,
+}));
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const navigate = useNavigate();
-
-  const handleMenuClick = ({ key }: { key: string }) => {
-    const { path } = menuItems.find((item) => item.key === key) || {};
-
-    if (path) {
-      navigate(path);
-    }
-  };
+  const { pathname } = useLocation();
 
   return (
     <AntdLayout>
@@ -65,8 +57,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           mode="horizontal"
           defaultSelectedKeys={["1"]}
           style={{ flex: 1, minWidth: 0 }}
-          items={menuItems}
-          onClick={handleMenuClick}
+          items={navItems}
+          selectedKeys={[pathname]}
         />
       </Header>
       <Content style={{ padding: "0 48px", marginTop: 32 }}>
