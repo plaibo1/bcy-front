@@ -36,6 +36,20 @@ const columns: ColumnsType<IBackdoorLead> = [
     title: "Комментарий",
     dataIndex: "comment",
     key: "comment",
+    render: (v) => {
+      return (
+        <div
+          style={{
+            maxWidth: 800,
+            height: 120,
+            wordBreak: "break-all",
+            overflow: "auto",
+          }}
+        >
+          {v}
+        </div>
+      );
+    },
   },
   {
     title: "Лог",

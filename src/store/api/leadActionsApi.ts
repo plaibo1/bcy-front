@@ -4,6 +4,7 @@ import {
   ITaskSchedule,
   ITaskScheduleDuration,
 } from "../../types/api/leadActionsTypes";
+import { EXCEL_LIMIT } from "../../consts";
 
 export const leadActionsApi = createApi({
   reducerPath: "leadActionsApi",
@@ -55,8 +56,8 @@ export const leadActionsApi = createApi({
           body: {
             ...body,
             paging: {
-              currentPage: body.paging?.currentPage || 0,
-              recordsOnPage: body.paging?.recordsOnPage || 200_000,
+              currentPage: 0,
+              recordsOnPage: EXCEL_LIMIT,
             },
           },
           responseHandler: (response) => response.blob(),

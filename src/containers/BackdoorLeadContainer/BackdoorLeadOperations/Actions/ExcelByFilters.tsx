@@ -9,7 +9,8 @@ export const ExcelByFilters = () => {
   const { message, notification } = App.useApp();
   const { filters } = useContext(BackdoorLeadContext);
 
-  const [getExcelByFilters] = useGetExcelByBackdoorLeadFiltersMutation();
+  const [getExcelByFilters, { isLoading }] =
+    useGetExcelByBackdoorLeadFiltersMutation();
 
   const handleExport = async () => {
     if (filters.length === 0) {
@@ -67,6 +68,7 @@ export const ExcelByFilters = () => {
         size="large"
         style={{ width: "100%" }}
         disabled={filters.length === 0}
+        loading={isLoading}
       >
         Загузить Excel файл
       </Button>
