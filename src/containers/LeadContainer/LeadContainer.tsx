@@ -8,7 +8,7 @@ import { LeadAddFieldButton } from "./LeadAddField";
 import { Divider, Flex } from "antd";
 import { EditLeadEntity } from "./EditLeadEntity";
 import { LeadFilters } from "./LeadFilters";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { type TableRowSelection } from "antd/es/table/interface";
 import { AddLeadButton } from "./AddLeadButton";
 import { AddBusinessObject } from "./AddBusinessObject";
@@ -27,13 +27,16 @@ export const LeadContainer = () => {
   const [getBusinessObjects, { data: businessObjects, isLoading, isFetching }] =
     useLazyGetBusinessObjectsQuery();
 
-  const handleSelect = async (entityId: string) => {
-    await getEntityFields(entityId);
-    await getBusinessObjects({ entityId });
+  const handleSelect = useCallback(
+    (entityId: string) => {
+      getEntityFields(entityId);
+      getBusinessObjects({ entityId });
 
-    currentEntityId.current = entityId;
-    setSelectedRowKeys([]);
-  };
+      currentEntityId.current = entityId;
+      setSelectedRowKeys([]);
+    },
+    [getBusinessObjects, getEntityFields]
+  );
 
   const handleFilterChange = (filters: IFilter[]) => {
     if (currentEntityId.current) {
