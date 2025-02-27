@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { type IBackdoorLead } from "../../types/api/backdoorLeadTypes";
 import { getBaseQuery } from "./getBaseQuery";
+import { EXCEL_LIMIT } from "../../consts";
 
 export const backdoorLeadApi = createApi({
   reducerPath: "backdoorLeadApi",
@@ -18,6 +19,7 @@ export const backdoorLeadApi = createApi({
               currentPage: body.paging?.currentPage || 0,
               recordsOnPage: body.paging?.recordsOnPage || 10,
             },
+            sorts: [{ field: "created_date", sortType: "DESC", order: 1.0 }],
           },
         };
       },
@@ -49,8 +51,8 @@ export const backdoorLeadApi = createApi({
           body: {
             ...body,
             paging: {
-              currentPage: body.paging?.currentPage || 0,
-              recordsOnPage: body.paging?.recordsOnPage || 200_000,
+              currentPage: 0,
+              recordsOnPage: EXCEL_LIMIT,
             },
           },
           responseHandler: (response) => response.blob(),

@@ -80,3 +80,5 @@ export const ordersStatuses: Record<
     color: "success",
   },
 };
+
+export const EXCEL_LIMIT = 50_000;

@@ -36,6 +36,9 @@ const columns: ColumnsType<IBackdoorLead> = [
     title: "Комментарий",
     dataIndex: "comment",
     key: "comment",
+    render: (v) => {
+      return <pre style={{ wordBreak: "break-all" }}>{v}</pre>;
+    },
   },
   {
     title: "Лог",

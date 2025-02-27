@@ -80,11 +80,7 @@ export const OrdersCreateForm = ({ onCancel }: { onCancel: () => void }) => {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          name="mailsForSend"
-          label="Мэйлы"
-          rules={[{ required: true }]}
-        >
+        <Form.Item name="mailsForSend" label="Мэйлы">
           <Select mode="tags" />
         </Form.Item>
 

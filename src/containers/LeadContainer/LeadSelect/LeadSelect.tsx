@@ -2,7 +2,6 @@ import { Flex, Select } from "antd";
 import { useGetEntitiesQuery } from "../../../store/api/entityApi";
 import { IEntity } from "../../../types/api/entityTypes";
 import { useEffect } from "react";
-// import { useEffect } from "react";
 
 const transformEntities = (entities: IEntity[]) => {
   if (entities.length === 0) return [];
@@ -56,7 +55,7 @@ export const LeadSelect = ({ onChange, selectFirst }: IProps) => {
         onChange={onChange}
         loading={isLoading}
         options={transformEntities(entities ?? [])}
-        defaultValue={entities?.[0]?.id}
+        {...(selectFirst && { defaultValue: entities?.[0]?.id })}
       />
     </Flex>
   );
