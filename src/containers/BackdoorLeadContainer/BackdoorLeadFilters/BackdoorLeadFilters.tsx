@@ -5,7 +5,7 @@ import { FilterFormCreateMap } from "../../../types/filterTypes";
 import { IBackdoorLead } from "../../../types/api/backdoorLeadTypes";
 import dayjs from "dayjs";
 
-const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
+const fields: FilterFormCreateMap<IBackdoorLead & { createdDate: string }> = {
   fullName: { label: "Имя", field: "fullName", operation: "starts with" },
   email: {
     label: "Email",
@@ -30,8 +30,8 @@ const fields: FilterFormCreateMap<IBackdoorLead & { date: string }> = {
   },
 
   // TODO: operation resolver
-  date: {
-    field: "date",
+  createdDate: {
+    field: "createdDate",
     label: "Дата",
     operation: "between",
     type: "dateRange",
