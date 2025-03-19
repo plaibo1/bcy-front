@@ -14,12 +14,13 @@ import { AddLeadButton } from "./AddLeadButton";
 import { AddBusinessObject } from "./AddBusinessObject";
 import { LeadActionsButton } from "./LeadActions";
 import { AnyObject } from "antd/es/_util/type";
+import { PageTotalCountTag } from "../../components/PageTotalCountTag";
 
 export const LeadContainer = () => {
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const currentEntityId = useRef<string>();
-  const pageSizeRef = useRef(10);
+  const pageSizeRef = useRef(50);
 
   const [getEntityFields, { data: entityFields, isError }] =
     useLazyGetEntityFieldsQuery();
@@ -99,6 +100,11 @@ export const LeadContainer = () => {
           />
         )}
       </Flex>
+
+      <PageTotalCountTag
+        count={businessObjects?.paging.totalRecordsAmount}
+        isLoading={isLoading || isFetching}
+      />
 
       <>
         {entityFields && !isError && entityFields && (

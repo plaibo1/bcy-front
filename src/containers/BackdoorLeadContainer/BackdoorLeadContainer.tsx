@@ -5,12 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { BackdoorLeadFilters } from "./BackdoorLeadFilters";
 import { BackdoorLeadOperations } from "./BackdoorLeadOperations";
 import { BackdoorLeadProvider } from "./BackdoorLeadContext/BackdoorLeadProvider";
+import { PageTotalCountTag } from "../../components/PageTotalCountTag";
 
 export const BackdoorLeadContainer = () => {
   const [getBackdoorLeads, { data, isLoading, isFetching }] =
     useLazyGetBackdoorLeadsQuery();
 
-  const pageSizeRef = useRef(10);
+  const pageSizeRef = useRef(50);
 
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -31,6 +32,11 @@ export const BackdoorLeadContainer = () => {
       <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
         <BackdoorLeadOperations selectedRowKeys={selectedRowKeys} />
       </Flex>
+
+      <PageTotalCountTag
+        count={data?.paging.totalRecordsAmount}
+        isLoading={isLoading || isFetching}
+      />
 
       <Space style={{ marginBottom: 32 }}>
         <BackdoorLeadFilters onFilters={onFilters} />
