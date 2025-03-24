@@ -25,6 +25,10 @@ const menuItems = [
     label: "Бекдоры лидов",
     path: "/backdoor-leads",
   },
+  {
+    label: "IVR",
+    path: "/ivr",
+  },
 ];
 
 const navItems = menuItems.map((item) => ({

@@ -1,37 +1,50 @@
-import { FiltersButton } from "../../../components/FiltersButton";
-
+import { Select } from "antd";
 import { CreateFilters } from "../../../components/CreateFilters";
+import { FiltersButton } from "../../../components/FiltersButton";
+import { IVR } from "../../../types/api/ivrTypes";
 import { FilterFormCreateMap } from "../../../types/filterTypes";
-import { IBackdoorLead } from "../../../types/api/backdoorLeadTypes";
 import dayjs from "dayjs";
 
 const fields: FilterFormCreateMap<
-  IBackdoorLead & { createdDate: string; updatedDate: string }
+  IVR & { createdDate: string; updatedDate: string }
 > = {
-  fullName: { label: "Имя", field: "fullName", operation: "starts with" },
-  email: {
-    label: "Email",
-    rules: [{ type: "email", message: "Некорректный email" }],
-    field: "email",
-  },
-  comment: { label: "Комментарий", field: "comment", operation: "contains" },
-  source: {
-    field: "source",
-    label: "Источник",
+  fullName: {
+    label: "Имя",
+    field: "fullName",
     operation: "starts with",
+    colSpan: 4,
   },
   phone: {
     field: "phone",
     label: "Телефон",
     type: "phone",
+    colSpan: 4,
   },
   region: {
     field: "region",
     label: "Регион",
     type: "region",
+    colSpan: 4,
   },
-
-  // TODO: operation resolver
+  sum: {
+    field: "sum",
+    label: "Сумма",
+    colSpan: 4,
+  },
+  status: {
+    field: "status",
+    label: "Статус",
+    operation: "equal",
+    colSpan: 4,
+    customComponent: () => {
+      return (
+        <Select>
+          <Select.Option value="NEW">Новый</Select.Option>
+          <Select.Option value="SENT_TO_LEAD">Отправлен в лиды</Select.Option>
+        </Select>
+      );
+    },
+  },
   createdDate: {
     field: "createdDate",
     label: "Дата создания",
@@ -48,7 +61,6 @@ const fields: FilterFormCreateMap<
         .map((v) => dayjs(v).format("YYYY-MM-DDTHH:mm:ssZ"));
     },
   },
-
   updatedDate: {
     field: "updatedDate",
     label: "Дата обновления",
@@ -67,7 +79,7 @@ const fields: FilterFormCreateMap<
   },
 };
 
-export const BackdoorLeadFilters = ({
+export const IVRFilters = ({
   onFilters,
 }: {
   onFilters: (filters: IFilter[]) => void;
@@ -75,7 +87,11 @@ export const BackdoorLeadFilters = ({
   return (
     <FiltersButton>
       <CreateFilters
-        formProps={{ layout: "vertical", size: "large" }}
+        formProps={{
+          layout: "vertical",
+          size: "large",
+          style: { width: "100%" },
+        }}
         fields={fields}
         onFilterChange={onFilters}
       />

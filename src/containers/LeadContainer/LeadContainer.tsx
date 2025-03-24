@@ -31,7 +31,10 @@ export const LeadContainer = () => {
   const handleSelect = useCallback(
     (entityId: string) => {
       getEntityFields(entityId);
-      getBusinessObjects({ entityId });
+      getBusinessObjects({
+        entityId,
+        paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
+      });
 
       currentEntityId.current = entityId;
       setSelectedRowKeys([]);
@@ -42,7 +45,11 @@ export const LeadContainer = () => {
   const handleFilterChange = (filters: IFilter[]) => {
     if (currentEntityId.current) {
       setFilters(filters);
-      getBusinessObjects({ entityId: currentEntityId.current, filters });
+      getBusinessObjects({
+        entityId: currentEntityId.current,
+        filters,
+        paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
+      });
     }
   };
 

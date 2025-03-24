@@ -18,5 +18,7 @@ export type FilterFormCreateMap<T extends object> = {
       | "dateTimeRange"
       | "region"
       | "phone";
+
+    customComponent?: () => React.ReactNode;
   };
 };

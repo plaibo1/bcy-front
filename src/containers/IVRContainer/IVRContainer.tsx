@@ -1,29 +1,28 @@
-import { Flex, Space } from "antd";
-import { useLazyGetBackdoorLeadsQuery } from "../../store/api/backdoorLeadApi";
-import { BackdoorLeadTable } from "./BackdoorLeadTable";
 import { useEffect, useRef, useState } from "react";
-import { BackdoorLeadFilters } from "./BackdoorLeadFilters";
-import { BackdoorLeadOperations } from "./BackdoorLeadOperations";
-import { BackdoorLeadProvider } from "./BackdoorLeadContext/BackdoorLeadProvider";
+import { IVRProvider } from "./IVRContext/IVRProvider";
+import { IVRTable } from "./IVRTable/IVRTable";
 import { PageTotalCountTag } from "../../components/PageTotalCountTag";
+import { Flex, Space } from "antd";
+import { IVRFilters } from "./IVRFilters/IVRFilters";
+import { useLazyGetIvrQuery } from "../../store/api/ivrApi";
+import { IVRActions } from "./IVRActions";
 
-export const BackdoorLeadContainer = () => {
-  const [getBackdoorLeads, { data, isLoading, isFetching }] =
-    useLazyGetBackdoorLeadsQuery();
+export const IVRContainer = () => {
+  const [getIvrData, { data, isLoading, isFetching }] = useLazyGetIvrQuery();
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [filters, setFilters] = useState<IFilter[]>([]);
 
   const pageSizeRef = useRef(50);
 
-  const [filters, setFilters] = useState<IFilter[]>([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
   useEffect(() => {
-    getBackdoorLeads({
+    getIvrData({
       paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
     });
-  }, [getBackdoorLeads]);
+  }, [getIvrData]);
 
   const onFilters = (filters: IFilter[]) => {
-    getBackdoorLeads({
+    getIvrData({
       filters,
       paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
     });
@@ -31,11 +30,15 @@ export const BackdoorLeadContainer = () => {
   };
 
   return (
-    <BackdoorLeadProvider
-      value={{ selectedBackdoorLeads: selectedRowKeys, filters }}
+    <IVRProvider
+      value={{
+        selectedIVRs: selectedRowKeys,
+        setSelectedIVRs: setSelectedRowKeys,
+        filters,
+      }}
     >
       <Flex style={{ marginBottom: 32 }} gap={8} align="flex-end">
-        <BackdoorLeadOperations selectedRowKeys={selectedRowKeys} />
+        <IVRActions />
       </Flex>
 
       <PageTotalCountTag
@@ -44,10 +47,10 @@ export const BackdoorLeadContainer = () => {
       />
 
       <Space style={{ marginBottom: 32 }}>
-        <BackdoorLeadFilters onFilters={onFilters} />
+        <IVRFilters onFilters={onFilters} />
       </Space>
 
-      <BackdoorLeadTable
+      <IVRTable
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
         data={data?.data}
@@ -56,7 +59,7 @@ export const BackdoorLeadContainer = () => {
           pagination: {
             onChange: (page, pageSize) => {
               pageSizeRef.current = pageSize;
-              getBackdoorLeads({
+              getIvrData({
                 paging: { currentPage: page - 1, recordsOnPage: pageSize },
                 filters,
               });
@@ -68,6 +71,6 @@ export const BackdoorLeadContainer = () => {
           },
         }}
       />
-    </BackdoorLeadProvider>
+    </IVRProvider>
   );
 };

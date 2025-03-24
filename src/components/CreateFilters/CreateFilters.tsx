@@ -52,93 +52,95 @@ export const CreateFilters = <T extends Record<string, unknown>>({
   };
 
   return (
-    <>
-      <Form form={form} onFinish={onFinish} {...formProps}>
-        <Row gutter={[16, 0]}>
-          {Object.entries(fields).map(([fieldKey, field]) => {
-            const Wrapper = ({ children }: { children: React.ReactNode }) => {
-              return (
-                <Col key={fieldKey} span={field.colSpan || 4}>
-                  <Form.Item
-                    label={field.label}
-                    name={fieldKey}
-                    rules={field.rules}
-                  >
-                    {children}
-                  </Form.Item>
-                </Col>
-              );
-            };
+    <Form form={form} onFinish={onFinish} {...formProps}>
+      <Row gutter={[16, 0]}>
+        {Object.entries(fields).map(([fieldKey, field]) => {
+          const Wrapper = ({ children }: { children: React.ReactNode }) => {
+            return (
+              <Col key={fieldKey} span={field.colSpan || 4}>
+                <Form.Item
+                  label={field.label}
+                  name={fieldKey}
+                  rules={field.rules}
+                >
+                  {children}
+                </Form.Item>
+              </Col>
+            );
+          };
 
-            if (field.type === "phone") {
-              return (
-                <Wrapper key={fieldKey}>
-                  <PhoneInput />
-                </Wrapper>
-              );
-            }
+          if (field.customComponent) {
+            return <Wrapper key={fieldKey}>{field.customComponent()}</Wrapper>;
+          }
 
-            if (field.type === "region") {
-              return (
-                <Wrapper key={fieldKey}>
-                  <RegionSelect />
-                </Wrapper>
-              );
-            }
-
-            if (typeof field.type === "undefined") {
-              return (
-                <Wrapper key={fieldKey}>
-                  <Input type="text" />
-                </Wrapper>
-              );
-            }
-
-            if (field.type === "date") {
-              return (
-                <Wrapper key={fieldKey}>
-                  <DatePicker format="DD.MM.YYYY" />
-                </Wrapper>
-              );
-            }
-
-            if (field.type === "datetime") {
-              return (
-                <Wrapper key={fieldKey}>
-                  <DatePicker format="DD.MM.YYYY HH:mm" />
-                </Wrapper>
-              );
-            }
-
-            if (field.type === "dateRange") {
-              return (
-                <Wrapper key={fieldKey}>
-                  <DatePicker.RangePicker
-                    format="DD.MM.YYYY"
-                    // TODO: operation resolver to  allowEmpty={[true, true]}
-                  />
-                </Wrapper>
-              );
-            }
-
+          if (field.type === "phone") {
             return (
               <Wrapper key={fieldKey}>
-                <input type="text" />
+                <PhoneInput />
               </Wrapper>
             );
-          })}
-        </Row>
+          }
 
-        <Divider />
+          if (field.type === "region") {
+            return (
+              <Wrapper key={fieldKey}>
+                <RegionSelect />
+              </Wrapper>
+            );
+          }
 
-        <Space size="middle">
-          <Button type="primary" htmlType="submit">
-            Применить
-          </Button>
+          if (typeof field.type === "undefined") {
+            return (
+              <Wrapper key={fieldKey}>
+                <Input type="text" />
+              </Wrapper>
+            );
+          }
 
-          <Button onClick={onClearFields}>Очистить</Button>
-        </Space>
-      </Form>
-    </>
+          if (field.type === "date") {
+            return (
+              <Wrapper key={fieldKey}>
+                <DatePicker format="DD.MM.YYYY" />
+              </Wrapper>
+            );
+          }
+
+          if (field.type === "datetime") {
+            return (
+              <Wrapper key={fieldKey}>
+                <DatePicker format="DD.MM.YYYY HH:mm" />
+              </Wrapper>
+            );
+          }
+
+          if (field.type === "dateRange") {
+            return (
+              <Wrapper key={fieldKey}>
+                <DatePicker.RangePicker
+                  format="DD.MM.YYYY"
+                  // TODO: operation resolver to  allowEmpty={[true, true]}
+                />
+              </Wrapper>
+            );
+          }
+
+          return (
+            <Wrapper key={fieldKey}>
+              <input type="text" />
+            </Wrapper>
+          );
+        })}
+      </Row>
+
+      <Divider />
+
+      <Space size="middle">
+        <Button type="primary" htmlType="submit">
+          Применить
+        </Button>
+
+        <Button onClick={onClearFields}>Очистить</Button>
+      </Space>
+    </Form>
   );
 };

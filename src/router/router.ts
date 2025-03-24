@@ -7,6 +7,7 @@ import { BackdoorLeadPage } from "../pages/BackdoorLeadPage";
 import { OrdersPage } from "../pages/OrdersPage";
 import { ActiveBackdoorConfiguratorPage } from "../pages/ActiveBackdoorConfiguratorPage";
 import { ConfiguratorSubPage } from "../containers/ActiveBackdoorConfigurator/Configurator";
+import { IVRPage } from "../pages/IVRPage";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/backdoor-leads",
         Component: BackdoorLeadPage,
+      },
+      {
+        path: "/ivr",
+        Component: IVRPage,
       },
     ],
   },

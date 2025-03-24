@@ -57,9 +57,15 @@ const columns: ColumnsType<IBackdoorLead> = [
     key: "log",
   },
   {
-    title: "Дата",
+    title: "Дата создания",
     render: (_, record) => {
       return <DateTimeCeil value={record.audit.createdDate} />;
+    },
+  },
+  {
+    title: "Дата обновления",
+    render: (_, record) => {
+      return <DateTimeCeil value={record.audit.updatedDate} />;
     },
   },
 ];
