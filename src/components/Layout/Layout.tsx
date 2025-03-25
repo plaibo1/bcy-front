@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { Layout as AntdLayout, Menu, theme } from "antd";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, Outlet, useLocation } from "react-router";
 
 const { Header, Content, Footer } = AntdLayout;
 
@@ -36,7 +36,7 @@ const navItems = menuItems.map((item) => ({
   label: <NavLink to={item.path}>{item.label}</NavLink>,
 }));
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+export const Layout = ({ children }: { children?: ReactNode }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -74,7 +74,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             borderRadius: borderRadiusLG,
           }}
         >
-          {children}
+          {children || <Outlet />}
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>

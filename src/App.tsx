@@ -6,17 +6,16 @@ import { Outlet } from "react-router";
 import ru_RU from "antd/lib/locale/ru_RU";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { Layout } from "./components/Layout";
 
 dayjs.locale("ru");
 
-// костыль для basic auth
-fetch("/api/v1/", {
-  method: "POST",
-  // credentials: "include",
-}).then(() => {
-  console.log("BASE_URL", import.meta.env.VITE_BASE_URL);
-});
+// // костыль для basic auth
+// fetch("/api/v1/", {
+//   method: "POST",
+//   // credentials: "include",
+// }).then(() => {
+//   console.log("BASE_URL", import.meta.env.VITE_BASE_URL);
+// });
 
 const App = () => {
   return (
@@ -34,9 +33,7 @@ const App = () => {
         }}
       >
         <AntdApp>
-          <Layout>
-            <Outlet />
-          </Layout>
+          <Outlet />
         </AntdApp>
       </ConfigProvider>
     </Provider>

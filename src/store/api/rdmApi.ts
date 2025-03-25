@@ -11,4 +11,4 @@ export const rdmApi = createApi({
   }),
 });
 
-export const { useGetRegionsQuery } = rdmApi;
+export const { useGetRegionsQuery, useLazyGetRegionsQuery } = rdmApi;
