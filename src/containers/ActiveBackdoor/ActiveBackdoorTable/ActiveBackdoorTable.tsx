@@ -6,6 +6,7 @@ import { RemoveActiveBackdoor } from "./ActionButtons";
 import { useGetConfigurationsQuery } from "../../../store/api/configuratorBackdoorApi";
 import { PlusOutlined, SettingOutlined } from "@ant-design/icons";
 import { Link } from "react-router";
+import { TableProps } from "antd/lib";
 
 const columns: ColumnsType<IActiveBackdoor> = [
   {
@@ -25,13 +26,24 @@ const columns: ColumnsType<IActiveBackdoor> = [
     dataIndex: "status",
 
     render: (status) => {
-      return <Tag color="geekblue">{status}</Tag>;
+      if (status === "REFRESH") {
+        return <Tag color="geekblue">{status}</Tag>;
+      }
+      if (status === "ERROR") {
+        return <Tag color="red">{status}</Tag>;
+      }
+
+      return <Tag color="default">{status}</Tag>;
     },
   },
   {
     title: "Клиент",
     dataIndex: "client",
-    render: (client) => {
+    render: (client, record) => {
+      if (!client) {
+        return record.clientId;
+      }
+
       return (
         <div>
           <b>
@@ -45,10 +57,10 @@ const columns: ColumnsType<IActiveBackdoor> = [
   },
   {
     title: "Дата создания",
-    dataIndex: "createdDate",
-
-    render: (createdDate) => {
-      return <DateTimeCeil value={createdDate} />;
+    dataIndex: "audit",
+    render: (audit) => {
+      if (!audit) return null;
+      return <DateTimeCeil value={audit.createdDate} />;
     },
   },
   {
@@ -99,9 +111,11 @@ const ExpandedRow = ({ backdoorId }: { backdoorId: string }) => {
 export const ActiveBackdoorTable = ({
   data,
   isLoading,
+  tableProps,
 }: {
   data?: IActiveBackdoor[];
   isLoading: boolean;
+  tableProps?: TableProps<IActiveBackdoor>;
 }) => {
   return (
     <Table
@@ -109,12 +123,12 @@ export const ActiveBackdoorTable = ({
       columns={columns}
       dataSource={data}
       loading={isLoading}
-      pagination={false}
       expandable={{
         expandedRowRender: (record) => {
           return <ExpandedRow backdoorId={record.id} />;
         },
       }}
+      {...tableProps}
     />
   );
 };

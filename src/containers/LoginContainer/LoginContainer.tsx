@@ -1,8 +1,9 @@
-import { Button, Flex, Form, Input } from "antd";
+import { App, Button, Flex, Form, Input } from "antd";
 import { useNavigate, useSearchParams } from "react-router";
 import { useLazyGetRegionsQuery } from "../../store/api/rdmApi";
 
 export const LoginContainer = () => {
+  const { notification } = App.useApp();
   const [refetchWithAuth] = useLazyGetRegionsQuery();
 
   const [searchParams] = useSearchParams();
@@ -23,6 +24,12 @@ export const LoginContainer = () => {
         }
 
         navigate("/");
+      })
+      .catch(() => {
+        notification.error({
+          message: "Ошибка",
+          description: "Не удалось войти в систему",
+        });
       });
   };
 

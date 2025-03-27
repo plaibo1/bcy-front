@@ -15,6 +15,20 @@ export const activeBackdoorsApi = createApi({
       providesTags: ["ActiveBackdoor"],
     }),
 
+    getActiveBackdoorsPage: builder.query<
+      PageResponse<IActiveBackdoor>,
+      PageRequest
+    >({
+      query: (body) => {
+        return {
+          method: "POST",
+          url: `/v1/backdoor/page`,
+          body,
+        };
+      },
+      providesTags: ["ActiveBackdoor"],
+    }),
+
     getActiveBackdoorById: builder.query<IActiveBackdoor, string>({
       query: (id) => `/v1/backdoor/${id}`,
     }),
@@ -60,5 +74,6 @@ export const {
   useGetActiveBackdoorByIdQuery,
   useCreateActiveBackdoorMutation,
   useRefreshActiveBackdoorMutation,
+  useLazyGetActiveBackdoorsPageQuery,
   useDeleteActiveBackdoorMutation,
 } = activeBackdoorsApi;
