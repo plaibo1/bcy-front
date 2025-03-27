@@ -52,8 +52,8 @@ export const columns: ColumnsType<IVR> = [
   },
   {
     title: "Комментарий",
-    dataIndex: "transcribation",
-    key: "transcribation",
+    dataIndex: "transcription",
+    key: "transcription",
     render: (v) => {
       if (!v) return null;
 

@@ -3,6 +3,7 @@ import { IOrder } from "../../../types/api/ordersType";
 import { ordersStatuses } from "../../../consts";
 import { Tag } from "antd";
 import { OrdersEditButton } from "../OrdersEditButton";
+import { Link } from "react-router";
 
 export const columns: ColumnsType<IOrder> = [
   {
@@ -37,11 +38,9 @@ export const columns: ColumnsType<IOrder> = [
     title: "Количество отправленных лидов",
     dataIndex: "countLeadsSent",
     key: "countLeadsSent",
-  },
-  {
-    title: "Выполнено лидов",
-    dataIndex: "executedLeadCount",
-    key: "executedLeadCount",
+    render: (countLeadsSent) => {
+      return <Link to={`/orders/${countLeadsSent}`}>{countLeadsSent}</Link>;
+    },
   },
   {
     title: "Майлы",

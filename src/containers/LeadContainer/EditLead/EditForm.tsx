@@ -76,6 +76,7 @@ export const EditForm = ({
   const [form] = Form.useForm();
 
   const { data } = boItem;
+  console.log("🚀 ~ data:", entityFields);
 
   const onFinish = (values: Record<string, unknown>) => {
     const res = Object.keys(values).reduce<Record<string, unknown>>(
@@ -165,6 +166,10 @@ export const EditForm = ({
       onFinish={onFinish}
       initialValues={transformDataToInitialValues(data, entityFields)}
     >
+      <Form.Item label="Имя" name="name">
+        <Input size="large" />
+      </Form.Item>
+
       {entityFields.map((field) => {
         const value = data[field.name];
 

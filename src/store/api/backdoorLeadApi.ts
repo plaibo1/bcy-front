@@ -19,7 +19,10 @@ export const backdoorLeadApi = createApi({
               currentPage: body.paging?.currentPage || 0,
               recordsOnPage: body.paging?.recordsOnPage || 10,
             },
-            sorts: [{ field: "updated_date", sortType: "DESC", order: 1.0 }],
+            sorts: [
+              { field: "updated_date", sortType: "DESC", order: 1.0 },
+              { field: "source", sortType: "ASC", order: 2.0 },
+            ],
           },
         };
       },

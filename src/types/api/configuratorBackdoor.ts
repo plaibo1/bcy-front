@@ -64,3 +64,14 @@ export interface IConfigurationBackdoor {
 
   time: IConfigurationTime;
 }
+
+export interface IWebhookSourceItem {
+  NAME: string;
+  SORT: number;
+  STATUS_ID: string;
+}
+
+export interface IWebhookSource {
+  result: IWebhookSourceItem[];
+  time: IConfigurationTime;
+}

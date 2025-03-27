@@ -6,6 +6,7 @@ import {
   Popconfirm,
   Space,
   Spin,
+  Tag,
   Typography,
 } from "antd";
 import { ConfiguratorTag } from "../ConfiguratorTag/ConfiguratorTag";
@@ -18,6 +19,7 @@ import {
   useDeleteConfigurationMutation,
   useGetConfigurationsQuery,
   useGetWebhookConfigurationsQuery,
+  useGetWebhookSourceQuery,
   useUpdateConfigurationMutation,
 } from "../../../store/api/configuratorBackdoorApi";
 import { SearchOrders } from "../../../components/SearchOrders";
@@ -45,6 +47,49 @@ const getInitConfig = ({
   }, {} as Record<string, IConfigurationItem>);
 };
 
+const Sources = ({ url }: { url?: string }) => {
+  const { data, isLoading, isError } = useGetWebhookSourceQuery(
+    {
+      url: url || "",
+    },
+    {
+      skip: !url,
+    }
+  );
+
+  if (isError) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 8,
+        flexWrap: "wrap",
+        overflow: "auto",
+        border: "1px solid #ccc",
+        borderRadius: 20,
+        padding: 8,
+        height: 500,
+      }}
+    >
+      {isLoading && (
+        <Flex justify="center" align="center" style={{ height: "100%" }}>
+          <Spin />
+        </Flex>
+      )}
+
+      {data?.result?.map((item, index) => (
+        <Tag key={index}>
+          <strong>{item.NAME}</strong>
+          <span>{item.STATUS_ID}</span>
+        </Tag>
+      ))}
+    </div>
+  );
+};
+
 /**
  *
  * простите если читаете это.....
@@ -56,11 +101,13 @@ export const Configurator = ({
   configurationItems,
   isNew,
   order,
+  url,
 }: {
   initialConfigValues?: Record<string, string>;
   configurationItems?: Record<string, IConfigurationItem>;
   isNew?: boolean;
   order?: IOrder;
+  url?: string;
 }) => {
   const navigate = useNavigate();
   const { id: backdoorId, configurationId } = useParams();
@@ -275,6 +322,7 @@ export const Configurator = ({
           borderRadius: 20,
           padding: 8,
           height: 500,
+          marginBottom: 24,
         }}
       >
         {Object.entries(configurationItems ?? {}).map(([key, value]) => {
@@ -290,6 +338,8 @@ export const Configurator = ({
           );
         })}
       </div>
+
+      <Sources url={url} />
 
       {Object.keys(configItems).length > 0 && (
         <div>
@@ -416,11 +466,16 @@ export const ConfiguratorSubPage = () => {
           order={result.order}
           initialConfigValues={result.data}
           configurationItems={webhookData.result}
+          url={backdoor.url}
         />
       )}
 
       {!result && webhookData?.result && (
-        <Configurator isNew configurationItems={webhookData.result} />
+        <Configurator
+          isNew
+          configurationItems={webhookData.result}
+          url={backdoor.url}
+        />
       )}
     </div>
   );

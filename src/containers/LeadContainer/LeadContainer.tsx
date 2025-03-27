@@ -78,6 +78,7 @@ export const LeadContainer = () => {
     <div>
       <Flex style={{ marginBottom: 32 }} gap={8} align="center">
         <AddLeadButton />
+
         <LeadSelect selectFirst onChange={handleSelect} />
 
         {entityFields && !isError && currentEntityId.current && (
@@ -86,16 +87,13 @@ export const LeadContainer = () => {
             onSubmit={() => getEntityFields(currentEntityId.current || "")}
           />
         )}
-
         {entityFields && !isError && currentEntityId.current && (
           <EditLeadEntity
             fields={entityFields}
             entityId={currentEntityId.current}
           />
         )}
-
         <Divider type="vertical" />
-
         {entityFields && !isError && currentEntityId.current && (
           <AddBusinessObject
             entityId={currentEntityId.current}

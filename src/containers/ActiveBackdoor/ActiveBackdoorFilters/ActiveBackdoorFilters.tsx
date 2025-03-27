@@ -12,7 +12,7 @@ const fields: FilterFormCreateMap<
   url: {
     field: "url",
     label: "URL",
-    operation: "equal",
+    operation: "starts with",
     colSpan: 4,
     rules: [{ type: "url", message: "Некорректный URL" }],
   },

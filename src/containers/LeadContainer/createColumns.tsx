@@ -9,12 +9,20 @@ import dayjs from "dayjs";
 
 import { EditButton } from "./EditLead";
 import { type IBusinessObject } from "../../types/api/businessObjectTypes";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { sourceTypeMap } from "../../consts";
+import { TagProps } from "antd/lib";
 
 interface ICreateColumns {
   columnsFields: IEntityField[];
 }
+
+const STATUSES_COLORS: Record<string, TagProps["color"]> = {
+  INTERVAL: "purple",
+  NOT_SENT: "default",
+  SENT: "success",
+  SCHEDULED: "geekblue",
+};
 
 export const createColumns = <T extends AnyObject>({
   columnsFields,
@@ -47,6 +55,15 @@ export const createColumns = <T extends AnyObject>({
       dataIndex: `data`,
       render: (_, record) => {
         const value = record?.data[column.name];
+
+        // ВРЕМЕННЫЙ ХАРДКОД
+        if (column.name === "status" && column.settings?.labelValues) {
+          return (
+            <Tag color={STATUSES_COLORS[value] || "default"}>
+              {column.settings.labelValues[value] ?? value}
+            </Tag>
+          );
+        }
 
         if (column.settings?.labelValues) {
           return column.settings.labelValues[value] ?? value;

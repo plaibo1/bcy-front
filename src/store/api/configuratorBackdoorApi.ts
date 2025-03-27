@@ -4,6 +4,7 @@ import {
   IBackdoorConfigurationItem,
   IConfigurationBackdoor,
   ICreateConfiguration,
+  IWebhookSource,
 } from "../../types/api/configuratorBackdoor";
 
 export const configuratorBackdoorApi = createApi({
@@ -20,6 +21,18 @@ export const configuratorBackdoorApi = createApi({
         return {
           method: "POST",
           url: `/v1/backdoor/configuration/bitrix-fields`,
+          body: {
+            bitrixUrl: url,
+          },
+        };
+      },
+    }),
+
+    getWebhookSource: builder.query<IWebhookSource, { url: string }>({
+      query: ({ url }) => {
+        return {
+          method: "POST",
+          url: `/v1/backdoor/configuration/bitrix-source`,
           body: {
             bitrixUrl: url,
           },
@@ -90,6 +103,7 @@ export const configuratorBackdoorApi = createApi({
 export const {
   useGetWebhookConfigurationsQuery,
   useGetConfigurationsQuery,
+  useGetWebhookSourceQuery,
   useCreateConfigurationMutation,
   useUpdateConfigurationMutation,
   useDeleteConfigurationMutation,

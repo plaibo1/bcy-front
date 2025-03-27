@@ -13,8 +13,8 @@ export const ConfiguratorHeading = ({
       <Flex style={{ marginBottom: 8 }} align="center" gap={8}>
         <Avatar icon={<UserOutlined />} />
         <Typography.Title style={{ margin: 0 }} level={3}>
-          {backdoor.client.lastName} {backdoor.client.firstName}{" "}
-          {backdoor.client.middleName}
+          {backdoor?.client?.lastName} {backdoor?.client?.firstName}{" "}
+          {backdoor?.client?.middleName}
         </Typography.Title>
       </Flex>
       <Flex gap={4}>
@@ -23,7 +23,7 @@ export const ConfiguratorHeading = ({
       </Flex>
       <Flex gap={4}>
         <MailOutlined />
-        {backdoor.client.email}
+        {backdoor?.client?.email}
       </Flex>
     </div>
   );

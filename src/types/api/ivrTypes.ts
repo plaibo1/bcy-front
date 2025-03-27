@@ -3,9 +3,10 @@ export interface IVR {
   fullName: string;
   phone: string;
   region: string;
-  transcribation: {
+  transcription: {
     name: string;
     sum: string;
+    transcription: string;
   };
   talkLink: string;
   status: string;
