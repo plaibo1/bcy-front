@@ -2,6 +2,7 @@ import {
   Alert,
   App,
   Button,
+  Divider,
   Flex,
   Popconfirm,
   Space,
@@ -61,6 +62,14 @@ const Sources = ({ url }: { url?: string }) => {
     return null;
   }
 
+  if (isLoading) {
+    return (
+      <Flex justify="center" align="center" style={{ height: "100%" }}>
+        <Spin />
+      </Flex>
+    );
+  }
+
   return (
     <div
       style={{
@@ -71,19 +80,20 @@ const Sources = ({ url }: { url?: string }) => {
         border: "1px solid #ccc",
         borderRadius: 20,
         padding: 8,
-        height: 500,
+        maxHeight: 500,
       }}
     >
-      {isLoading && (
-        <Flex justify="center" align="center" style={{ height: "100%" }}>
-          <Spin />
-        </Flex>
-      )}
-
       {data?.result?.map((item, index) => (
-        <Tag key={index}>
-          <strong>{item.NAME}</strong>
-          <span>{item.STATUS_ID}</span>
+        <Tag key={index} style={{ display: "flex", alignItems: "center" }}>
+          <Typography.Text>
+            <strong>{item.NAME}</strong>
+          </Typography.Text>
+
+          <Divider type="vertical" />
+
+          <div>
+            <Typography.Text>{item.STATUS_ID}</Typography.Text>
+          </div>
         </Tag>
       ))}
     </div>
