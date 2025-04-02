@@ -64,6 +64,7 @@ export const EditForm = ({
   entityId,
   index,
   entityFields,
+  name,
 }: IProps) => {
   const { notification } = App.useApp();
   const { setLeads } = useContext(LeadContext); // TODO: useContext
@@ -76,11 +77,15 @@ export const EditForm = ({
   const [form] = Form.useForm();
 
   const { data } = boItem;
-  console.log("🚀 ~ data:", entityFields);
 
   const onFinish = (values: Record<string, unknown>) => {
     const res = Object.keys(values).reduce<Record<string, unknown>>(
       (acc, key) => {
+        if (key === "name") {
+          acc[key] = values[key];
+          return acc;
+        }
+
         const foundField = entityFields.find((f) => f.name === key);
 
         if (foundField!.type === "DATE") {
@@ -105,6 +110,7 @@ export const EditForm = ({
       entityId,
       id: boItem.id,
       data: res,
+      name: res.name as string,
     })
       .unwrap()
       .then((res) => {
@@ -164,7 +170,10 @@ export const EditForm = ({
       layout="vertical"
       form={form}
       onFinish={onFinish}
-      initialValues={transformDataToInitialValues(data, entityFields)}
+      initialValues={{
+        ...transformDataToInitialValues(data, entityFields),
+        name,
+      }}
     >
       <Form.Item label="Имя" name="name">
         <Input size="large" />
@@ -182,7 +191,7 @@ export const EditForm = ({
         }
 
         if (field.settings?.labelValues) {
-          return <SelectField field={field} />;
+          return <SelectField key={field.name} field={field} />;
         }
 
         if (field.type === "DATE") {

@@ -108,6 +108,7 @@ export const createColumns = <T extends AnyObject>({
             entityFields={columnsFields}
             entityId={columnsFields[0]?.entityId}
             index={index}
+            name={record.name as string}
           />
         );
       },

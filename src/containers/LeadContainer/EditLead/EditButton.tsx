@@ -12,6 +12,7 @@ export interface IEditProps {
   entityId: string;
   entityFields: IEntityField[];
   index: number;
+  name: string;
 }
 
 export const EditButton = ({
@@ -19,6 +20,7 @@ export const EditButton = ({
   entityId,
   entityFields,
   index,
+  name,
 }: IEditProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -56,6 +58,7 @@ export const EditButton = ({
           entityId={entityId}
           cancel={handleCancel}
           index={index}
+          name={name}
         />
       </Modal>
     </>
