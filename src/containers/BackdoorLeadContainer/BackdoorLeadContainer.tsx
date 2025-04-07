@@ -28,6 +28,7 @@ export const BackdoorLeadContainer = () => {
       paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
     });
     setFilters(filters);
+    setSelectedRowKeys([]);
   };
 
   return (

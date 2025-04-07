@@ -50,6 +50,7 @@ export const LeadContainer = () => {
         filters,
         paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
       });
+      setSelectedRowKeys([]);
     }
   };
 

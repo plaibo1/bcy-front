@@ -27,6 +27,7 @@ export const IVRContainer = () => {
       paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
     });
     setFilters(filters);
+    setSelectedRowKeys([]);
   };
 
   return (
