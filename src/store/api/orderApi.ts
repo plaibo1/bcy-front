@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { type IOrder, type IOrderCreate } from "../../types/api/ordersType";
 import { getBaseQuery } from "./getBaseQuery";
+import { type IBusinessObject } from "../../types/api/businessObjectTypes";
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
@@ -56,6 +57,37 @@ export const orderApi = createApi({
       },
       invalidatesTags: ["Order"],
     }),
+
+    getOrderSendingResults: builder.query<
+      PageResponse<IBusinessObject>,
+      { orderId: string } & PageRequest
+    >({
+      query: ({ orderId, ...body }) => {
+        return {
+          method: "POST",
+          url: `/v1/order/${orderId}/sending-result/page`,
+          body: {
+            ...body,
+            paging: {
+              currentPage: body.paging?.currentPage || 0,
+              recordsOnPage: body.paging?.recordsOnPage || 10,
+            },
+          },
+        };
+      },
+      providesTags: ["Order"],
+    }),
+
+    ordersDownloadExcel: builder.mutation<Blob, { orderId: string }>({
+      query: ({ orderId }) => {
+        return {
+          method: "POST",
+          url: `/v1/order/${orderId}/download/excel`,
+          responseHandler: (response) => response.blob(),
+          responseType: "blob" as const,
+        };
+      },
+    }),
   }),
 });
 
@@ -64,4 +96,7 @@ export const {
   useCreateOrderMutation,
   useEditOrderMutation,
   useDeleteOrderMutation,
+
+  useOrdersDownloadExcelMutation,
+  useLazyGetOrderSendingResultsQuery,
 } = orderApi;

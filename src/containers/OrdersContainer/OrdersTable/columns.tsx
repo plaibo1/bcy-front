@@ -38,8 +38,8 @@ export const columns: ColumnsType<IOrder> = [
     title: "Количество отправленных лидов",
     dataIndex: "countLeadsSent",
     key: "countLeadsSent",
-    render: (countLeadsSent) => {
-      return <Link to={`/orders/${countLeadsSent}`}>{countLeadsSent}</Link>;
+    render: (countLeadsSent, record) => {
+      return <Link to={`/orders/${record.id}`}>{countLeadsSent}</Link>;
     },
   },
   {

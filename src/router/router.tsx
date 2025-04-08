@@ -12,6 +12,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { EmptyLayout } from "../components/Layout/EmptyLayout";
 import { Layout } from "../components/Layout";
 import { AuthGuard } from "./AuthGuard";
+import { OrdersSendingResultsPage } from "../pages/OrdersSendingResultsPage";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
           {
             path: "/orders",
             Component: OrdersPage,
+          },
+          {
+            path: "/orders/:orderId",
+            Component: OrdersSendingResultsPage,
           },
           {
             path: "/active-backdoors",
