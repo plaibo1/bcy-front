@@ -61,7 +61,8 @@ export const columns: ColumnsType<IVR> = [
         <div
           style={{
             maxWidth: 800,
-            height: 50,
+            minHeight: 50,
+            maxHeight: 170,
             overflow: "auto",
           }}
         >
