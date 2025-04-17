@@ -1,5 +1,6 @@
 import { Button, Divider, Form, Input, Tag } from "antd";
 import { IConfigurationItem } from "../../../types/api/configuratorBackdoor";
+import { FormInstance } from "antd/lib";
 
 export const ConfiguratorForm = ({
   configItems,
@@ -7,15 +8,17 @@ export const ConfiguratorForm = ({
   onSubmit,
   onClear,
   initialValues,
+  form
 }: {
   configItems: Record<string, IConfigurationItem>;
   initialValues?: Record<string, string>;
   onRemove: (key: string) => void;
   onSubmit: (values: Record<string, string>) => void;
   onClear: () => void;
+  form?: FormInstance;
 }) => {
   return (
-    <Form initialValues={initialValues} onFinish={onSubmit}>
+    <Form form={form} initialValues={initialValues} onFinish={onSubmit}>
       <div
         style={{
           display: "flex",

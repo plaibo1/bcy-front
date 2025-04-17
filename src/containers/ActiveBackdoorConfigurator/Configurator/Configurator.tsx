@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   Flex,
+  Form,
   Popconfirm,
   Space,
   Spin,
@@ -48,7 +49,7 @@ const getInitConfig = ({
   }, {} as Record<string, IConfigurationItem>);
 };
 
-const Sources = ({ url }: { url?: string }) => {
+const Sources = ({ url, addSourceId }: { url?: string; addSourceId: (id: string) => void }) => {
   const { data, isLoading, isError } = useGetWebhookSourceQuery(
     {
       url: url || "",
@@ -70,6 +71,7 @@ const Sources = ({ url }: { url?: string }) => {
     );
   }
 
+
   return (
     <div
       style={{
@@ -84,7 +86,7 @@ const Sources = ({ url }: { url?: string }) => {
       }}
     >
       {data?.result?.map((item, index) => (
-        <Tag key={index} style={{ display: "flex", alignItems: "center" }}>
+        <Tag key={index} onClick={() => addSourceId(item.STATUS_ID)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
           <Typography.Text>
             <strong>{item.NAME}</strong>
           </Typography.Text>
@@ -122,6 +124,8 @@ export const Configurator = ({
   const navigate = useNavigate();
   const { id: backdoorId, configurationId } = useParams();
   const { notification, message } = App.useApp();
+
+  const [form] = Form.useForm()
 
   const { data: configurationsData } = useGetConfigurationsQuery({
     filters: [
@@ -284,6 +288,23 @@ export const Configurator = ({
       });
   };
 
+  const handleAddSourceId = (SOURCE_ID: string) => {
+    setConfigItems((prev) => {
+      return {
+        ...prev,
+        SOURCE_ID: {
+          type: "string",
+          isRequired: true,
+          isReadOnly: true,
+          isImmutable: true,
+        } as IConfigurationItem
+      }
+    })
+    form.setFieldsValue({
+      SOURCE_ID
+    })
+  }
+
   return (
     <div>
       {isNew ? (
@@ -349,7 +370,7 @@ export const Configurator = ({
         })}
       </div>
 
-      <Sources url={url} />
+      <Sources url={url} addSourceId={handleAddSourceId} />
 
       {Object.keys(configItems).length > 0 && (
         <div>
@@ -361,6 +382,7 @@ export const Configurator = ({
             onSubmit={onSubmit}
             onClear={clearConfig}
             initialValues={initialConfigValues}
+            form={form}
           />
         </div>
       )}
