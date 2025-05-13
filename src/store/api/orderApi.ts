@@ -20,6 +20,10 @@ export const orderApi = createApi({
               currentPage: body.paging?.currentPage || 0,
               recordsOnPage: body.paging?.recordsOnPage || 10,
             },
+            sorts: [
+              { field: "id", sortType: "DESC", order: 1.0 },
+              { field: "status", sortType: "ASC", order: 2.0 },
+            ],
           },
         };
       },

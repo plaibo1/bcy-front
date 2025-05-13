@@ -46,7 +46,7 @@ export const CreateFilters = <T extends Record<string, unknown>>({
   };
 
   const onClearFields = () => {
-    form.resetFields();
+    form.setFieldsValue(() => null);
     onFilterChange([]);
     onCancel?.();
   };

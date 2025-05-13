@@ -5,20 +5,33 @@ import { OrdersCreateButton } from "./OrdersCreateButton";
 import { useLazyGetOrdersQuery } from "../../store/api/orderApi";
 import { useEffect, useRef, useState } from "react";
 import { OrdersFilters } from "./OrdersFilters";
+import { PageTotalCountTag } from "../../components/PageTotalCountTag";
+
+const DEFAULT_FILTER: IFilter = {
+  field: "status",
+  operation: "equal",
+  values: ["IN_PROGRESS"],
+};
 
 export const OrdersContainer = () => {
-  const [getOrders, { data, isLoading }] = useLazyGetOrdersQuery();
+  const [getOrders, { data, isLoading, isFetching }] = useLazyGetOrdersQuery();
 
-  const pageSizeRef = useRef(10);
+  const pageSizeRef = useRef(50);
 
   const [filters, setFilters] = useState<IFilter[]>([]);
 
   useEffect(() => {
-    getOrders({});
+    getOrders({
+      filters: [DEFAULT_FILTER], // Из ТЗ по дефолту ищем так
+      paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
+    });
   }, [getOrders]);
 
   const onFilters = (filters: IFilter[]) => {
-    getOrders({ filters });
+    getOrders({
+      filters,
+      paging: { currentPage: 0, recordsOnPage: pageSizeRef.current },
+    });
     setFilters(filters);
   };
 
@@ -28,6 +41,11 @@ export const OrdersContainer = () => {
         <OrdersCreateButton />
       </Flex>
 
+      <PageTotalCountTag
+        count={data?.paging.totalRecordsAmount}
+        isLoading={isLoading || isFetching}
+      />
+
       <Space style={{ marginBottom: 32 }}>
         <OrdersFilters onFilters={onFilters} />
       </Space>
@@ -35,7 +53,7 @@ export const OrdersContainer = () => {
       <OrdersTable
         data={data?.data}
         tableProps={{
-          loading: isLoading,
+          loading: isLoading || isFetching,
           pagination: {
             onChange: (page, pageSize) => {
               pageSizeRef.current = pageSize;
