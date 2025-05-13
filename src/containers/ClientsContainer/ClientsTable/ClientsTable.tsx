@@ -1,4 +1,4 @@
-import { Button, Flex, Modal, Table, Tag, Typography } from "antd";
+import { Button, Flex, Modal, Skeleton, Table, Tag, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { IClient } from "../../../types/api/clientsType";
 import { TableProps } from "antd/lib";
@@ -124,9 +124,11 @@ export const ClientsTable = ({
   data,
   tableProps,
 }: {
-  data: IClient[];
+  data?: IClient[];
   tableProps: TableProps<IClient>;
 }) => {
+  if (!data) return <Skeleton active />;
+
   return (
     <Table
       rowKey="id"
@@ -141,6 +143,7 @@ export const ClientsTable = ({
       ]}
       dataSource={data}
       expandable={{
+        defaultExpandAllRows: true,
         expandedRowRender: (record) => <ExpandedRow client={record} />,
         rowExpandable: (record) => record.orders.length > 0,
       }}
