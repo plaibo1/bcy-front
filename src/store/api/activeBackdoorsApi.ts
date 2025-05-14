@@ -47,6 +47,20 @@ export const activeBackdoorsApi = createApi({
       invalidatesTags: ["ActiveBackdoor"],
     }),
 
+    editActiveBackdoor: builder.mutation<
+      IActiveBackdoor,
+      { status: string; id: string }
+    >({
+      query: (body) => {
+        return {
+          method: "PUT",
+          url: `/v1/backdoor`,
+          body,
+        };
+      },
+      invalidatesTags: ["ActiveBackdoor"],
+    }),
+
     deleteActiveBackdoor: builder.mutation<string, string>({
       query: (id) => {
         return {
@@ -73,6 +87,7 @@ export const {
   useGetActiveBackdoorsQuery,
   useGetActiveBackdoorByIdQuery,
   useCreateActiveBackdoorMutation,
+  useEditActiveBackdoorMutation,
   useRefreshActiveBackdoorMutation,
   useLazyGetActiveBackdoorsPageQuery,
   useDeleteActiveBackdoorMutation,

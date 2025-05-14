@@ -3,8 +3,16 @@ import { DeleteOutlined, SettingOutlined } from "@ant-design/icons";
 import { useDeleteActiveBackdoorMutation } from "../../../store/api/activeBackdoorsApi";
 import { isBackendError } from "../../../types/errorTypeGuards";
 import { Link } from "react-router";
+import { EditActiveBackdoor } from "./EditActiveBackdoor";
+import { type IActiveBackdoor } from "../../../types/api/activeBackdoorsTypes";
 
-export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
+export const RemoveActiveBackdoor = ({
+  id,
+  record,
+}: {
+  id: string;
+  record: IActiveBackdoor;
+}) => {
   const { notification } = App.useApp();
   const [deleteActiveBackdoor, { isLoading }] =
     useDeleteActiveBackdoorMutation();
@@ -35,6 +43,8 @@ export const RemoveActiveBackdoor = ({ id }: { id: string }) => {
 
   return (
     <Space>
+      <EditActiveBackdoor id={id} record={record} />
+
       <Link to={`/active-backdoors/${id}`}>
         <Button icon={<SettingOutlined />} />
       </Link>

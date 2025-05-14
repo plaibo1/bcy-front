@@ -65,8 +65,8 @@ const columns: ColumnsType<IActiveBackdoor> = [
   },
   {
     dataIndex: "id",
-    render: (id) => {
-      return <RemoveActiveBackdoor id={id} />;
+    render: (id, record) => {
+      return <RemoveActiveBackdoor id={id} record={record} />;
     },
   },
 ];
