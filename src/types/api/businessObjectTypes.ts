@@ -3,6 +3,8 @@ export interface IBusinessObject {
   name: string;
   entityId: string;
   data: Record<string, unknown>;
+  sourceType: "FRONT" | "BACKDOOR" | string;
+  sourceId: string;
 
   audit: {
     createdDate: string;

@@ -29,6 +29,15 @@ export const backdoorLeadApi = createApi({
       providesTags: ["BackdoorLead"],
     }),
 
+    getBackdoorLeadById: builder.query<IBackdoorLead, { id: string }>({
+      query: ({ id }) => {
+        return {
+          url: `/v1/backdoor-lead/${id}`,
+        };
+      },
+      providesTags: ["BackdoorLead"],
+    }),
+
     moveBackdoorLead: builder.mutation<
       IBackdoorLead,
       { entityId: string; backdoorLeadIds: string[] }
@@ -68,6 +77,7 @@ export const backdoorLeadApi = createApi({
 
 export const {
   useLazyGetBackdoorLeadsQuery,
+  useGetBackdoorLeadByIdQuery,
   useMoveBackdoorLeadMutation,
   useGetExcelByBackdoorLeadFiltersMutation,
 } = backdoorLeadApi;

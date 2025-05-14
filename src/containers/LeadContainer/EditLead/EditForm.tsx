@@ -21,6 +21,7 @@ import { LeadContext } from "../LeadContext";
 import { SelectField } from "../LeadFilters/SelectField";
 import { PhoneInput } from "../../../components/PhoneInput";
 import { type IEntityField } from "../../../types/api/entityFieldsTypes";
+import { useGetBackdoorLeadByIdQuery } from "../../../store/api/backdoorLeadApi";
 
 const { TextArea } = Input;
 
@@ -68,6 +69,13 @@ export const EditForm = ({
 }: IProps) => {
   const { notification } = App.useApp();
   const { setLeads } = useContext(LeadContext); // TODO: useContext
+
+  const { data: backdoorLead } = useGetBackdoorLeadByIdQuery(
+    { id: boItem.sourceId },
+    { skip: boItem.sourceType !== "BACKDOOR" }
+  );
+
+  console.log("boItem: ", boItem);
 
   const [updateBusinessObject, { isLoading: isUpdating }] =
     useUpdateBusinessObjectMutation();
@@ -259,6 +267,22 @@ export const EditForm = ({
           </Form.Item>
         );
       })}
+
+      {boItem?.sourceType === "BACKDOOR" && (
+        <>
+          <div
+            style={{
+              border: "2px dashed #ececec",
+              borderRadius: 12,
+              padding: 8,
+              marginBottom: 32,
+            }}
+          >
+            <strong>Комментарий: </strong>
+            {backdoorLead?.comment || "отсутствует"}
+          </div>
+        </>
+      )}
 
       <Flex justify="space-between" gap={16}>
         <Popconfirm
