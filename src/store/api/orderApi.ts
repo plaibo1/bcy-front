@@ -21,7 +21,7 @@ export const orderApi = createApi({
               recordsOnPage: body.paging?.recordsOnPage || 10,
             },
             sorts: [
-              { field: "id", sortType: "DESC", order: 1.0 },
+              { field: "clientId", sortType: "DESC", order: 1.0 },
               { field: "status", sortType: "ASC", order: 2.0 },
             ],
           },

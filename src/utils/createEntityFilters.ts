@@ -16,6 +16,18 @@ export const createEntityFilters = (
       };
     }
 
+    if (field === "createdDate") {
+      return {
+        field,
+        operation: "between",
+        values: Array.isArray(value)
+          ? value
+              .filter(Boolean)
+              .map((v) => dayjs(v).format("YYYY-MM-DDTHH:mm:ssZ"))
+          : [],
+      };
+    }
+
     const foundField = fields.find((f) => f.name === field);
 
     if (foundField!.type === "DATE") {

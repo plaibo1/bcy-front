@@ -16,6 +16,8 @@ import { FiltersButton } from "../../../components/FiltersButton";
 import { SelectField } from "./SelectField";
 import { PhoneInput } from "../../../components/PhoneInput";
 
+const { RangePicker } = DatePicker;
+
 export const LeadFilters = ({
   entityFields,
   onFilters,
@@ -44,6 +46,16 @@ export const LeadFilters = ({
     <FiltersButton>
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Row gutter={[16, 0]}>
+          <Col span={4}>
+            <Form.Item label="Дата создания" name="createdDate">
+              <RangePicker
+                size="large"
+                style={{ width: "100%" }}
+                format="DD.MM.YYYY"
+              />
+            </Form.Item>
+          </Col>
+
           <Col span={4}>
             <Form.Item label="Имя" name="name">
               <Input size="large" type="text" />

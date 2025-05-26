@@ -9,14 +9,6 @@ import "dayjs/locale/ru";
 
 dayjs.locale("ru");
 
-// // костыль для basic auth
-// fetch("/api/v1/", {
-//   method: "POST",
-//   // credentials: "include",
-// }).then(() => {
-//   console.log("BASE_URL", import.meta.env.VITE_BASE_URL);
-// });
-
 const App = () => {
   return (
     <Provider store={store}>
