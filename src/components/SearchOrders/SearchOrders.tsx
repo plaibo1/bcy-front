@@ -34,7 +34,12 @@ const transformResponseToOptions = (data: IOrder[]) => {
 
             <br />
 
-            <code style={{ fontWeight: "bold", fontSize: 12 }}>{id}</code>
+            <div>
+              <span style={{ color: "#59cf1d" }}>{order.countLeadsSent} </span>{" "}
+              / {order.leadCount}
+            </div>
+
+            {/* <code style={{ fontWeight: "bold", fontSize: 12 }}>{id}</code> */}
           </div>
         </Flex>
       ),
@@ -46,9 +51,11 @@ export const SearchOrders = ({
   value,
   onChange,
   selectProps,
+  searchFilters,
 }: {
   value?: string;
   onChange?: (v: string) => void;
+  searchFilters?: IFilter[];
   selectProps?: SelectProps;
 }) => {
   const { message } = App.useApp();
@@ -69,6 +76,7 @@ export const SearchOrders = ({
             operation: "contains",
             values: [value],
           },
+          ...(searchFilters ? searchFilters : []),
         ],
       }).unwrap();
 

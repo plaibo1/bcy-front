@@ -130,7 +130,15 @@ export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
 
       <Form size="large" layout="vertical" onFinish={onFinish}>
         <Form.Item label="Заказ" name="orderId" rules={[{ required: true }]}>
-          <SearchOrders />
+          <SearchOrders
+            searchFilters={[
+              {
+                field: "status",
+                operation: "not equal",
+                values: ["EXECUTED"],
+              },
+            ]}
+          />
         </Form.Item>
 
         <Space>
