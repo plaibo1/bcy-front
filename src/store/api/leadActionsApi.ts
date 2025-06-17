@@ -1,8 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { getBaseQuery } from "./getBaseQuery";
 import {
-  ITaskSchedule,
-  ITaskScheduleDuration,
+  type ITaskSchedule,
+  type ITaskScheduleDuration,
+  type ITaskScheduleResponse,
 } from "../../types/api/leadActionsTypes";
 import { EXCEL_LIMIT } from "../../consts";
 
@@ -10,7 +11,7 @@ export const leadActionsApi = createApi({
   reducerPath: "leadActionsApi",
   baseQuery: getBaseQuery(),
   endpoints: (builder) => ({
-    scheduleLeads: builder.mutation<void, ITaskSchedule>({
+    scheduleLeads: builder.mutation<ITaskScheduleResponse, ITaskSchedule>({
       query: ({ entityId, ...body }) => {
         return {
           method: "POST",
@@ -20,7 +21,10 @@ export const leadActionsApi = createApi({
       },
     }),
 
-    scheduleLeadsWithDuration: builder.mutation<void, ITaskScheduleDuration>({
+    scheduleLeadsWithDuration: builder.mutation<
+      ITaskScheduleResponse,
+      ITaskScheduleDuration
+    >({
       query: ({ entityId, ...body }) => {
         return {
           method: "POST",

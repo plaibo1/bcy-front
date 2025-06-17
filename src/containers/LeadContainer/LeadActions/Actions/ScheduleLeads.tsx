@@ -15,11 +15,12 @@ import {
 } from "../../../../store/api/leadActionsApi";
 import { useContext } from "react";
 import { LeadContext } from "../../LeadContext";
-import dayjs from "dayjs";
 import { isBackendError } from "../../../../types/errorTypeGuards";
 
+import dayjs from "dayjs";
+
 export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
-  const { message, notification } = App.useApp();
+  const { message, notification, modal } = App.useApp();
   const { selectedLeads, entityId } = useContext(LeadContext);
   const [scheduleLeads, { isLoading }] = useScheduleLeadsMutation();
   const [scheduleLeadsWithDuration, { isLoading: isLoading2 }] =
@@ -54,7 +55,53 @@ export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
         startDate: null,
       })
         .unwrap()
-        .then(() => {
+        .then((res) => {
+          if (Array.isArray(res?.unsentLeads) && res.unsentLeads.length > 0) {
+            modal.warning({
+              width: 800,
+              title: "Лиды не отправленые в интервал",
+              content: res.unsentLeads.map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    marginBottom: 16,
+                    padding: 16,
+                    borderRadius: 12,
+                    border: "2px dased #f0f0f0",
+                  }}
+                >
+                  <Alert
+                    showIcon
+                    type="info"
+                    message="Причина: "
+                    description={item.reason}
+                  />
+
+                  <Flex gap={16} wrap>
+                    {item.leads.map((lead) => (
+                      <div
+                        style={{
+                          padding: "8px 16px",
+                          border: "1px solid #f0f0f0",
+                          borderRadius: 12,
+                        }}
+                        key={lead.id}
+                      >
+                        <strong>{lead.name}</strong>
+
+                        {typeof lead?.data?.phone === "string" && (
+                          <p style={{ margin: 0, padding: 0 }}>
+                            {lead?.data?.phone}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </Flex>
+                </div>
+              )),
+            });
+          }
+
           notification.success({
             message: "Успешно",
             description: "Лиды успешно запланированы",
@@ -94,7 +141,53 @@ export const ScheduleLeads = ({ onCancel }: { onCancel?: () => void }) => {
       durationInMinutes,
     })
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        if (Array.isArray(res?.unsentLeads) && res.unsentLeads.length > 0) {
+          modal.warning({
+            width: 800,
+            title: "Лиды не отправленые в интервал",
+            content: res.unsentLeads.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  marginBottom: 16,
+                  padding: 16,
+                  borderRadius: 12,
+                  border: "2px dased #f0f0f0",
+                }}
+              >
+                <Alert
+                  showIcon
+                  type="info"
+                  message="Причина: "
+                  description={item.reason}
+                />
+
+                <Flex gap={16} wrap>
+                  {item.leads.map((lead) => (
+                    <div
+                      style={{
+                        padding: "8px 16px",
+                        border: "1px solid #f0f0f0",
+                        borderRadius: 12,
+                      }}
+                      key={lead.id}
+                    >
+                      <strong>{lead.name}</strong>
+
+                      {typeof lead?.data?.phone === "string" && (
+                        <p style={{ margin: 0, padding: 0 }}>
+                          {lead?.data?.phone}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </Flex>
+              </div>
+            )),
+          });
+        }
+
         notification.success({
           message: "Успешно",
           description: "Лиды успешно запланированы",
