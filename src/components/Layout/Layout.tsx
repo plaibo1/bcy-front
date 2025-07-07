@@ -29,6 +29,10 @@ const menuItems = [
     label: "IVR",
     path: "/ivr",
   },
+  {
+    label: "Лэндинг лиды",
+    path: "/landing-leads",
+  },
 ];
 
 const navItems = menuItems.map((item) => ({

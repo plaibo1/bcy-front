@@ -13,6 +13,7 @@ import { EmptyLayout } from "../components/Layout/EmptyLayout";
 import { Layout } from "../components/Layout";
 import { AuthGuard } from "./AuthGuard";
 import { OrdersSendingResultsPage } from "../pages/OrdersSendingResultsPage";
+import { LandingLeadsPage } from "../pages/LandingLeadsPage";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
           {
             path: "/ivr",
             Component: IVRPage,
+          },
+          {
+            path: "/landing-leads",
+            Component: LandingLeadsPage,
           },
         ],
       },
