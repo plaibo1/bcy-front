@@ -14,6 +14,7 @@ import { Layout } from "../components/Layout";
 import { AuthGuard } from "./AuthGuard";
 import { OrdersSendingResultsPage } from "../pages/OrdersSendingResultsPage";
 import { LandingLeadsPage } from "../pages/LandingLeadsPage";
+import { TasksPage } from "../pages/TasksPage";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
           {
             path: "/backdoor-leads",
             Component: BackdoorLeadPage,
+          },
+          {
+            path: "/tasks",
+            Component: TasksPage,
           },
           {
             path: "/ivr",

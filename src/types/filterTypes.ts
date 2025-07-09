@@ -2,7 +2,7 @@ import { type Rule } from "antd/es/form";
 
 export type FilterFormCreateMap<T extends object> = {
   [K in keyof Partial<T>]: {
-    field: K;
+    field: K | string;
     operation?: FiltersOperations;
     valueResolver?: (value: unknown) => string | number | boolean | string[];
     label?: string;
@@ -20,5 +20,6 @@ export type FilterFormCreateMap<T extends object> = {
       | "phone";
 
     customComponent?: () => React.ReactNode;
+    customFilterValue?: (value: unknown) => IFilter[] | IFilter;
   };
 };

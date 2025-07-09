@@ -13,6 +13,7 @@ import { rdmApi } from "./api/rdmApi";
 import { configuratorBackdoorApi } from "./api/configuratorBackdoorApi";
 import { ivrApi } from "./api/ivrApi";
 import { landingLeadsApi } from "./api/landingLeadsApi";
+import { tasksApi } from "./api/tasksApi";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     [configuratorBackdoorApi.reducerPath]: configuratorBackdoorApi.reducer,
     [ivrApi.reducerPath]: ivrApi.reducer,
     [landingLeadsApi.reducerPath]: landingLeadsApi.reducer,
+    [tasksApi.reducerPath]: tasksApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -48,6 +50,7 @@ export const store = configureStore({
       configuratorBackdoorApi.middleware,
       ivrApi.middleware,
       landingLeadsApi.middleware,
+      tasksApi.middleware,
     ]),
 });
 

@@ -1,11 +1,11 @@
-import { Button, Flex, Modal, Skeleton, Table, Tag, Typography } from "antd";
+import { Button, Modal, Skeleton, Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { IClient } from "../../../types/api/clientsType";
 import { TableProps } from "antd/lib";
-import { EditOutlined, UserOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { ClientsEditForm } from "../ClientsEditForm";
-import { ordersStatuses } from "../../../consts";
+import { OrderCard } from "../../../components/OrderCard";
 
 const columns: ColumnsType<IClient> = [
   {
@@ -49,46 +49,7 @@ const ExpandedRow = ({ client }: { client: IClient }) => {
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
         {client.orders.map((order) => {
-          return (
-            <div
-              key={order.id}
-              style={{
-                border: "1px solid #eee",
-                padding: 8,
-                borderRadius: 8,
-                backgroundColor: "#fff",
-              }}
-            >
-              <div>
-                <Typography.Text type="success">
-                  {order.countLeadsSent}
-                </Typography.Text>{" "}
-                / <Typography.Text strong>{order.leadCount}</Typography.Text>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-                key={order.id}
-              >
-                <Flex gap={4}>
-                  <UserOutlined />
-                  {order.name}
-                </Flex>
-
-                <Tag
-                  style={{ marginLeft: 12 }}
-                  color={ordersStatuses[order.status].color}
-                >
-                  {ordersStatuses[order.status].label}
-                </Tag>
-              </div>
-              <code style={{ fontSize: 12 }}>{order.id}</code>
-            </div>
-          );
+          return <OrderCard order={order} />;
         })}
       </div>
     </div>

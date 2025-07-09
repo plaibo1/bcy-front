@@ -22,6 +22,12 @@ interface IFilter {
   values: (string | number | boolean)[];
 }
 
+interface IFilter {
+  field: never;
+  operation: "or" | "and";
+  values: IFilter[];
+}
+
 interface ISort {
   field: string;
   sortType: "ASC" | "DESC";
@@ -39,6 +45,13 @@ interface PageRequest {
   paging?: Partial<IPagination>;
   filters?: IFilter[];
   sorts?: ISort[];
+}
+
+interface IAudit {
+  createdDate: string;
+  createdBy: string;
+  updatedDate: string;
+  updatedBy: string;
 }
 
 type FiltersOperations =

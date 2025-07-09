@@ -30,6 +30,10 @@ const menuItems = [
     path: "/ivr",
   },
   {
+    label: "Задачи",
+    path: "/tasks",
+  },
+  {
     label: "Лэндинг лиды",
     path: "/landing-leads",
   },
