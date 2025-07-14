@@ -42,4 +42,4 @@ export const tasksApi = createApi({
   }),
 });
 
-export const { useLazyGetTasksQuery } = tasksApi;
+export const { useLazyGetTasksQuery, useGetSubTasksQuery } = tasksApi;
