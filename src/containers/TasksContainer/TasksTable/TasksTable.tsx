@@ -31,14 +31,19 @@ const SubTaskCard = ({ taskId }: { taskId: string }) => {
         >
           <Flex justify="space-between" align="start" style={{ width: "100%" }}>
             <DateTimeCeil value={subTask.sendDate} />
-            <Tag color={tasksStatuses[subTask.status].color}>
-              {tasksStatuses[subTask.status].title}
-            </Tag>
+
+            {tasksStatuses[subTask.status] ? (
+              <Tag color={tasksStatuses[subTask.status].color}>
+                {tasksStatuses[subTask.status].title}
+              </Tag>
+            ) : (
+              <Tag color="default">{subTask.status}</Tag>
+            )}
           </Flex>
 
           <div>
             <div>
-              <strong>Отправитель: </strong>
+              <strong>Место назначения: </strong>
             </div>
             <Typography.Text style={{ fontSize: 14 }}>
               {subTask.destination}
@@ -58,9 +63,9 @@ const SubTaskCard = ({ taskId }: { taskId: string }) => {
             />
           )}
 
-          {/* <span style={{ fontFamily: "monospace", fontSize: 12 }}>
-            {subTask.id}
-          </span> */}
+          <span style={{ fontFamily: "monospace", fontSize: 12 }}>
+            {subTask.dataId}
+          </span>
         </Flex>
       ))}
     </Flex>

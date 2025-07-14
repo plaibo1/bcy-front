@@ -30,7 +30,7 @@ const menuItems = [
     path: "/ivr",
   },
   {
-    label: "Задачи",
+    label: "Экспорт лидов",
     path: "/tasks",
   },
   {

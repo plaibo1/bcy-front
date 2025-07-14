@@ -47,7 +47,8 @@ export const configuratorBackdoorApi = createApi({
       query: (body) => {
         return {
           method: "POST",
-          url: "/v1/backdoor/configuration/page",
+          // url: "/v1/backdoor/configuration/page",
+          url: "/v1/backdoor/configuration/page-view",
           body: {
             ...body,
             paging: {

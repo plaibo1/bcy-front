@@ -22,7 +22,8 @@ export const activeBackdoorsApi = createApi({
       query: (body) => {
         return {
           method: "POST",
-          url: `/v1/backdoor/page`,
+          // url: `/v1/backdoor/page`,
+          url: `/v1/backdoor/page-view`,
           body,
         };
       },
