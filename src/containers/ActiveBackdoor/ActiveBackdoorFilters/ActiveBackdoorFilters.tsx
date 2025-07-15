@@ -24,6 +24,33 @@ const fields: FilterFormCreateMap<
     colSpan: 4,
   },
 
+  client: {
+    label: "Имя клиента",
+    operation: "or",
+    colSpan: 4,
+    field: "client",
+
+    customFilterValue: (value) => {
+      return [
+        {
+          field: "client.firstName",
+          operation: "starts with",
+          values: [value as string],
+        },
+        {
+          field: "client.lastName",
+          operation: "starts with",
+          values: [value as string],
+        },
+        {
+          field: "client.middleName",
+          operation: "starts with",
+          values: [value as string],
+        },
+      ];
+    },
+  },
+
   status: {
     field: "status",
     label: "Статус",
